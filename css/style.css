@@ -1,0 +1,76 @@
+.bg-ece {
+    background-color: #264351
+}
+
+a.bg-ece:focus, a.bg-ece:hover, button.bg-ece:focus, button.bg-ece:hover {
+    background-color: #264351
+}
+
+a.nav-link {
+    padding: 0;
+    position: relative;
+    top: 1px;
+}
+
+.fs1p1rem {
+    font-size: 1.10rem;
+}
+
+body {
+    padding-top: 56px;
+}
+
+.carousel-item {
+    height: 65vh;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.portfolio-item {
+    margin-bottom: 30px;
+}
+
+.fwhite {
+    color: white;
+}
+
+.link:focus, .link:hover {
+    text-decoration: none;
+    color: rgb(100, 100, 100);
+}
+
+.link-black {
+    color: black;
+}
+
+.link-black:focus, .link-black:hover {
+    text-decoration: none;
+    color: rgb(100, 100, 100);
+}
+
+.white {
+    color: white;
+}
+
+.lightgrey {
+    color: rgb(200, 200, 200);
+}
+
+#copyright {
+    font-size: 60%;
+}
+
+#acheterVendre {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+}
+
+.navElemRight {
+    position: absolute;
+    right: 0px;
+}

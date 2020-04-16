@@ -77,8 +77,77 @@
                         $categorie = $_POST['categorie'];
                         $description = $_POST['description'];
                         $typeVente = $_POST['typeVente'];
+                        $urlPhotos = $_POST['result'];  //array with les urls des photos
+                        
+                        // On va upload la vidéo
                         
 
+                            // Check filesize
+                            if ($_FILES['video']['size'] > 5000000) {
+                                die('File uploaded exceeds maximum upload size.');
+                            }
+
+                            // Check if the file exists
+                            if (file_exists('databaseVideos/' . $_FILES['video']['name'])) {
+                                //Si le fichier existe déjà (son nom du moins), on va rajouter un chiffre
+                                $name = pathinfo($_FILES['video']['name'], PATHINFO_FILENAME);
+
+                                $extension = pathinfo($_FILES['video']['name'], PATHINFO_EXTENSION);
+
+                                $increment = '1'; //start with no suffix
+
+                                error_log("le fichier existe déjà");
+
+                                error_log("name: $name, extension: $extension");
+
+                                while (file_exists("databaseVideos/" . $name . $increment . '.' . $extension)) {
+                                    $increment++;
+                                    error_log("lOn incrémente");
+                                }
+
+                                $newName = $name . $increment . '.' . $extension;
+                                error_log("newName: $newName");
+                                $newFilePath = "databaseVideos/" . $newName;
+                                error_log("lOn réécrit");
+                                    
+                                $tmpFilePath = $_FILES['video']['tmp_name'];
+                                    //Upload the file into the temp dir
+                                    if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+
+                                        //Handle other code here
+                                        echo "vidéo envoyée";
+                                    }
+                                    $urlVideo = $newFilePath; //On récupère l'url de la vidéo
+
+                            } else {
+
+                                //Get the temp file path
+                                $tmpFilePath = $_FILES['video']['tmp_name'];
+
+                                //Make sure we have a file path
+                                if ($tmpFilePath != "") {
+                                    //Setup our new file path
+                                    $newFilePath = "databaseVideos/" . $_FILES['video']['name'];
+                                    
+                                    //Upload the file into the temp dir
+                                    if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+
+                                        //Handle other code here
+                                        echo "vidéo envoyée";
+                                    }
+                                    $urlVideo = $newFilePath; //On récupère l'url de la vidéo
+                                }
+                            }
+                        
+                        
+
+                            //On passe l'url de la vidéo
+                            echo '<input type="hidden" name="urlVideo[]" value="'. $urlVideo. '">';
+
+                            //On passe les urls des photos
+                          foreach($urlPhotos as $value) {
+                        echo '<input type="hidden" name="urlPhotos[]" value="'. $value. '">';
+                        }
                         ?>
 
                         <?php
@@ -88,12 +157,9 @@
                         echo "typeVente: $typeVente";
                         ?>
 
-                        <input type="hidden" name="nom" value="<?php print $nom ?>">
-                        <input type="hidden" name="categorie" value="<?php print $categorie ?>">
-                        <input type="hidden" name="description" value="<?php print $description ?>">
-                        <input type="hidden" name="typeVente" value="<?php print $typeVente ?>">
+                        
 
-                        <input type="hidden" name="photos[]" multiple value="<?php print $photos ?>">
+                        
 
 
                         <?php
@@ -168,6 +234,11 @@
                                 </td>
                             </tr>
                         </table>
+
+                        <input type="hidden" name="nom" value="<?php print $nom ?>">
+                        <input type="hidden" name="categorie" value="<?php print $categorie ?>">
+                        <input type="hidden" name="description" value="<?php print $description ?>">
+                        <input type="hidden" name="typeVente" value="<?php print $typeVente ?>">
 
                     </form>
 

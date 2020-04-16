@@ -16,6 +16,8 @@
 
     <!-- Page title -->
     <title>eBay ECE - Vendre</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -67,7 +69,7 @@
                 <div class="col-sm-10 m-5 border border-primary mx-auto">
 
                     <!-- Form enchère -->
-                    <form name="form" action="vendre_2_2_video.php" method="post" enctype="multipart/form-data" id="vendre" onsubmit="return validateForm()" required>
+                    <form name="form" action="vendre_2_2_video.php" method="post" enctype="multipart/form-data" id="vendrePP" onsubmit="return validateForm()" required>
 
                         <!-- On récupère les données -->
                         <?php
@@ -88,20 +90,56 @@
                             <tr>
                                 <td>
                                     <!-- On upload les photos -->
-                                    <label for="photos[]">Select Image Files to Upload :</label>
+                                    <label for="photos[]">Choisissez des <strong>photos</strong> de votre produit :</label>
                                 </td>
                                 <td>
-                                    <input type="file" name="photos[]" multiple>
+                                    <input type="file" name="photos[]" accept="image/*" id="upload" multiple>
+                                </td>
+                            </tr>
+                            <tr class="pb-2">
+                                <td colspan="2" class="pb-2">
+                                    <h6 style="text-align: center; position: relative; right: 25px;" class="pb-2">(Nombre de photos max : 4)</h6>
                                 </td>
                             </tr>
                             <tr>
+                            <tr>
                                 <td colspan="2">
-                                    <input type="submit" name="button" value="Ajouter photos" class="mx-20 my-3">
+                                    <input type="submit" name="button" value="Ajouter photos" id="submit" class="mx-20 my-3">
                                 </td>
                             </tr>
                         </table>
 
+                        <!-- Script JS pour désactiver le bouton tant qu'on a pas choisi entre 1 et 4 photos -->
+                        <script type="text/javascript">
+                            $(function() {
+
+                                var // Define maximum number of files.
+                                    max_file_number = 4,
+                                    // Define your form id or class or just tag.
+                                    $form = $('#vendrePP'),
+                                    // Define your upload field class or id or tag.
+                                    $file_upload = $('#upload', $form),
+                                    // Define your submit class or id or tag.
+                                    $button = $('#submit', $form);
+
+                                // Disable submit button on page ready.
+                                $button.prop('disabled', 'disabled');
+
+                                $file_upload.on('change', function() {
+                                    var number_of_images = $(this)[0].files.length;
+                                    if (number_of_images > max_file_number) {
+                                        alert(`Vous ne pouvez pas envoyer plus de ${max_file_number} photos.`);
+                                        $(this).val('');
+                                        $button.prop('disabled', 'disabled');
+                                    } else {
+                                        $button.prop('disabled', false);
+                                    }
+                                });
+                            });
+                        </script>
+
                     </form>
+
 
 
                 </div>
@@ -142,7 +180,7 @@
         <!-- fin Footer -->
     </div>
     <!-- links to bootstrap JS dependencies -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

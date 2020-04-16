@@ -67,40 +67,91 @@
                 <div class="col-sm-10 m-5 border border-primary mx-auto">
 
                     <!-- Form enchère -->
-                    <form name="form" action="vendre_3_infos_Vente.php" method="post" enctype="multipart/form-data" id="vendre" onsubmit="return validateForm()" required>
+                    <form name="form" action="vendre_3_infos_Vente.php" method="post" enctype="multipart/form-data" id="vendre">
 
                         <!-- On récupère les données -->
                         <?php
-                        $nom = $_POST['Name'];
-                        $categorie = $_POST['Categorie'];
+                        error_log("Début script PHP vendre_2_2");
+
+                        $nom = $_POST['nom'];
+                        $categorie = $_POST['categorie'];
                         $description = $_POST['description'];
                         $typeVente = $_POST['typeVente'];
 
                         $photos = $_FILES['photos'];
 
+
+
                         //On va upload les photos directement dans le serveur (hors bdd)
                         //$files = array_filter($_FILES['upload']['name']); //something like that to be used before processing files.
 
                         // Count # of uploaded files in array
-                        $total = count($_FILES['photos']['name']);
+                        //$total = count($photos);
+
 
                         // Loop through each file
-                        for ($i = 0; $i < $total; $i++) {
+                        foreach ($_FILES["photos"]["tmp_name"] as $key=>$tmp_name) {
 
-                            //Get the temp file path
-                            $tmpFilePath = $_FILES['photos']['tmp_name'][$i];
+                           
+                            if (!getimagesize($_FILES['photos']['tmp_name'][$key])) {
+                                die('Please ensure you are uploading an image.');
+                            }
 
-                            //Make sure we have a file path
-                            if ($tmpFilePath != "") {
-                                //Setup our new file path
-                                $newFilePath = "databaseImages/" . $_FILES['photos']['name'][$i];
+                            // Check filesize
+                            if ($_FILES['photos']['size'][$key] > 500000) {
+                                die('File uploaded exceeds maximum upload size.');
+                            }
 
-                                //Upload the file into the temp dir
-                                if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+                            // Check if the file exists
+                            if (file_exists('databaseImages/' . $_FILES['photos']['name'][$key])) {
+                                //Si le fichier existe déjà (son nom du moins), on va rajouter un chiffre
+                                $name = pathinfo($_FILES['photos']['name'][$key], PATHINFO_FILENAME);
 
-                                    //Handle other code here
-                                    echo "photos envoyées";
+                                $extension = pathinfo($_FILES['photos']['name'][$key], PATHINFO_EXTENSION);
 
+                                $increment = '1'; //start with no suffix
+
+                                error_log("le fichier existe déjà");
+
+                                error_log("name: $name, extension: $extension");
+
+                                while (file_exists("databaseImages/" . $name . $increment . '.' . $extension)) {
+                                    $increment++;
+                                    error_log("lOn incrémente");
+                                }
+
+                                $newName = $name . $increment . '.' . $extension;
+                                error_log("newName: $newName");
+                                $newFilePath = "databaseImages/" . $newName;
+                                error_log("lOn réécrit");
+                                    
+                                $tmpFilePath = $_FILES['photos']['tmp_name'][$key];
+                                    //Upload the file into the temp dir
+                                    if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+
+                                        //Handle other code here
+                                        echo "photos envoyées";
+                                    }
+                                    $urlPhotos[] = $newFilePath; //On récupère les urls des photos pour les mettre dans la db ensuite
+
+                            } else {
+
+                                //Get the temp file path
+                                $tmpFilePath = $_FILES['photos']['tmp_name'][$key];
+
+                                //Make sure we have a file path
+                                if ($tmpFilePath != "") {
+                                    //Setup our new file path
+                                    $newFilePath = "databaseImages/" . $_FILES['photos']['name'][$key];
+                                    
+                                    //Upload the file into the temp dir
+                                    if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+
+                                        //Handle other code here
+                                        echo "photos envoyées";
+                                    }
+                                    $urlPhotos[] = $newFilePath; //On récupère les urls des photos pour les mettre dans la db ensuite
+                                    
                                 }
                             }
                         }
@@ -110,22 +161,39 @@
                         <input type="hidden" name="categorie" value="<?php print $categorie ?>">
                         <input type="hidden" name="description" value="<?php print $description ?>">
                         <input type="hidden" name="typeVente" value="<?php print $typeVente ?>">
+                        <!-- On poste les urls des photos pour les mettre ensuite dans la db -->
+                        <?php
+                        foreach ($urlPhotos as $value) {
+                            error_log("urlPhotos: $value");
+                            echo '<input type="hidden" name="result[]" value="' . $value . '">';
+                        }
+                        ?>
 
 
                         <!-- On fait passer -->
                         <table class="mx-auto my-3">
                             <tr>
+                                <td colspan="2">
+                                    <h6 style="text-align: center" class="m-3">Photo(s) bien reçue(s) !</h6>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>
                                     <!-- On upload les photos -->
-                                    <label for="video">Choisissez 1 vidéo de votre produit :</label>
+                                    <label for="video">Choisissez une <strong>vidéo</strong> de votre produit :</label>
                                 </td>
                                 <td>
-                                    <input type="file" name="video" multiple>
+                                    <input type="file" name="video" accept="video/*">
+                                </td>
+                            </tr>
+                            <tr class="pb-2">
+                                <td colspan="2" class="pb-2">
+                                    <h6 style="text-align: center; position: relative; right: 25px;" class="pb-2">(Taille maximale : 5MB)</h6>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <input type="submit" name="button" value="Ajouter photos" class="mx-20 my-3">
+                                    <input type="submit" name="button" value="Ajouter vidéo" class="mx-20 my-3">
                                 </td>
                             </tr>
                         </table>

@@ -62,16 +62,22 @@
 
         <!-- On récupère les données -->
         <?php
+        error_log("----------------------------------------------------------------------------------------------------");
+        error_log("Début vendre_4_postDB.php");
+
         $nom = $_POST['nom'];   //all
         $categorie = $_POST['categorie'];   //all
         $description = $_POST['description'];   //all
         $typeVente = $_POST['typeVente'];   //all
-        $photos = $_FILES['photos'];    //all
         $prixDepart = $_POST['prixDepart']; //100 110
         $dateDebut = $_POST['dateDebut']; //100 110
         $dateFin = $_POST['dateFin']; //100 110
         $prixAchImm = $_POST['prixAchImm']; //010 110 011
         //En fait pas besoin de séparer les cas car les valeurs non nécessaires sont nulles
+        $urlPhotos = $_POST['urlPhotos'];
+        $urlVideo = $_POST['urlVideo'];
+
+        echo "$urlPhotos[0]<br>$urlPhotos[1]<br>$urlPhotos[2]<br>$urlPhotos[3]<br>$urlPhotos[4]<br>$urlVideo[0]";
 
         ?>
 
@@ -93,22 +99,32 @@
             $conn->beginTransaction();
             // our SQL statements
 
+            //INSERT ITEMS
             if ($typeVente == "100") { //Enchère seule
                 $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, Begin_Date, End_Date, Price_Min, ID_seller)
-                VALUES ('$nom', '$categorie', '$typeVente', false, '0', '$description', '$dateDebut', '$dateFin', '$prixDepart', '1')");
+                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$dateDebut', '$dateFin', '$prixDepart', '1')");
             }
             if ($typeVente == "110") { //Enchère + Achat immédiat
                 $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, Begin_Date, End_Date, Price_Min, Price_Now, ID_seller)
-                VALUES ('$nom', '$categorie', '$typeVente', false, '0', '$description', '$dateDebut', '$dateFin', '$prixDepart', '$prixAchImm', '1')");
+                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$dateDebut', '$dateFin', '$prixDepart', '$prixAchImm', '1')");
             }
             if ($typeVente == "010" or $typeVente == "011") { //Ach Imm seul ou achat Imm + meilleure offre
                 $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, Price_Now, ID_seller)
-                VALUES ('$nom', '$categorie', '$typeVente', false, '0', '$description', '$prixAchImm', '1')");
+                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$prixAchImm', '1')");
             }
             if ($typeVente == "001") { //Meilleure offre seule
                 $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, ID_seller)
-                VALUES ('$nom', '$categorie', '$typeVente', false, '0', '$description', '1')");
+                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '1')");
             }
+
+            //INSERT IMAGES
+            $idItem = $conn->lastInsertId(); // On récupère l'ID du dernier Item inséré // ! Ne fonctionne pas corréctement si placé après le commit.
+
+            foreach ($urlPhotos as $url) {
+                $conn->exec("INSERT INTO Images (Image_Path, Id_Item) VALUES ('$url', '$idItem')");
+            }
+
+
 
             // commit the transaction
             $conn->commit();
@@ -125,21 +141,16 @@
         <!-- Début main container -->
         <div class="content-wrap container">
 
-            <?php
-            // echo "$nom<br>";
-            // echo "$categorie<br>";
-            // echo "$description<br>";
-            // echo "$typeVente<br>";
-            // //photos
-            // echo "$prixDepart<br>";
-            // echo "$dateDebut<br>";
-            // echo "$dateFin<br>";
-            echo "$prixAchImm<br>";
-            ?>
+            <h1 class="mx-20 mt-5 text-center" style="width: 495px;">Article publié avec succès !</h1>
+            <h5 class="mx-20 my-2 text-center">Bonne chance pour la vente 🤑.</h5>
 
         </div>
         <!-- Fin main container -->
 
+        <?php
+        error_log("Fin vendre_4_postDB.php");
+        error_log("----------------------------------------------------------------------------------------------------");
+        ?>
 
         <!-- Footer -->
         <footer class="footer navbar-dark bg-ece mb-0 px-2 pt-3 pb-1">

@@ -1,0 +1,112 @@
+
+		.topnav {
+			background-color: #333;
+			position: fixed;
+			top:0px;
+			width : 100%;
+			left: 0;
+			height : 50px;
+		}
+
+		.topnav a {
+			float: left;
+			color: white;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+			font-size: 15px;
+		}
+
+		.topnav a:hover {
+			background-color: #223843;
+			color: white;
+			height: 50px;
+		}
+
+		.topnav-right {
+			float: right;
+			height : 50px;
+			display : flex;
+		}
+	
+		.dropbtn {
+			background-color: #333;
+			color: white;
+			padding: 16px;
+			font-size: 15px;
+			border: none;
+			height : 50px;
+		}
+
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+			background-color: lightgrey;
+			min-width: 160px;
+			z-index: 1;
+			font-size : 10px;
+		}
+
+		.dropdown-content a {
+			color: black;
+			padding: 10px 15px;
+			text-decoration: none;
+			display: block;
+			font-size : 10px;
+			height: 30px;
+		}
+		header {
+			display : flex;}
+			.dropdown-content a:hover {background-color: rgba(0,0,0,0.1);
+				height : 100%;}
+			.dropdown:hover .dropdown-content {display: grid;}
+			.dropdown:hover .dropbtn {background-color: #223843;}
+
+		#titre_page {
+			color : #223843 ;
+ 			font-size: 3em;
+ 			font-family: Poppins ; 
+ 			text-align: center;
+ 			padding-top: 50px ; 
+ 		}
+
+ 		body {
+		background-color : #E5E1E1;
+		}
+
+		/* PARTIE ANIMATION	: zoom sur les images. Code pris sur https://www.web-eau.net/blog/15-effets-css3-pour-vos-images */
+		.zoom-out {
+				-webkit-transform: scale(1.25);
+				transform: scale(1.25);
+				-webkit-transition: .3s ease-in-out;
+				transition: .3s ease-in-out;
+			}
+		.zoom-out:hover {
+			-webkit-transform: scale(1);
+			transform: scale(1);
+		}
+
+		img {
+  			border-radius: 30px;
+		}
+		
+		#section {
+  			display: flex;
+  			margin-top: 100px ; 
+  			justify-content: space-evenly;
+			}
+
+		#titres {
+  			color : #223843 ;
+ 			font-size: 2.3rem;
+ 			font-family: poppins ; 
+ 			margin-top: 60px ; 
+ 			margin-left: 180px ; 
+			}
+	

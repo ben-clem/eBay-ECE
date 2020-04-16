@@ -62,35 +62,83 @@
 
         <!-- On récupère les données -->
         <?php
-        $nom = $_POST['nom'];
-        $categorie = $_POST['categorie'];
-        $description = $_POST['description'];
-        $typeVente = $_POST['typeVente'];
-        //photos
-        $prixDepart = $_POST['prixDepart'];
-        $dateDebut = $_POST['dateDebut'];
-        $dateFin = $_POST['dateFin'];
-        $prixAchImm = $_POST['prixAchImm'];
+        $nom = $_POST['nom'];   //all
+        $categorie = $_POST['categorie'];   //all
+        $description = $_POST['description'];   //all
+        $typeVente = $_POST['typeVente'];   //all
+        $photos = $_FILES['photos'];    //all
+        $prixDepart = $_POST['prixDepart']; //100 110
+        $dateDebut = $_POST['dateDebut']; //100 110
+        $dateFin = $_POST['dateFin']; //100 110
+        $prixAchImm = $_POST['prixAchImm']; //010 110 011
+        //En fait pas besoin de séparer les cas car les valeurs non nécessaires sont nulles
+
+        ?>
+
+        <!-- Le plus simple est de faire 3 type d'upload en fonction du choix de vente -->
+
+        <!-- On se connecte à la bdd -->
+        <?php
+        $servername = "localhost";
+        $username = "benzinho";
+        $password = "75011";
+        $dbname = "eBay ECE";
+
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            // set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // begin the transaction
+            $conn->beginTransaction();
+            // our SQL statements
+
+            if ($typeVente == "100") { //Enchère seule
+                $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, Begin_Date, End_Date, Price_Min, ID_seller)
+                VALUES ('$nom', '$categorie', '$typeVente', false, '0', '$description', '$dateDebut', '$dateFin', '$prixDepart', '1')");
+            }
+            if ($typeVente == "110") { //Enchère + Achat immédiat
+                $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, Begin_Date, End_Date, Price_Min, Price_Now, ID_seller)
+                VALUES ('$nom', '$categorie', '$typeVente', false, '0', '$description', '$dateDebut', '$dateFin', '$prixDepart', '$prixAchImm', '1')");
+            }
+            if ($typeVente == "010" or $typeVente == "011") { //Ach Imm seul ou achat Imm + meilleure offre
+                $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, Price_Now, ID_seller)
+                VALUES ('$nom', '$categorie', '$typeVente', false, '0', '$description', '$prixAchImm', '1')");
+            }
+            if ($typeVente == "001") { //Meilleure offre seule
+                $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, ID_seller)
+                VALUES ('$nom', '$categorie', '$typeVente', false, '0', '$description', '1')");
+            }
+
+            // commit the transaction
+            $conn->commit();
+            echo "New records created successfully";
+        } catch (PDOException $e) {
+            // roll back the transaction if something failed
+            $conn->rollback();
+            echo "Error: " . $e->getMessage();
+        }
+
+        $conn = null;
         ?>
 
         <!-- Début main container -->
         <div class="content-wrap container">
 
             <?php
-            echo "$nom<br>";
-            echo "$categorie<br>";
-            echo "$description<br>";
-            echo "$typeVente<br>";
-            //photos
-            echo "$prixDepart<br>";
-            echo "$dateDebut<br>";
-            echo "$dateFin<br>";
+            // echo "$nom<br>";
+            // echo "$categorie<br>";
+            // echo "$description<br>";
+            // echo "$typeVente<br>";
+            // //photos
+            // echo "$prixDepart<br>";
+            // echo "$dateDebut<br>";
+            // echo "$dateFin<br>";
             echo "$prixAchImm<br>";
             ?>
 
         </div>
         <!-- Fin main container -->
-
 
 
         <!-- Footer -->

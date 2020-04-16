@@ -20,7 +20,6 @@
 
 <body>
     <div class="page-container">
-
         <!-- Navigation -->
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-ece px-0" style="height: 80px;">
             <div class="container-fluid p-0">
@@ -63,29 +62,48 @@
 
 
 
-
         <div class="content-wrap container">
             <div class="row">
                 <div class="col-sm-10 m-5 border border-primary mx-auto">
 
                     <!-- Form enchère -->
-                    <form name="form" action="vendre_4_postDB.php" method="post" enctype="multipart/form-data" id="vendre" onsubmit="return validateForm()" required>
+                    <form name="form" action="vendre_3_infos_Vente.php" method="post" enctype="multipart/form-data" id="vendre" onsubmit="return validateForm()" required>
 
                         <!-- On récupère les données -->
                         <?php
-                        $nom = $_POST['nom'];
-                        $categorie = $_POST['categorie'];
+                        $nom = $_POST['Name'];
+                        $categorie = $_POST['Categorie'];
                         $description = $_POST['description'];
                         $typeVente = $_POST['typeVente'];
-                        
 
-                        ?>
+                        $photos = $_FILES['photos'];
 
-                        <?php
-                        echo "$nom";
-                        echo "$categorie";
-                        echo "$description";
-                        echo "typeVente: $typeVente";
+                        //On va upload les photos directement dans le serveur (hors bdd)
+                        //$files = array_filter($_FILES['upload']['name']); //something like that to be used before processing files.
+
+                        // Count # of uploaded files in array
+                        $total = count($_FILES['photos']['name']);
+
+                        // Loop through each file
+                        for ($i = 0; $i < $total; $i++) {
+
+                            //Get the temp file path
+                            $tmpFilePath = $_FILES['photos']['tmp_name'][$i];
+
+                            //Make sure we have a file path
+                            if ($tmpFilePath != "") {
+                                //Setup our new file path
+                                $newFilePath = "databaseImages/" . $_FILES['photos']['name'][$i];
+
+                                //Upload the file into the temp dir
+                                if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+
+                                    //Handle other code here
+                                    echo "photos envoyées";
+
+                                }
+                            }
+                        }
                         ?>
 
                         <input type="hidden" name="nom" value="<?php print $nom ?>">
@@ -93,78 +111,21 @@
                         <input type="hidden" name="description" value="<?php print $description ?>">
                         <input type="hidden" name="typeVente" value="<?php print $typeVente ?>">
 
-                        <input type="hidden" name="photos[]" multiple value="<?php print $photos ?>">
 
-
-                        <?php
-                        if ($typeVente == "100" or $typeVente == "110") {
-                        ?>
-                            <table class="mx-auto my-3 border border-success">
-                                <tr>
-                                    <td colspan="2" class="mx-auto text-center pt-3">
-                                        <h5>Infos Enchère</h5>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1"><label class="ml-auto mr-1" for="prixDepart">Prix de départ :</label></td>
-                                    <td class="p-1"><input required type="number" name="prixDepart" placeholder="5€"></td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1"><label class="ml-auto mr-1" for="dateDebut">Date de début :</label></td>
-                                    <td class="p-1"><input required type="datetime-local" name="dateDebut"></td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1"><label class="ml-auto mr-1" for="dateFin">Date de fin :</label></td>
-                                    <td class="p-1"><input required type="datetime-local" name="dateFin"></td>
-                                </tr>
-                            </table>
-                        <?php
-                        }
-                        ?>
-
-                        <?php
-                        if ($typeVente == "010" || $typeVente == "110" || $typeVente == "011") {
-                        ?>
-                            <table class="mx-auto my-3 border border-danger">
-                                <tr>
-                                    <td colspan="2" class="mx-auto text-center pt-3">
-                                        <h5>Infos Achat Immédiat</h5>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1"><label class="ml-auto mr-1" for="prixAchImm">Prix Achat Immédiat :</label></td>
-                                    <td class="p-1"><input type="number" name="prixAchImm" placeholder="500€"></td>
-                                </tr>
-                            </table>
-                        <?php
-                        }
-                        ?>
-
-                        <?php
-                        if ($typeVente == "001" or $typeVente == "011") {
-                        ?>
-                            <table class="mx-auto my-3 border border-dark">
-                                <tr>
-                                    <td colspan="2" class="mx-auto text-center pt-3">
-                                        <h5>Infos Meilleure Offre</h5>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="mx-auto text-center pt-3">
-                                        <p>Les acheteurs vont pouvoir vous faire des offres. Vous pourrez alors accepter ou proposer une contre offre. Si vous arrivez à un terrain d'entente au bout de 5 échanges, la vente aura lieu.</p>
-                                    </td>
-                                </tr>
-                            </table>
-                        <?php
-                        }
-                        ?>
-
-
-
+                        <!-- On fait passer -->
                         <table class="mx-auto my-3">
                             <tr>
+                                <td>
+                                    <!-- On upload les photos -->
+                                    <label for="video">Choisissez 1 vidéo de votre produit :</label>
+                                </td>
+                                <td>
+                                    <input type="file" name="video" multiple>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td colspan="2">
-                                    <input type="submit" name="button" value="Mettre la vente en ligne">
+                                    <input type="submit" name="button" value="Ajouter photos" class="mx-20 my-3">
                                 </td>
                             </tr>
                         </table>
@@ -175,18 +136,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Script pour vérifier que le nom a bien été rempli
-    <script>
-        function validateForm() {
-            var x = document.forms["form"]["Name"].value;
-            if (x == "" || x == null) {
-                alert("Name must be filled out");
-                return false;
-            }
-        }
-    </script> -->
-
 
         <!-- Footer -->
         <footer class="navbar-dark bg-ece mb-0 px-2 pt-3 pb-1">

@@ -67,7 +67,7 @@
                 <div class="col-sm-10 m-5 border border-primary mx-auto">
 
                     <!-- Form enchère -->
-                    <form name="form" action="vendre_3_infos_Vente.php" method="post" enctype="multipart/form-data" id="vendre" onsubmit="return validateForm()" required>
+                    <form name="form" action="vendre_2_2_video.php" method="post" enctype="multipart/form-data" id="vendre" onsubmit="return validateForm()" required>
 
                         <!-- On récupère les données -->
                         <?php
@@ -82,15 +82,21 @@
                         <input type="hidden" name="description" value="<?php print $description ?>">
                         <input type="hidden" name="typeVente" value="<?php print $typeVente ?>">
 
-                        <!-- On upload les photos -->
-                        INPUT PHOTOS
-
 
                         <!-- On fait passer -->
                         <table class="mx-auto my-3">
                             <tr>
+                                <td>
+                                    <!-- On upload les photos -->
+                                    <label for="photos[]">Select Image Files to Upload :</label>
+                                </td>
+                                <td>
+                                    <input type="file" name="photos[]" multiple>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td colspan="2">
-                                    <input type="submit" name="button" value="Ajouter photos">
+                                    <input type="submit" name="button" value="Ajouter photos" class="mx-20 my-3">
                                 </td>
                             </tr>
                         </table>
@@ -101,18 +107,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Script pour vérifier que le nom a bien été rempli
-    <script>
-        function validateForm() {
-            var x = document.forms["form"]["Name"].value;
-            if (x == "" || x == null) {
-                alert("Name must be filled out");
-                return false;
-            }
-        }
-    </script> -->
-
 
         <!-- Footer -->
         <footer class="navbar-dark bg-ece mb-0 px-2 pt-3 pb-1">

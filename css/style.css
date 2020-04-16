@@ -115,6 +115,18 @@ footer {
     /* Footer height */
 }
 
+/* End */
+
+.mx-10 {
+    margin-left: 10rem!important;
+    margin-right: 10rem!important;
+}
+
+.mx-20 {
+    margin-left: 20rem!important;
+    margin-right: 20rem!important;
+}
+}
 
         .topnav {
             background-color: #333;
@@ -198,4 +210,5 @@ footer {
              padding-bottom: 50px ; 
         }
 
+/* End */
 /* End */

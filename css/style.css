@@ -68,6 +68,22 @@ label {
     text-align: right;
 }
 
+#first{
+    font-family: Poppins ; 
+    color : #223843 ;
+    font-size: 1.8em;
+}
+
+#second{
+    font-family: Poppins ; 
+    color : #223843 ;
+    font-size: 1em;
+}
+
+.card{
+    font-family: Poppins ; 
+}
+
 /* Keeping the footer where it should be
 https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/
 need :

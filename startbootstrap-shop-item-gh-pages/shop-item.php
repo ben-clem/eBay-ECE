@@ -9,17 +9,28 @@
   <meta name="author" content="">
 
   <title>Shop Item</title>
-
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
   <!-- Custom styles for this template -->
   <link href="shop-item.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel = "https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,300)">
 
+<script type="text/javascript">
+    function encherir() {
+    var enchere;
+    enchere = prompt("Combien voulez vous enchérir pour ce produit?");
+    alert("Merci ! Nous avons bien enregistré votre enchère");
+    }
 
+    function offre() {
+    var offre;
+    enchere = prompt("Quel est le montant de votre offre pour ce produit?");
+    alert("Merci ! Nous avons bien transmis votre offre au vendeur");
+    }
+</script>
 
 </head>
 
@@ -27,7 +38,7 @@
 <!-- BARRE DE NAVIGATION -->
 <header class="page-header header container-fluid">
             <div class="topnav">
-                <a href="index.html"> <span class="glyphicon glyphicon-home"></span> </a>
+                <a href="eBay-ECE/index.html"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
            <a class="dropbtn" href="achats.html"> Achats </a>
                    <!-- <div class="dropdown-content">
@@ -80,11 +91,20 @@
     <div class="row">
 
       <div class="col-lg-3">
-        <h1 class="my-4"><?php echo $data['nom'] ; ?> </h1>
+        <h1 class="my-4"><?php echo $data['nom'] ; ?> </h1> <br>
         <div class="list-group">
-          <a href="#" class="list-group-item active">Achat Immédiat</a>
-          <a href="#" class="list-group-item">Enchères</a>
-          <a href="#" class="list-group-item">Ajouter au panier</a>
+          <button class="list-group-item" onclick=""> 
+            <div class ="bouton"> Achat Immédiat </div> <div class = "info"> Prix : <?php echo $data['prix'] ; echo " Euros" ; ?> <br> <a href ="#" id="lol"> Ajouter au panier </a> <br> 
+          </div>
+          </button>
+          <button class="list-group-item" onclick="encherir()"> 
+            <div class ="bouton">Enchérir</div> <br> <div class = "info"> Enchère maximale : 300 Euros <br> Nombre d'enchères : 5 <br> Temps restant : 01:34:00 <br><br>
+          </div>
+          </button>
+           <button class="list-group-item" onclick="offre()"> 
+              <div class ="bouton">Faire une offre </div> 
+            </button>
+        
         </div>
       </div>
       <!-- /.col-lg-3 -->
@@ -149,6 +169,8 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</div><!--end .container-->
 
 </body>
 

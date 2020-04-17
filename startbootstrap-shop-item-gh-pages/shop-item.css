@@ -112,3 +112,41 @@ footer {
     /* Footer height */
 }
 
+.list-group-items{
+    color : #223843 ;
+    font-size: 1em;
+    position: relative;  
+    text-align: center;
+}
+
+
+.bouton{
+    font-size: 1.5em;
+    font-weight:bold;
+    position: relative;
+    text-align: center;
+    color : #2E5266 ; 
+}
+
+.container{
+    font-family: 'Poppins', sans-serif;
+}
+
+.info{
+     position: relative;  
+    text-align: center;
+}
+
+.my-4{
+    position: relative;  
+    text-align: center;
+}
+
+#lol{
+    font-size: 1.15em;
+}
+
+.card-title{
+     font-weight:bold;
+     color : #2E5266 ; 
+}

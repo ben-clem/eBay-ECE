@@ -24,7 +24,7 @@
         <!-- Navigation -->
         <header class="page-header header container-fluid">
             <div class="topnav">
-                <a href="index.html"> <span class="glyphicon glyphicon-home"></span> </a>
+                <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
                     <a class="dropbtn" href="achats.php"> Achats </a>
                 </div>

@@ -1,4 +1,10 @@
-!DOCTYPE html>
+<?php
+error_log("----------------------------------------------------------------------------------------------------");
+error_log("Début vendre_4_postDB.php");
+session_start();
+error_log("id_user_session :" . $_SESSION['id_user'])
+?>
+<!DOCTYPE html>
 <html lang="fr">
 <!-- specify primary language for Search Engines (en, fr...) -->
 
@@ -24,7 +30,7 @@
         <!-- Navigation -->
         <header class="page-header header container-fluid">
             <div class="topnav">
-                <a href="index.html"> <span class="glyphicon glyphicon-home"></span> </a>
+                <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
                     <a class="dropbtn" href="achats.php"> Achats </a>
                 </div>
@@ -50,8 +56,7 @@
 
         <!-- On récupère les données -->
         <?php
-        error_log("----------------------------------------------------------------------------------------------------");
-        error_log("Début vendre_4_postDB.php");
+        
 
         $nom = $_POST['nom'];   //all
         $categorie = $_POST['categorie'];   //all
@@ -64,6 +69,8 @@
         //En fait pas besoin de séparer les cas car les valeurs non nécessaires sont nulles
         $urlPhotos = $_POST['urlPhotos'];
         $urlVideo = $_POST['urlVideo'];
+
+        $ID_USER = $_SESSION['id_user'];
 
         echo "$urlPhotos[0]<br>$urlPhotos[1]<br>$urlPhotos[2]<br>$urlPhotos[3]<br>$urlPhotos[4]<br>$urlVideo[0]";
 
@@ -90,19 +97,19 @@
             //INSERT ITEMS
             if ($typeVente == "100") { //Enchère seule
                 $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, Begin_Date, End_Date, Price_Min, ID_seller)
-                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$dateDebut', '$dateFin', '$prixDepart', '1')");
+                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$dateDebut', '$dateFin', '$prixDepart', '$ID_USER')");
             }
             if ($typeVente == "110") { //Enchère + Achat immédiat
                 $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, Begin_Date, End_Date, Price_Min, Price_Now, ID_seller)
-                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$dateDebut', '$dateFin', '$prixDepart', '$prixAchImm', '1')");
+                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$dateDebut', '$dateFin', '$prixDepart', '$prixAchImm', '$ID_USER')");
             }
             if ($typeVente == "010" or $typeVente == "011") { //Ach Imm seul ou achat Imm + meilleure offre
                 $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, Price_Now, ID_seller)
-                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$prixAchImm', '1')");
+                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$prixAchImm', '$ID_USER')");
             }
             if ($typeVente == "001") { //Meilleure offre seule
                 $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, ID_seller)
-                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '1')");
+                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$ID_USER')");
             }
 
             //INSERT IMAGES

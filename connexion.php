@@ -1,7 +1,7 @@
 <?php
 if (empty(session_id()) ) {session_start();}
 if (isset($_SESSION['id_user'])) {
- header('Location: /ebay-ECE/home.php');
+ header('Location: /ebay-ECE/index.php');
  }
 
 ?>
@@ -43,7 +43,6 @@ if (isset($_SESSION['id_user'])) {
 			width : 100%;
 			left:0;
 			height : 50px;
-			justify-content: 
 		}
 
 		.topnav a {
@@ -112,10 +111,8 @@ if (isset($_SESSION['id_user'])) {
 				.dropdown:hover .dropdown-content {display: grid;}
 
 				.dropdown:hover .dropbtn {background-color: red;
-					z-index: ;
-					z-index: ;
 				}
-	body {background-image: url("background_connexion.jpg");
+	body {background-image: url("img/background_connexion.jpg");
 			height:100%;
 			background-size: cover;
 			background-repeat: no-repeat;
@@ -161,7 +158,7 @@ if (isset($_SESSION['id_user'])) {
 
 		<form id ="connexion_form" action="#php" method="post">
 			<div class="topnav">
-				<a href="home.php"> <span class="glyphicon glyphicon-home"></span> </a>
+				<a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
 				<div class="dropdown">
 					<button class="dropbtn"> Achats </button>
 					<div class="dropdown-content">
@@ -197,7 +194,7 @@ if (isset($_SESSION['id_user'])) {
 			</div>
 		</header>
 
-		<form id ="connexion_form" action="" method="post">
+		<form id ="connexion_form" action="connexion.php" method="post">
 
 				<h4> <strong> Connexion </strong> </h4>
 					<div class="input-group form-group">
@@ -231,7 +228,7 @@ if (isset($_SESSION['id_user'])) {
   {
 
 	//connexion mysql
-    $bdd = new PDO('mysql:host=localhost;dbname=piscine;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    $bdd = new PDO('mysql:host=localhost;dbname=eBay ECE;charset=utf8', 'benzinho', '75011', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
   }
    // si erreur
   catch(Exception $e)
@@ -261,7 +258,7 @@ if (isset($_SESSION['id_user'])) {
 		       $_SESSION['Firstname'] = $login_info['Firstname'];
 		       $_SESSION['user_type']=1;
 		       echo $_SESSION['id_user'];
-		      echo "<p> Vous êtes maintenant connecté !<br> Merci de vous rediriger vers <a href='home.php'> page d'accueil </p>";
+		      echo "<p> Vous êtes maintenant connecté !<br> Merci de vous rediriger vers <a href='index.php'> page d'accueil </p>";
 		    }
 		  }
 	else 
@@ -270,7 +267,7 @@ if (isset($_SESSION['id_user'])) {
 		 $_SESSION['Firstname'] = $login_info['Firstname'];
 		 $_SESSION['user_type']=0;
 		 echo $_SESSION['id_user'];
-		      echo '<p> Vous êtes maintenant connecté !<br> Merci de vous rediriger vers <a href="home.php"> page d\'accueil </p>';
+		      echo '<p> Vous êtes maintenant connecté !<br> Merci de vous rediriger vers <a href="index.php"> page d\'accueil </p>';
 	}
  }
 

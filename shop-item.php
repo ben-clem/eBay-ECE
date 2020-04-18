@@ -52,7 +52,7 @@
           </button>
           <div class="dropdown-content">
             <a href="connexion.php">Se connecter</a>
-            <a href="inscription.php">S'inscrire</a>
+            <a href="inscription_buyer.php">S'inscrire</a>
             <a href="admin.php">Admin</a>
           </div>
         </div>

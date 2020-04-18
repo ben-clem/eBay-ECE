@@ -25,24 +25,14 @@
 <body>
     <div class="page-container">
         <!-- Navigation -->
-        <header class="page-header header container-fluid my-5 mb-4 p-0">
+        <header class="page-header header container-fluid">
             <div class="topnav">
-                <a href="#search"> <span class="glyphicon glyphicon-home"></span> </a>
+                <a href="index.html"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
-                    <a class="dropbtn" href="achats.html"> Achats </a>
-                    <!-- <div class="dropdown-content">
-                        <a href="#">Vente aux enchères</a> 
-                        <a href="#">Achat Immédiat</a>
-                        <a href="#">Meilleure offre</a>
-                    </div>-->
+                    <a class="dropbtn" href="achats.php"> Achats </a>
                 </div>
                 <div class="dropdown">
                     <a class="dropbtn" href="categories.html">Categories</a>
-                    <!-- <div class="dropdown-content">
-                        <a href="#">Ferraille ou Trésor</a>
-                        <a href="#">Accessoires VIP</a>
-                        <a href="#">Bon pour le Musée</a>
-                    </div> -->
                 </div>
                 <div class="topnav-right">
                     <div class="dropdown">
@@ -50,12 +40,12 @@
                             <p>Mon compte <span class="glyphicon glyphicon-user"></span></p>
                         </button>
                         <div class="dropdown-content">
-                            <a href="#">Se connecter</a>
-                            <a href="#">S'inscrire</a>
-                            <a href="#">Admin</a>
+                            <a href="connexion.php">Se connecter</a>
+                            <a href="inscription.php">S'inscrire</a>
+                            <a href="admin.php">Admin</a>
                         </div>
                     </div>
-                    <a href="#about">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                    <a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </div>
             </div>
         </header>

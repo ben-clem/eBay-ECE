@@ -18,8 +18,7 @@
 			top:0;
 			width : 100%;
 			left:0;
-			height : 50px;
-			justify-content: }
+			height : 50px;}
 
 	.topnav a {float: left;
 			color: #f2f2f2;
@@ -116,44 +115,32 @@
 </style>
 </head>
 <body>
+	<!-- Navigation -->
 	<header class="page-header header container-fluid">
-
-			<div class="topnav">
-				<a href="#fichieraccueil"> <span class="glyphicon glyphicon-home"></span> </a>
-				<div class="dropdown">
-					<button class="dropbtn"> Achats </button>
-					<div class="dropdown-content">
-						<a href="#">Vente aux enchères</a> 
-						<a href="#">Achat Immédiat</a>
-						<a href="#">Meilleure offre</a>
-					</div>
-				</div>
-
-				<div class="dropdown">
-					<button class="dropbtn">Categories</button>
-					<div class="dropdown-content">
-						<a href="#">Ferraille ou Trésor</a>
-						<a href="#">Accessoires VIP</a>
-						<a href="#">Bon pour le Musée</a>
-					</div>
-				</div>
-
-  				<div class="topnav-right">
-
-  					<div class="dropdown">
-					<button class="dropbtn"><p>Mon compte <span class="glyphicon glyphicon-user"></span></p></button>
-					<div class="dropdown-content">
-						<a href="connexion.html">Se connecter</a>
-						<a href="inscription_seller.html">S'inscrire</a>
-						<a href="connexion.html">Admin</a>
-					</div>
-					</div>
-					<a href="#about">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
-
-  				</div>
-
-			</div>
-		</header>
+            <div class="topnav">
+                <a href="index.html"> <span class="glyphicon glyphicon-home"></span> </a>
+                <div class="dropdown">
+                    <a class="dropbtn" href="achats.php"> Achats </a>
+                </div>
+                <div class="dropdown">
+                    <a class="dropbtn" href="categories.html">Categories</a>
+                </div>
+                <div class="topnav-right">
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <p>Mon compte <span class="glyphicon glyphicon-user"></span></p>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="connexion.php">Se connecter</a>
+                            <a href="inscription.php">S'inscrire</a>
+                            <a href="admin.php">Admin</a>
+                        </div>
+                    </div>
+                    <a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                </div>
+            </div>
+        </header>
+        <!-- Fin Nav -->
 
 		<form id ="connexion_form" action="#php" method="post">
 

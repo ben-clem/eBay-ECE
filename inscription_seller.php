@@ -103,8 +103,7 @@ if (!empty($_POST['btn_submit'])){
 			.dropdown:hover .dropdown-content {display: grid;}
 
 			.dropdown:hover .dropbtn {background-color: red;
-				z-index: ;
-			z-index: ;
+				font-style: underline;
 			}
 
 

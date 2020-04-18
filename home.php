@@ -1,3 +1,8 @@
+<?php 
+   session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <!-- specify primary language for Search Engines (en, fr...) -->
@@ -34,31 +39,28 @@
         <!-- Navigation -->
         <header class="page-header header container-fluid">
             <div class="topnav">
-                <a href="#search"> <span class="glyphicon glyphicon-home"></span> </a>
-                <div class="dropdown">
-                    <a class="dropbtn" href="achats.html"> Achats </a>
-                   <!-- <div class="dropdown-content">
-                        <a href="#">Vente aux enchères</a> 
-                        <a href="#">Achat Immédiat</a>
-                        <a href="#">Meilleure offre</a>
-                    </div>-->
+               <a href="home.php"> <span class="glyphicon glyphicon-home"></span> </a>
+                <a href="#achats.php"> Achats</a>
+                <a href="#catégories"> Catégories</a>
 
-                </div>
-
-                <div class="dropdown">
-                    <a class="dropbtn" href="categories.html" >Categories</a>
-                   <!-- <div class="dropdown-content">
-                        <a href="#">Ferraille ou Trésor</a>
-                        <a href="#">Accessoires VIP</a>
-                        <a href="#">Bon pour le Musée</a>
-                    </div> -->
-                </div>
                 <div class="topnav-right">
 
                     <div class="dropdown">
-                    <button class="dropbtn"><p>Mon compte <span class="glyphicon glyphicon-user"></span></p></button>
+                    <button class="dropbtn"><p> <?php if(isset($_SESSION['id_user'])) {                       
+                        echo "Bonjour, "; echo $_SESSION['Firstname'];
+                    }
+                    else {
+                        echo "Mon Compte";
+                      }
+                      ?> <span class="glyphicon glyphicon-user"></span></p></button>
                     <div class="dropdown-content">
-                        <a href="#">Se connecter</a>
+                        <?php if(isset($_SESSION['id_user'])){
+                        echo '<a href="#" onclick="deconnect()">Se déconnecter</a> ' ;}
+                        else {
+                         echo '<a href="connexion.php">Se connecter</a> ';
+                        }
+                        ?>
+                    
                         <a href="#">S'inscrire</a>
                         <a href="#">Admin</a>
                     </div>
@@ -256,6 +258,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        
+        function deconnect () {
+             alert ("Vous avez été déconnecté, à bientôt !");
+            <?php
+
+            session_destroy()
+            ?>
+        }
+    </script>
 </body>
 
 </html>

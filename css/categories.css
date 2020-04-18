@@ -110,3 +110,15 @@
  			margin-left: 190px ; 
 			}
 	
+a.bg-ece:focus, a.bg-ece:hover, button.bg-ece:focus, button.bg-ece:hover {
+    background-color: #333333;
+}
+
+
+.fs1p1rem {
+    font-size: 1.10rem;
+}
+
+.white {
+    color: white;
+}

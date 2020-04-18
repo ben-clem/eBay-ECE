@@ -22,7 +22,7 @@
 <body>
     <div class="page-container">
         <!-- Navigation -->
-        <header class="page-header header container-fluid">
+        <header class="page-header header container-fluid my-3 mb-5">
             <div class="topnav">
                 <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
@@ -34,22 +34,30 @@
                 <div class="topnav-right">
                     <div class="dropdown">
                         <button class="dropbtn">
-                            <p>Mon compte <span class="glyphicon glyphicon-user"></span></p>
+                            <p> <?php if (isset($_SESSION['id_user'])) {
+                                    echo "Bonjour, ";
+                                    echo $_SESSION['Firstname'];
+                                } else {
+                                    echo "Mon Compte";
+                                }
+                                ?> <span class="glyphicon glyphicon-user"></span></p>
                         </button>
                         <div class="dropdown-content">
-                            <a href="connexion.php">Se connecter</a>
-                            <a href="inscription_buyer.php">S'inscrire</a>
-                            <a href="admin.php">Admin</a>
+                            <?php if (isset($_SESSION['id_user'])) {
+                                echo '<a href="#" onclick="deconnect()">Se déconnecter</a> ';
+                            } else {
+                                echo '<a href="connexion.php">Se connecter</a> ';
+                            }
+                            ?>
+                            <a href="#">S'inscrire</a>
+                            <a href="#">Admin</a>
                         </div>
                     </div>
-                    <a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                    <a href="#about">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </div>
             </div>
         </header>
         <!-- Fin Nav -->
-
-
-
         <div class="content-wrap container">
             <div class="row">
                 <div class="col-sm-10 m-5 border border-primary mx-auto">
@@ -78,9 +86,9 @@
 
 
                         // Loop through each file
-                        foreach ($_FILES["photos"]["tmp_name"] as $key=>$tmp_name) {
+                        foreach ($_FILES["photos"]["tmp_name"] as $key => $tmp_name) {
 
-                           
+
                             if (!getimagesize($_FILES['photos']['tmp_name'][$key])) {
                                 die('Please ensure you are uploading an image.');
                             }
@@ -112,15 +120,15 @@
                                 error_log("newName: $newName");
                                 $newFilePath = "databaseImages/" . $newName;
                                 error_log("lOn réécrit");
-                                    
-                                $tmpFilePath = $_FILES['photos']['tmp_name'][$key];
-                                    //Upload the file into the temp dir
-                                    if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 
-                                        //Handle other code here
-                                        echo "photos envoyées";
-                                    }
-                                    $urlPhotos[] = $newFilePath; //On récupère les urls des photos pour les mettre dans la db ensuite
+                                $tmpFilePath = $_FILES['photos']['tmp_name'][$key];
+                                //Upload the file into the temp dir
+                                if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+
+                                    //Handle other code here
+                                    echo "photos envoyées";
+                                }
+                                $urlPhotos[] = $newFilePath; //On récupère les urls des photos pour les mettre dans la db ensuite
 
                             } else {
 
@@ -131,7 +139,7 @@
                                 if ($tmpFilePath != "") {
                                     //Setup our new file path
                                     $newFilePath = "databaseImages/" . $_FILES['photos']['name'][$key];
-                                    
+
                                     //Upload the file into the temp dir
                                     if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 
@@ -139,7 +147,7 @@
                                         echo "photos envoyées";
                                     }
                                     $urlPhotos[] = $newFilePath; //On récupère les urls des photos pour les mettre dans la db ensuite
-                                    
+
                                 }
                             }
                         }
@@ -194,8 +202,8 @@
         </div>
 
         <!-- Footer -->
-        <footer class="navbar-dark bg-ece mb-0 px-2 pt-3 pb-1">
-            <h6 class="white">NOUS CONTACTER</h6>
+        <footer class="footer navbar-dark bg-ece mb-0 pt-3">
+            <h6 class="white mr-0 ml-3" style="width: 50%">NOUS CONTACTER</h6>
             <div class="row mx-4 mb-0 my-1">
                 <svg class="bi bi-building white" width="25px" height="25px" viewBox="0 0 18 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M15.285.089A.5.5 0 0115.5.5v15a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5V14h-1v1.5a.5.5 0 01-.5.5H1a.5.5 0 01-.5-.5v-6a.5.5 0 01.418-.493l5.582-.93V3.5a.5.5 0 01.324-.468l8-3a.5.5 0 01.46.057zM7.5 3.846V8.5a.5.5 0 01-.418.493l-5.582.93V15h8v-1.5a.5.5 0 01.5-.5h2a.5.5 0 01.5.5V15h2V1.222l-7 2.624z" clip-rule="evenodd" />
@@ -219,10 +227,7 @@
                 </svg>
                 <a class="link ml-3 mb-0 pl-2 lightgrey" href="tel:+33 6 78 66 01 08">+33 6 78 66 01 08</a>
             </div>
-            <div class="row">
-                <p class="white mx-auto my-0 py-0" id="copyright">Copyright &copy; 2020 eBay ECE Inc. Tous droits réservés à
-                    l'ECE Paris-Lyon.</p>
-            </div>
+            <p class="white mx-auto my-0 py-0 text-center" id="copyright">Copyright &copy; 2020 eBay ECE Inc. Tous droits réservés à l'ECE Paris-Lyon.</p>
         </footer>
         <!-- fin Footer -->
     </div>

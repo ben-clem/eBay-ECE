@@ -5,6 +5,7 @@
 <!-- specify primary language for Search Engines (en, fr...) -->
 
 <head>
+
     <!-- Meta tags -->
     <meta charset="UTF-8"> <!-- specify the character encoding -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <!-- make it responsive -->
@@ -14,12 +15,15 @@
 
     <!-- links to bootstrap style sheet and my own style sheet -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> <!-- ! Bien mettre après le 4.4.1 pour pas override tout (sert pour les icônes de la navbar) -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
     <!-- Page title -->
     <title>Admin - eBay ECE</title>
-    <!-- Include -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -279,7 +283,7 @@
 
                         error_log("Suppression réussie.");
 
-                        
+
 
                         echo "<h5 class='text-center'>Vendeur correctement supprimé 👍.<br>
                                                         (la page va se recharger)</h5>";
@@ -298,8 +302,11 @@
                 ?>
             </form>
 
+
+            <hr class="my-2" style="border: 1px dashed black;">
+
+
             <!-- ADD / DELETE ITEM -->
-            <hr class="my-20" style="border: 1px dashed black;">
             <!-- Form pour ajouter un vendeur à la BDD -->
             <form name="addItem" id="addItem" class="m-5 border border-success" action="vendre_1_infos_Item.php" method="post">
                 <table class="w-100 text-center mx-auto my-2">
@@ -314,7 +321,7 @@
                 </table>
             </form>
 
-            <!-- Form pour supprimer un vendeur de la BDD -->
+            <!-- Form pour supprimer un item de la BDD -->
             <form name="deleteItem" id="deleteItem" class="m-5 border border-danger" action="admin.php" method="post">
                 <table class="w-100 text-center mx-auto my-2">
                     <tr>
@@ -329,40 +336,39 @@
                         <td class="p-2 text-left">
                             <select name="selectItem" id="selectItem">
                                 <option value="" disabled selected>Choisir un Item à supprimer</option> <!-- Il faut qu'on aille chercher tous les vendeurs de la BDD pour les afficher en tant qu'options -->
-                                        <?php
-                                        // Accès DB
-                                        $servername = "localhost";
-                                        $username = "benzinho";
-                                        $dbpassword = "75011";
-                                        $dbname = "eBay ECE";
+                                <?php
+                                // Accès DB
+                                $servername = "localhost";
+                                $username = "benzinho";
+                                $dbpassword = "75011";
+                                $dbname = "eBay ECE";
 
-                                        try {
-                                            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
-                                            // set the PDO error mode to exception
-                                            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                try {
+                                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
+                                    // set the PDO error mode to exception
+                                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                            $stmt = $conn->prepare("SELECT Id_Item, Name, Category, Sale_Type, Sold, Video_Path, Description, Begin_Date, End_Date, Price_Min, Price_Now, ID_Seller, ID_Buyer
+                                    $stmt = $conn->prepare("SELECT Id_Item, Name, Category, Sale_Type, Sold, Video_Path, Description, Begin_Date, End_Date, Price_Min, Price_Now, ID_Seller, ID_Buyer
                                                             FROM Item
                                                             ORDER BY ID_Item");
-                                            $stmt->execute();
+                                    $stmt->execute();
 
-                                            $result = $stmt->setFetchMode(PDO::FETCH_NUM);
+                                    $result = $stmt->setFetchMode(PDO::FETCH_NUM);
 
-                                            while ($row = $stmt->fetch()) {
-                                                // print $row[0] . "\t" . $row[1] . "\t" . $row[2] . "\n";
+                                    while ($row = $stmt->fetch()) {
+                                        // print $row[0] . "\t" . $row[1] . "\t" . $row[2] . "\n";
 
-                                                    echo "<option value='$row[0]'>$row[0] - $row[1] - $row[2] - $row[3] - $row[4] - $row[5] - $row[6] - $row[7] - $row[8] - $row[9] - $row[10] - $row[11] - $row[12]</option>";
-                                                
-                                            }
-                                        } catch (PDOException $e) {
-                                            // roll back the transaction if something failed
-                                            $conn->rollback();
-                                            error_log("Error: " . $e->getMessage());
-                                        }
+                                        echo "<option value='$row[0]'>$row[0] - $row[1] - $row[2] - $row[3] - $row[4] - $row[5] - $row[6] - $row[7] - $row[8] - $row[9] - $row[10] - $row[11] - $row[12]</option>";
+                                    }
+                                } catch (PDOException $e) {
+                                    // roll back the transaction if something failed
+                                    $conn->rollback();
+                                    error_log("Error: " . $e->getMessage());
+                                }
 
-                                        // On se déconnecte
-                                        $conn = null;
-                                        ?>
+                                // On se déconnecte
+                                $conn = null;
+                                ?>
                             </select>
                         </td>
                     </tr>
@@ -429,8 +435,8 @@
         ?>
 
         <!-- Footer -->
-        <footer class="footer navbar-dark bg-ece mb-0 px-2 pt-3 pb-1">
-            <h6 class="white">NOUS CONTACTER</h6>
+        <footer class="footer navbar-dark bg-ece mb-0 pt-3">
+            <h6 class="white mr-0 ml-3" style="width: 50%">NOUS CONTACTER</h6>
             <div class="row mx-4 mb-0 my-1">
                 <svg class="bi bi-building white" width="25px" height="25px" viewBox="0 0 18 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M15.285.089A.5.5 0 0115.5.5v15a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5V14h-1v1.5a.5.5 0 01-.5.5H1a.5.5 0 01-.5-.5v-6a.5.5 0 01.418-.493l5.582-.93V3.5a.5.5 0 01.324-.468l8-3a.5.5 0 01.46.057zM7.5 3.846V8.5a.5.5 0 01-.418.493l-5.582.93V15h8v-1.5a.5.5 0 01.5-.5h2a.5.5 0 01.5.5V15h2V1.222l-7 2.624z" clip-rule="evenodd" />
@@ -454,10 +460,7 @@
                 </svg>
                 <a class="link ml-3 mb-0 pl-2 lightgrey" href="tel:+33 6 78 66 01 08">+33 6 78 66 01 08</a>
             </div>
-            <div class="row">
-                <p class="white mx-auto my-0 py-0" id="copyright">Copyright &copy; 2020 eBay ECE Inc. Tous droits réservés à
-                    l'ECE Paris-Lyon.</p>
-            </div>
+            <p class="white mx-auto my-0 py-0 text-center" id="copyright">Copyright &copy; 2020 eBay ECE Inc. Tous droits réservés à l'ECE Paris-Lyon.</p>
         </footer>
         <!-- fin Footer -->
 

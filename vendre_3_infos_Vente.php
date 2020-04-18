@@ -21,9 +21,8 @@
 
 <body>
     <div class="page-container">
-
         <!-- Navigation -->
-        <header class="page-header header container-fluid">
+        <header class="page-header header container-fluid my-3 mb-5">
             <div class="topnav">
                 <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
@@ -35,23 +34,30 @@
                 <div class="topnav-right">
                     <div class="dropdown">
                         <button class="dropbtn">
-                            <p>Mon compte <span class="glyphicon glyphicon-user"></span></p>
+                            <p> <?php if (isset($_SESSION['id_user'])) {
+                                    echo "Bonjour, ";
+                                    echo $_SESSION['Firstname'];
+                                } else {
+                                    echo "Mon Compte";
+                                }
+                                ?> <span class="glyphicon glyphicon-user"></span></p>
                         </button>
                         <div class="dropdown-content">
-                            <a href="connexion.php">Se connecter</a>
-                            <a href="inscription_buyer.php">S'inscrire</a>
-                            <a href="admin.php">Admin</a>
+                            <?php if (isset($_SESSION['id_user'])) {
+                                echo '<a href="#" onclick="deconnect()">Se déconnecter</a> ';
+                            } else {
+                                echo '<a href="connexion.php">Se connecter</a> ';
+                            }
+                            ?>
+                            <a href="#">S'inscrire</a>
+                            <a href="#">Admin</a>
                         </div>
                     </div>
-                    <a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                    <a href="#about">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </div>
             </div>
         </header>
         <!-- Fin Nav -->
-
-
-
-
         <div class="content-wrap container">
             <div class="row">
                 <div class="col-sm-10 m-5 border border-primary mx-auto">
@@ -66,75 +72,75 @@
                         $description = $_POST['description'];
                         $typeVente = $_POST['typeVente'];
                         $urlPhotos = $_POST['result'];  //array with les urls des photos
-                        
+
                         // On va upload la vidéo
-                        
 
-                            // Check filesize
-                            if ($_FILES['video']['size'] > 5000000) {
-                                die('File uploaded exceeds maximum upload size.');
+
+                        // Check filesize
+                        if ($_FILES['video']['size'] > 5000000) {
+                            die('File uploaded exceeds maximum upload size.');
+                        }
+
+                        // Check if the file exists
+                        if (file_exists('databaseVideos/' . $_FILES['video']['name'])) {
+                            //Si le fichier existe déjà (son nom du moins), on va rajouter un chiffre
+                            $name = pathinfo($_FILES['video']['name'], PATHINFO_FILENAME);
+
+                            $extension = pathinfo($_FILES['video']['name'], PATHINFO_EXTENSION);
+
+                            $increment = '1'; //start with no suffix
+
+                            error_log("le fichier existe déjà");
+
+                            error_log("name: $name, extension: $extension");
+
+                            while (file_exists("databaseVideos/" . $name . $increment . '.' . $extension)) {
+                                $increment++;
+                                error_log("lOn incrémente");
                             }
 
-                            // Check if the file exists
-                            if (file_exists('databaseVideos/' . $_FILES['video']['name'])) {
-                                //Si le fichier existe déjà (son nom du moins), on va rajouter un chiffre
-                                $name = pathinfo($_FILES['video']['name'], PATHINFO_FILENAME);
+                            $newName = $name . $increment . '.' . $extension;
+                            error_log("newName: $newName");
+                            $newFilePath = "databaseVideos/" . $newName;
+                            error_log("lOn réécrit");
 
-                                $extension = pathinfo($_FILES['video']['name'], PATHINFO_EXTENSION);
+                            $tmpFilePath = $_FILES['video']['tmp_name'];
+                            //Upload the file into the temp dir
+                            if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 
-                                $increment = '1'; //start with no suffix
-
-                                error_log("le fichier existe déjà");
-
-                                error_log("name: $name, extension: $extension");
-
-                                while (file_exists("databaseVideos/" . $name . $increment . '.' . $extension)) {
-                                    $increment++;
-                                    error_log("lOn incrémente");
-                                }
-
-                                $newName = $name . $increment . '.' . $extension;
-                                error_log("newName: $newName");
-                                $newFilePath = "databaseVideos/" . $newName;
-                                error_log("lOn réécrit");
-                                    
-                                $tmpFilePath = $_FILES['video']['tmp_name'];
-                                    //Upload the file into the temp dir
-                                    if (move_uploaded_file($tmpFilePath, $newFilePath)) {
-
-                                        //Handle other code here
-                                        echo "vidéo envoyée";
-                                    }
-                                    $urlVideo = $newFilePath; //On récupère l'url de la vidéo
-
-                            } else {
-
-                                //Get the temp file path
-                                $tmpFilePath = $_FILES['video']['tmp_name'];
-
-                                //Make sure we have a file path
-                                if ($tmpFilePath != "") {
-                                    //Setup our new file path
-                                    $newFilePath = "databaseVideos/" . $_FILES['video']['name'];
-                                    
-                                    //Upload the file into the temp dir
-                                    if (move_uploaded_file($tmpFilePath, $newFilePath)) {
-
-                                        //Handle other code here
-                                        echo "vidéo envoyée";
-                                    }
-                                    $urlVideo = $newFilePath; //On récupère l'url de la vidéo
-                                }
+                                //Handle other code here
+                                echo "vidéo envoyée";
                             }
-                        
-                        
+                            $urlVideo = $newFilePath; //On récupère l'url de la vidéo
 
-                            //On passe l'url de la vidéo
-                            echo '<input type="hidden" name="urlVideo[]" value="'. $urlVideo. '">';
+                        } else {
 
-                            //On passe les urls des photos
-                          foreach($urlPhotos as $value) {
-                        echo '<input type="hidden" name="urlPhotos[]" value="'. $value. '">';
+                            //Get the temp file path
+                            $tmpFilePath = $_FILES['video']['tmp_name'];
+
+                            //Make sure we have a file path
+                            if ($tmpFilePath != "") {
+                                //Setup our new file path
+                                $newFilePath = "databaseVideos/" . $_FILES['video']['name'];
+
+                                //Upload the file into the temp dir
+                                if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+
+                                    //Handle other code here
+                                    echo "vidéo envoyée";
+                                }
+                                $urlVideo = $newFilePath; //On récupère l'url de la vidéo
+                            }
+                        }
+
+
+
+                        //On passe l'url de la vidéo
+                        echo '<input type="hidden" name="urlVideo[]" value="' . $urlVideo . '">';
+
+                        //On passe les urls des photos
+                        foreach ($urlPhotos as $value) {
+                            echo '<input type="hidden" name="urlPhotos[]" value="' . $value . '">';
                         }
                         ?>
 
@@ -145,9 +151,9 @@
                         echo "typeVente: $typeVente";
                         ?>
 
-                        
 
-                        
+
+
 
 
                         <?php
@@ -247,9 +253,11 @@
     </script> -->
 
 
+
+
         <!-- Footer -->
-        <footer class="navbar-dark bg-ece mb-0 px-2 pt-3 pb-1">
-            <h6 class="white">NOUS CONTACTER</h6>
+        <footer class="footer navbar-dark bg-ece mb-0 pt-3">
+            <h6 class="white mr-0 ml-3" style="width: 50%">NOUS CONTACTER</h6>
             <div class="row mx-4 mb-0 my-1">
                 <svg class="bi bi-building white" width="25px" height="25px" viewBox="0 0 18 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M15.285.089A.5.5 0 0115.5.5v15a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5V14h-1v1.5a.5.5 0 01-.5.5H1a.5.5 0 01-.5-.5v-6a.5.5 0 01.418-.493l5.582-.93V3.5a.5.5 0 01.324-.468l8-3a.5.5 0 01.46.057zM7.5 3.846V8.5a.5.5 0 01-.418.493l-5.582.93V15h8v-1.5a.5.5 0 01.5-.5h2a.5.5 0 01.5.5V15h2V1.222l-7 2.624z" clip-rule="evenodd" />
@@ -273,13 +281,11 @@
                 </svg>
                 <a class="link ml-3 mb-0 pl-2 lightgrey" href="tel:+33 6 78 66 01 08">+33 6 78 66 01 08</a>
             </div>
-            <div class="row">
-                <p class="white mx-auto my-0 py-0" id="copyright">Copyright &copy; 2020 eBay ECE Inc. Tous droits réservés à
-                    l'ECE Paris-Lyon.</p>
-            </div>
+            <p class="white mx-auto my-0 py-0 text-center" id="copyright">Copyright &copy; 2020 eBay ECE Inc. Tous droits réservés à l'ECE Paris-Lyon.</p>
         </footer>
         <!-- fin Footer -->
     </div>
+    
     <!-- links to bootstrap JS dependencies -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

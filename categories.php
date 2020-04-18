@@ -1,55 +1,35 @@
-<?php
-if (empty(session_id())) {
-	session_start();
-}
-if (isset($_SESSION['id_user'])) {
-	header('Location: /ebay-ECE/index.php');
-}
-?>
-
 <!DOCTYPE html>
 <html>
 
 <head>
+
 	<!-- Meta tags -->
 	<meta charset="UTF-8"> <!-- specify the character encoding -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <!-- make it responsive -->
 	<meta name="description" content="eBay ECE, vente aux enchères en ligne
-    pour la communauté ECE Paris "> <!-- Search Engines description -->
+pour la communauté ECE Paris "> <!-- Search Engines description -->
 	<meta name="keywords" content="eBay, ECE, vente, enchères"> <!-- Search Engines keywords -->
 
 	<!-- links to bootstrap style sheet and my own style sheet -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
-
-	<!-- STYLES SPECIFIQUES A CETTE PAGE ICI -->
-	<link rel="stylesheet" href="css/connexion.css"> STYLES SPECIFIQUES A CETTE PAGE ICI
-	<!-- STYLES SPECIFIQUES A CETTE PAGE ICI -->
+	<link rel="stylesheet" type="text/css" href="css/categories.css">
 
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 
 	<!-- Page title -->
-	<title>Connexion</title>
+	<title>Categories - eBay ECE</title>
 
-	<style>
-		body {
-	background-image: url("img/background_connexion.jpg");
-    height: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    font-family: 'Numans', sans-serif;
-    align-content: center;
-}
-	</style>
 </head>
 
 <body>
+
 	<div class="page-container">
 		<!-- Navigation -->
-		<header class="page-header header container-fluid my-3 mb-5 border-0">
+		<header class="page-header header container-fluid my-3 mb-5">
 			<div class="topnav">
 				<a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
 				<div class="dropdown">
@@ -87,82 +67,25 @@ if (isset($_SESSION['id_user'])) {
 		<!-- Fin Nav -->
 		<div class="content-wrap">
 
-			<form id="connexion_form" action="connexion.php" method="post">
-
-				<h4> <strong> Connexion </strong> </h4>
-				<div class="input-group form-group">
-					<label for="connexion_email">Adresse E-mail</label>
-					<input type="email" class="form-control" name="id_user" placeholder="Adresse E-mail">
-
-				</div>
-				<div class="input-group form-group">
-					<label for="connexion_password">Mot de Passe</label>
-					<input type="password" name="password" class="form-control" placeholder="Mot de Passe">
-				</div>
-
-				<div class="form-group">
-					<input type="submit" value="Login" class="btn float-right login_btn" name="btn_submit">
-				</div>
-
-				<div id="form_footer">
-					<div class="d-flex justify-content-center links">
-						<p> <br> Nouveau ? <a href="inscription_seller.html"> Inscrivez-vous </a></p>
-					</div>
-					<div class="d-flex justify-content-center">
-						<h6><a href="#"> <br> Mot de passe oublié ?</a></h6>
-					</div>
-				</div>
-			</form>
-			<div id=connected>
-
-				<?php
-
-				try {
-
-					//connexion mysql
-					$bdd = new PDO('mysql:host=localhost;dbname=eBay ECE;charset=utf8', 'benzinho', '75011', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-				}
-				// si erreur
-				catch (Exception $e) {
-
-					die('Erreur : ' . $e->getMessage());
-				}
-
-
-				if (isset($_POST['btn_submit'])) {
-					$req = $bdd->prepare('SELECT ID_Seller, Firstname, Password FROM seller WHERE ID_Seller=? AND Password=?');
-					$req->execute(array(
-						$_POST['id_user'],
-						$_POST['password']
-					));
-					$login_info = $req->fetch();
-					if (!$login_info) {
-						$req = $bdd->prepare('SELECT ID_Buyer, Firstname, Password FROM buyer WHERE ID_Buyer=? AND Password=?');
-						$req->execute(array(
-							$_POST['id_user'],
-							$_POST['password']
-						));
-						$login_info = $req->fetch();
-						if (!$login_info) {
-							echo 'Mauvais identifiant ou mot de passe !';
-						} else {
-							$_SESSION['id_user'] = $login_info['ID_Buyer'];
-							$_SESSION['Firstname'] = $login_info['Firstname'];
-							$_SESSION['user_type'] = 1;
-							echo $_SESSION['id_user'];
-							echo "<p> Vous êtes maintenant connecté !<br> Merci de vous rediriger vers <a href='index.php'> page d'accueil </p>";
-						}
-					} else {
-						$_SESSION['id_user'] = $login_info['ID_Seller'];
-						$_SESSION['Firstname'] = $login_info['Firstname'];
-						$_SESSION['user_type'] = 0;
-						echo $_SESSION['id_user'];
-						echo '<p> Vous êtes maintenant connecté !<br> Merci de vous rediriger vers <a href="index.php"> page d\'accueil </p>';
-					}
-				}
-
-				?>
+			<div id="titre_page">
+				<p> Les différentes catégories </p>
 			</div>
+
+			<!-- AFFICHAGE DES IMAGES -->
+			<div id="section">
+				<a href="items.php?id=4" class="zoom-out"> <img src="img/tresor.jpg" height="200" width="200"> </a>
+				<a href="items.php?id=5" class="zoom-out"> <img src="img/musee.jpg" height="200" width="200"> </a>
+				<a href="items.php?id=6" class="zoom-out"> <img src="img/vip.jpg" height="200" width="200"> </a>
+			</div>
+
+			<table id="titres">
+				<tr>
+					<th> Ferraille ou Trésor </th>
+					<th STYLE="padding:0 0 0 190px;"> Bon pour le Musée </th>
+					<th STYLE="padding:0 0 0 200px;"> Accessoires VIP </th>
+				</tr>
+			</table>
+
 
 
 		</div>
@@ -197,7 +120,6 @@ if (isset($_SESSION['id_user'])) {
 		</footer>
 		<!-- fin Footer -->
 	</div>
-
 </body>
 
 </html>

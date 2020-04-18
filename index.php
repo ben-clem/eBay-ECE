@@ -19,15 +19,12 @@ error_log("id_user_session :" . $_SESSION['id_user'])
 
     <!-- links to bootstrap style sheet and my own style sheet -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
     <!-- Page title -->
     <title>eBay ECE - Accueil</title>
 
@@ -47,29 +44,28 @@ error_log("id_user_session :" . $_SESSION['id_user'])
                     <a class="dropbtn" href="categories.html">Categories</a>
                 </div>
                 <div class="topnav-right">
-
                     <div class="dropdown">
-                    <button class="dropbtn"><p> <?php if(isset($_SESSION['id_user'])) {                       
-                        echo "Bonjour, "; echo $_SESSION['Firstname'];
-                    }
-                    else {
-                        echo "Mon Compte";
-                      }
-                      ?> <span class="glyphicon glyphicon-user"></span></p></button>
-                    <div class="dropdown-content">
-                        <?php if(isset($_SESSION['id_user'])){
-                        echo '<a href="#" onclick="deconnect()">Se déconnecter</a> ' ;}
-                        else {
-                         echo '<a href="connexion.php">Se connecter</a> ';
-                        }
-                        ?>
-                    
-                        <a href="#">S'inscrire</a>
-                        <a href="#">Admin</a>
-                    </div>
+                        <button class="dropbtn">
+                            <p> <?php if (isset($_SESSION['id_user'])) {
+                                    echo "Bonjour, ";
+                                    echo $_SESSION['Firstname'];
+                                } else {
+                                    echo "Mon Compte";
+                                }
+                                ?> <span class="glyphicon glyphicon-user"></span></p>
+                        </button>
+                        <div class="dropdown-content">
+                            <?php if (isset($_SESSION['id_user'])) {
+                                echo '<a href="#" onclick="deconnect()">Se déconnecter</a> ';
+                            } else {
+                                echo '<a href="connexion.php">Se connecter</a> ';
+                            }
+                            ?>
+                            <a href="#">S'inscrire</a>
+                            <a href="#">Admin</a>
+                        </div>
                     </div>
                     <a href="#about">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                    
                 </div>
             </div>
         </header>
@@ -205,10 +201,9 @@ error_log("id_user_session :" . $_SESSION['id_user'])
             </div>
         </div>
 
-        <footer class="navbar-dark bg-ece mb-0 px-2 pt-3 pb-1">
-
-            <h6 class="white">NOUS CONTACTER</h6>
-
+        <!-- Footer -->
+        <footer class="footer navbar-dark bg-ece mb-0 pt-3">
+            <h6 class="white mr-0 ml-3" style="width: 50%">NOUS CONTACTER</h6>
             <div class="row mx-4 mb-0 my-1">
                 <svg class="bi bi-building white" width="25px" height="25px" viewBox="0 0 18 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M15.285.089A.5.5 0 0115.5.5v15a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5V14h-1v1.5a.5.5 0 01-.5.5H1a.5.5 0 01-.5-.5v-6a.5.5 0 01.418-.493l5.582-.93V3.5a.5.5 0 01.324-.468l8-3a.5.5 0 01.46.057zM7.5 3.846V8.5a.5.5 0 01-.418.493l-5.582.93V15h8v-1.5a.5.5 0 01.5-.5h2a.5.5 0 01.5.5V15h2V1.222l-7 2.624z" clip-rule="evenodd" />
@@ -217,7 +212,6 @@ error_log("id_user_session :" . $_SESSION['id_user'])
                 </svg>
                 <a class="link ml-3 mb-0 pl-2 lightgrey" href="https://goo.gl/maps/wKUyiYcg5y4VWvs27" target="_blank">37, Quai de Grenelle, 75015 Paris, France</a>
             </div>
-
             <div class="row mx-4 mb-0 my-1">
                 <svg class="bi bi-envelope white" width="25px" height="25px" viewBox="0 0 17 17" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M14 3H2a1 1 0 00-1 1v8a1 1 0 001 1h12a1 1 0 001-1V4a1 1 0 00-1-1zM2 2a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H2z" clip-rule="evenodd" />
@@ -226,7 +220,6 @@ error_log("id_user_session :" . $_SESSION['id_user'])
                 </svg>
                 <a class="link ml-3 mb-0 pl-2 lightgrey" href="mailto:ebay.ece.binks" target="_blank">infos@ece-ebay.fr</a>
             </div>
-
             <div class="row mx-4 mb-0 my-2">
                 <svg class="bi bi-phone white" width="25px" height="25px" viewBox="0 0 18 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M11 1H5a1 1 0 00-1 1v12a1 1 0 001 1h6a1 1 0 001-1V2a1 1 0 00-1-1zM5 0a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V2a2 2 0 00-2-2H5z" clip-rule="evenodd" />
@@ -234,22 +227,18 @@ error_log("id_user_session :" . $_SESSION['id_user'])
                 </svg>
                 <a class="link ml-3 mb-0 pl-2 lightgrey" href="tel:+33 6 78 66 01 08">+33 6 78 66 01 08</a>
             </div>
-
-            <div class="row">
-                <p class="white mx-auto my-0 py-0" id="copyright">Copyright &copy; 2020 eBay ECE Inc. Tous droits
-                    réservés à
-                    l'ECE Paris-Lyon.</p>
-            </div>
+            <p class="white mx-auto my-0 py-0 text-center" id="copyright">Copyright &copy; 2020 eBay ECE Inc. Tous droits réservés à l'ECE Paris-Lyon.</p>
         </footer>
+        <!-- fin Footer -->
     </div>
+
     <!-- links to bootstrap JS dependencies -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript">
-        
-        function deconnect () {
-             alert ("Vous avez été déconnecté, à bientôt !");
+        function deconnect() {
+            alert("Vous avez été déconnecté, à bientôt !");
             <?php
 
             session_destroy()

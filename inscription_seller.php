@@ -113,6 +113,9 @@ if (!empty($_POST['btn_submit'])) {
 			z-index: ; */
 		}
 
+			.dropdown:hover .dropbtn {background-color: red;
+				font-style: underline;
+			}
 
 		.container h3 {
 			text-align: center;

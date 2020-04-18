@@ -308,6 +308,128 @@
                 ?>
             </form>
 
+            <!-- ADD / DELETE ITEM -->
+            <hr class="my-20" style="border: 1px dashed black;">
+            <!-- Form pour ajouter un vendeur à la BDD -->
+            <form name="addItem" id="addItem" class="m-5 border border-success" action="vendre_1_infos_Item.php" method="post">
+                <table class="w-100 text-center mx-auto my-2">
+                    <tr>
+                        <td colspan="2" class="p-2">
+                            <h4>Ajouter un Item</h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="p-2 pb-3 text-center"><input required type="submit" name="submit" value="Aller à la page mise en vente"></td>
+                    </tr>
+                </table>
+            </form>
+
+            <!-- Form pour supprimer un vendeur de la BDD -->
+            <form name="deleteItem" id="deleteItem" class="m-5 border border-danger" action="admin.php" method="post">
+                <table class="w-100 text-center mx-auto my-2">
+                    <tr>
+                        <td colspan="2" class="p-2">
+                            <h4>Supprimer un Item</h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w-50 p-2 text-right">
+                            <label class="text-left align-middle pl-2" for="selectVendor">Sélectionner dans la BDD :</label>
+                        </td>
+                        <td class="p-2 text-left">
+                            <select name="selectItem" id="selectItem">
+                                <option value="" disabled selected>Choisir un Item à supprimer</option> <!-- Il faut qu'on aille chercher tous les vendeurs de la BDD pour les afficher en tant qu'options -->
+                                        <?php
+                                        // Accès DB
+                                        $servername = "localhost";
+                                        $username = "benzinho";
+                                        $dbpassword = "75011";
+                                        $dbname = "eBay ECE";
+
+                                        try {
+                                            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
+                                            // set the PDO error mode to exception
+                                            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                            $stmt = $conn->prepare("SELECT Id_Item, Name, Category, Sale_Type, Sold, Video_Path, Description, Begin_Date, End_Date, Price_Min, Price_Now, ID_Seller, ID_Buyer
+                                                            FROM Item
+                                                            ORDER BY ID_Item");
+                                            $stmt->execute();
+
+                                            $result = $stmt->setFetchMode(PDO::FETCH_NUM);
+
+                                            while ($row = $stmt->fetch()) {
+                                                // print $row[0] . "\t" . $row[1] . "\t" . $row[2] . "\n";
+
+                                                    echo "<option value='$row[0]'>$row[0] - $row[1] - $row[2] - $row[3] - $row[4] - $row[5] - $row[6] - $row[7] - $row[8] - $row[9] - $row[10] - $row[11] - $row[12]</option>";
+                                                
+                                            }
+                                        } catch (PDOException $e) {
+                                            // roll back the transaction if something failed
+                                            $conn->rollback();
+                                            error_log("Error: " . $e->getMessage());
+                                        }
+
+                                        // On se déconnecte
+                                        $conn = null;
+                                        ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="p-2 text-center"><input required type="submit" name="submit" value="Supprimer Item"></td>
+                    </tr>
+                </table>
+
+                <!-- Delete Item DB -->
+                <?php
+                // Traitement des données
+                $itemDelete = $_POST['selectItem'];
+
+                // Debug console
+                error_log("itemDelete : $itemDelete.");
+
+                // upload DB
+                $servername = "localhost";
+                $username = "benzinho";
+                $dbpassword = "75011";
+                $dbname = "eBay ECE";
+
+                try {
+                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    // begin the transaction
+                    $conn->beginTransaction();
+
+                    // our SQL statements
+                    if (!empty($itemDelete)) { // Si les champs sont bien remplis
+                        // On delete dans la DB
+                        $conn->exec("DELETE FROM Item WHERE ID_Item = '$itemDelete'");
+
+                        // commit the transaction
+                        $conn->commit();
+
+                        error_log("Suppression réussie.");
+
+                        echo "<h5 class='text-center'>Item correctement supprimé 👍.<br>
+                                                        (la page va se recharger)</h5>";
+
+                        echo '<meta http-equiv="refresh" content="3; URL=admin.php" />'; /* Refresh la page au bout de 3 secondes */
+                    }
+                } catch (PDOException $e) {
+                    // roll back the transaction if something failed
+                    $conn->rollback();
+                    error_log("Error: " . $e->getMessage());
+                    echo "<h5 class='text-center'>Il y a eu une erreur 😰.</h5>";
+                }
+
+                // On se déconnecte
+                $conn = null;
+                ?>
+            </form>
+
         </div>
         <!-- Fin main container -->
 

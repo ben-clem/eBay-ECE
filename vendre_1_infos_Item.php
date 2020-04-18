@@ -13,6 +13,7 @@
 
     <!-- links to bootstrap style sheet and my own style sheet -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> <!-- ! Bien mettre après le 4.4.1 pour pas override tout (sert pour les icônes de la navbar) -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <!-- Page title -->
@@ -23,49 +24,43 @@
 <body>
     <div class="page-container">
         <!-- Navigation -->
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-ece px-0" style="height: 80px;">
+        <header class="page-header header container-fluid">
+            <div class="topnav">
+                <a href="#search"> <span class="glyphicon glyphicon-home"></span> </a>
+                <div class="dropdown">
+                    <a class="dropbtn" href="achats.html"> Achats </a>
+                   <!-- <div class="dropdown-content">
+                        <a href="#">Vente aux enchères</a> 
+                        <a href="#">Achat Immédiat</a>
+                        <a href="#">Meilleure offre</a>
+                    </div>-->
 
-            <div class="container-fluid p-0">
-                <a class="navbar-brand ml-3" href="index.html">eBay ECE</a>
+                </div>
 
+                <div class="dropdown">
+                    <a class="dropbtn" href="categories.html" >Categories</a>
+                   <!-- <div class="dropdown-content">
+                        <a href="#">Ferraille ou Trésor</a>
+                        <a href="#">Accessoires VIP</a>
+                        <a href="#">Bon pour le Musée</a>
+                    </div> -->
+                </div>
+                <div class="topnav-right">
 
-
-                <ul class="navbar-nav" id="acheterVendre">
-                    <li class="nav-item mx-3 my-0 fs1p1rem" style="position: relative; right: 1px;">
-                        <a class="nav-link" href="nosProduits.html"><button type="button" class="btn btn-outline-light">Acheter</button></a>
-                    </li>
-                    <li class="nav-item mx-3 my-0 fs1p1rem" style="position: relative; left: 1px;">
-                        <a class="nav-link" href="vendre.html"><button type="button" class="btn btn-outline-light">Vendre</button></a>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav navElemRight">
-                    <li class="nav-item mx-3 px-0" style="width: fit-content; position: relative; left: 22px">
-                        <a class="nav-link mx-0 px-0" href="panier.html" style="width: fit-content;">
-                            Mon Panier
-                            <svg class="bi bi-bag" width="35px" height="35px" viewBox="-1 2.5 20 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M14 5H2v9a1 1 0 001 1h10a1 1 0 001-1V5zM1 4v10a2 2 0 002 2h10a2 2 0 002-2V4H1z" clip-rule="evenodd" />
-                                <path d="M8 1.5A2.5 2.5 0 005.5 4h-1a3.5 3.5 0 117 0h-1A2.5 2.5 0 008 1.5z" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="nav-item mr-2 ml-2">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Mon Compte
-                            <svg class="bi bi-person" width="30px" height="35px" viewBox="0 2 15 15" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 00.014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 00.022.004zm9.974.056v-.002.002zM8 7a2 2 0 100-4 2 2 0 000 4zm3-2a3 3 0 11-6 0 3 3 0 016 0z" clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                            <a class="dropdown-item text-center" href="connexion.html">Connexion</a>
-                            <a class="dropdown-item text-center" href="profil.html">Profil</a>
-                        </div>
-                    </li>
-                </ul>
-
+                    <div class="dropdown">
+                    <button class="dropbtn"><p>Mon compte <span class="glyphicon glyphicon-user"></span></p></button>
+                    <div class="dropdown-content">
+                        <a href="#">Se connecter</a>
+                        <a href="#">S'inscrire</a>
+                        <a href="#">Admin</a>
+                    </div>
+                    </div>
+                    <a href="#about">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                    
+                </div>
             </div>
 
-        </nav>
+        <!-- Fin Nav -->
         <div style="height: 24px;"></div>
 
         <div class="content-wrap container">

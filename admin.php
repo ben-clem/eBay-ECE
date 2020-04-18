@@ -36,7 +36,7 @@
                     <a class="dropbtn" href="achats.php"> Achats </a>
                 </div>
                 <div class="dropdown">
-                    <a class="dropbtn" href="categories.html">Categories</a>
+                    <a class="dropbtn" href="categories.php">Categories</a>
                 </div>
                 <div class="topnav-right">
                     <div class="dropdown">

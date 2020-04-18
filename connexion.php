@@ -56,7 +56,7 @@ if (isset($_SESSION['id_user'])) {
 					<a class="dropbtn" href="achats.php"> Achats </a>
 				</div>
 				<div class="dropdown">
-					<a class="dropbtn" href="categories.html">Categories</a>
+					<a class="dropbtn" href="categories.php">Categories</a>
 				</div>
 				<div class="topnav-right">
 					<div class="dropdown">
@@ -76,11 +76,11 @@ if (isset($_SESSION['id_user'])) {
 								echo '<a href="connexion.php">Se connecter</a> ';
 							}
 							?>
-							<a href="#">S'inscrire</a>
-							<a href="#">Admin</a>
+							<a href="inscription_buyer.php">S'inscrire</a>
+							<a href="admin.php">Admin</a>
 						</div>
 					</div>
-					<a href="#about">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
+					<a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
 				</div>
 			</div>
 		</header>

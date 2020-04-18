@@ -123,22 +123,25 @@
                     //si le BDD existe, faire le traitement
                     if ($db_found) {
                         if ($id == 1) {
-                            $sql = "SELECT * FROM items WHERE (sale_type = '100' OR sale_type = '110') ";
+                            $sql = "SELECT * FROM item WHERE (Sale_Type = '100' OR Sale_Type = '110') ";
                         } //encheres
+
                         if ($id == 2) {
-                            $sql = "SELECT * FROM items WHERE (sale_type = '001' OR sale_type = '011') ";
+                            $sql = "SELECT * FROM item WHERE (Sale_Type = '001' OR Sale_Type = '011') ";
                         } //offre
+
                         if ($id == 3) {
-                            $sql = "SELECT * FROM items WHERE (sale_type = '010' OR sale_type = '110' OR sale_type = '011') ";
+                            $sql = "SELECT * FROM item WHERE (Sale_Type = '010' OR Sale_Type = '110' OR Sale_Type = '011') ";
                         } //achat immediat
+
                         if ($id == 4) {
-                            $sql = "SELECT * FROM items WHERE category = 'tresor' ";
+                            $sql = "SELECT * FROM item WHERE Category = 'tresor' ";
                         }
                         if ($id == 5) {
-                            $sql = "SELECT * FROM items WHERE category = 'musee' ";
+                            $sql = "SELECT * FROM item WHERE Category = 'musee' ";
                         }
                         if ($id == 6) {
-                            $sql = "SELECT * FROM items WHERE category = 'vip' ";
+                            $sql = "SELECT * FROM item WHERE Category = 'vip' ";
                         }
 
                         $result = mysqli_query($db_handle, $sql);
@@ -153,17 +156,18 @@
                                     <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
                                     <div class="card-body">
                                         <h4 class="card-title">
-                                            <a href="startbootstrap-shop-item-gh-pages/shop-item.php?
-                                    name=<?php echo $data["name"] ?>
-                                    &description=<?php echo $data["description"] ?>
-                                    &sale_type=<?php echo $data["sale_type"] ?>">
-                                                <?php echo $data['name']; ?>
+                                            <a href="shop-item.php?
+                                                Name=<?php echo $data["Name"] ?>
+                                                &Description=<?php echo $data["Description"] ?>
+                                                &Sale_Type=<?php echo $data["Sale_Type"] ?>
+                                                ">
+                                                <?php echo $data['Name']; ?>
 
                                             </a>
 
 
                                         </h4>
-                                        <p class="card-text"><?php echo $data['description']; ?></p>
+                                        <p class="card-text"><?php echo $data['Description']; ?></p>
                                     </div>
                                 </div>
                             </div>

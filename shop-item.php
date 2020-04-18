@@ -12,7 +12,7 @@
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
-  <link href="shop-item.css" rel="stylesheet">
+  <link href="css/shop-item.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -90,9 +90,9 @@
       <?php
       //identifier le nom de base de données
       $database = "eBay ECE";
-      $name = $_GET["name"];
-      $description = $_GET["description"];
-      $sale_type = $_GET["sale_type"];
+      $name = $_GET["Name"];
+      $description = $_GET["Description"];
+      $sale_type = $_GET["Sale_Type"];
 
       //connectez-vous dans votre BDD
       //Rappel : votre serveur = localhost | votre login = root | votre mot de pass = '' (rien)
@@ -211,7 +211,7 @@
 
               <div class="card-body">
                 <h3 class="card-title"> <?php echo $name; ?> </h3>
-                <h4>Prix</h4>
+                <h4>Prix : </h4>
                 <p class="card-text"> <?php echo $description; ?></p>
                 <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
                 4.0 stars

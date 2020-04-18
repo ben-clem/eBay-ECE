@@ -1,0 +1,164 @@
+/*!
+ * Start Bootstrap - Shop Item (https://startbootstrap.com/template-overviews/shop-item)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-item/blob/master/LICENSE)
+ */
+
+        .topnav {
+            background-color: #333;
+            position: fixed;
+            top:0px;
+            width : 100%;
+            left: 0;
+            height : 50px;
+            z-index:2 ;
+            
+        }
+
+        .topnav a {
+            float: left;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 15px;
+            z-index:2 ;
+        }
+
+        .topnav a:hover {
+            background-color: #223843;
+            color: white;
+            height: 50px;
+            z-index:2 ;
+        }
+
+        .topnav-right {
+            float: right;
+            height : 50px;
+            display : flex;
+             z-index:2 ;
+        }
+    
+        .dropbtn {
+            background-color: #333;
+            color: white;
+            padding: 16px;
+            font-size: 15px;
+            border: none;
+            height : 50px;
+            z-index:2 ;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+             z-index:2 ;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            background-color: lightgrey;
+            min-width: 160px;
+            z-index: 1;
+            font-size : 10px;
+             z-index:2 ;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            font-size : 13px;
+            height: 30px;
+             z-index:2 ;
+        }
+        header {
+            display : flex;}
+            .dropdown-content a:hover {background-color: rgba(0,0,0,0.1);
+                height : 100%;}
+            .dropdown:hover .dropdown-content {display: grid;}
+            .dropdown:hover .dropbtn {background-color: #223843;}
+
+        body {
+        background-color : #E5E1E1;
+        }
+
+        .bg-ece {
+    margin-top: 10px ; 
+    background-color: #333333;
+}
+
+a.bg-ece:focus, a.bg-ece:hover, button.bg-ece:focus, button.bg-ece:hover {
+    background-color: #333333;
+}
+
+
+.fs1p1rem {
+    font-size: 1.10rem;
+}
+
+.white {
+    color: white;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    /* Footer height */
+}
+
+.list-group-items{
+    color : #223843 ;
+    font-size: 1em;
+    position: relative;  
+    text-align: center;
+}
+
+
+.bouton{
+    font-size: 1.5em;
+    font-weight:bold;
+    position: relative;
+    text-align: center;
+    color : #2E5266 ; 
+}
+
+.container{
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.info{
+     position: relative;  
+    text-align: center;
+}
+
+.my-4{
+    position: relative;  
+    text-align: center;
+}
+
+#lol{
+    font-size: 1.15em;
+}
+
+.card-title{
+     font-weight:bold;
+     color : #2E5266 ; 
+}
+
+.carousel-item {
+    height: 400px;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+

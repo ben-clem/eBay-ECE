@@ -34,10 +34,10 @@ error_log("id_user_session :" . $_SESSION['id_user'])
 </head>
 
 <body>
-    <div class="page-container">
 
+    <div class="page-container">
         <!-- Navigation -->
-        <header class="page-header header container-fluid">
+        <header class="page-header header container-fluid my-3 mb-5">
             <div class="topnav">
                 <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
@@ -74,8 +74,8 @@ error_log("id_user_session :" . $_SESSION['id_user'])
             </div>
         </header>
         <!-- Fin Nav -->
-
         <div class="content-wrap">
+
             <!-- Carousel -->
             <header>
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">

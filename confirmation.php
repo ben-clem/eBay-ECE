@@ -21,13 +21,14 @@ error_log("id_user_session :" . $_SESSION['id_user'])
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/panier.css">
+    <link href="css/confirmation.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.3/getting-started/introduction/">
 
     <!-- Page title -->
-    <title>Panier - eBay ECE</title>
+    <title>Confirmation</title>
 
 </head>
 
@@ -71,97 +72,45 @@ error_log("id_user_session :" . $_SESSION['id_user'])
             </div>
         </header>
         <!-- Fin Nav -->
-   <!-- PANIER 
-Code inspirer de : https://bootsnipp.com/snippets/ZXKKD -->
 
-        <h1 class="jumbotron-heading">Mon Panier</h1> <br><br>
-   
+           <!-- CODE INSPIRE DE : https://codepen.io/JacobLett/pen/vyegPV -->
 
-<div class="container mb-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col"> </th>
-                            <th scope="col">Produit</th>
-                            <th scope="col">Disponible</th>
-                            <th scope="col" class="text-center">Quantité</th>
-                            <th scope="col" class="text-right">Prix</th>
-                            <th> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Dada</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">124,90 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Toto</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">33,90 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Titi</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">70,00 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Sous-Total</td>
-                            <td class="text-right">255,90 €</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Livraison</td>
-                            <td class="text-right">0.00 €</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>Total</strong></td>
-                            <td class="text-right"><strong>346,90 €</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col mb-2">
-            <div class="row">
-                <div class="col-sm-12  col-md-6">
-                    <button class="btn btn-block btn-light">Continuer Le Shopping</button>
-                </div>
-                <div class="col-sm-12 col-md-6 text-right">
-                    <a href = "paiement.php"><button class="btn btn-lg btn-block btn-success text-uppercase" href = "paiement.php"> Paiement</button></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+           <!-- SI LA COMMANDE EST PASSEE -->
 
+                     <!-- METTRE UNE CONDITION ICI -->
 
+                    <div class="jumbotron text-center">
+                          <h1 class="display-3">Merci !</h1>
+                          <p class="lead"><strong>Votre commande à bien été confirmée </strong> <br> <h4>Nous vous avons envoyé un email de confirmation ! Suivez votre colis en temps réel<h4></p>
+                          <hr>
+                          <p>
+                            Un problème ? <a href="#footer">Contactez-nous</a>
+                          </p>
+                          <p class="lead">
+                            <a class="btn btn-primary btn-sm" href="index.php" role="button" id ="buttonMenu">Revenir à la page principale</a>
+                          </p>
+                    </div> 
+
+            <!-- SI LA COMMANDE N EST PAS PASSEE -->
+
+                     <!-- METTRE UNE CONDITION ICI 
+
+                     <div class="jumbotron text-center">
+                          <h1 class="display-3"> Oups !</h1>
+                          <p class="lead"><strong>Il semblerait qu'il y ai eu un petit problème... </strong> <br> <h4>Votre commande n'a pas pu être confirmé e <h4></p>
+                          <hr>
+                          <p> <h4>
+                            N'hesitez pas à nous contacter pour en savoir plus : <a href="#footer">Contactez-nous</a> </h4>
+                          </p>
+                          <p class="lead">
+                            <a class="btn btn-primary btn-sm" href="index.php" role="button" id ="buttonMenu">Revenir à la page principale</a>
+                          </p>
+                    </div> -->
+        
+        <!-- fin du message -->
 
         <!-- Footer -->
-        <footer class="footer navbar-dark bg-ece mb-0 pt-3">
+        <footer class="footer navbar-dark bg-ece mb-0 pt-3" id="footer">
             <h6 class="white mr-0 ml-3" style="width: 50%">NOUS CONTACTER</h6>
             <div class="row mx-4 mb-0 my-1">
                 <svg class="bi bi-building white" width="25px" height="25px" viewBox="0 0 18 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

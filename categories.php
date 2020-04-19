@@ -73,9 +73,9 @@ pour la communauté ECE Paris "> <!-- Search Engines description -->
 
 			<!-- AFFICHAGE DES IMAGES -->
 			<div id="section">
-				<a href="items.php?id=4" class="zoom-out"> <img src="img/tresor.jpg" height="200" width="200"> </a>
-				<a href="items.php?id=5" class="zoom-out"> <img src="img/musee.jpg" height="200" width="200"> </a>
-				<a href="items.php?id=6" class="zoom-out"> <img src="img/vip.jpg" height="200" width="200"> </a>
+				<a href="items.php?id=__1" class="zoom-out"> <img src="img/tresor.jpg" height="200" width="200"> </a>
+				<a href="items.php?id=__2" class="zoom-out"> <img src="img/musee.jpg" height="200" width="200"> </a>
+				<a href="items.php?id=__3" class="zoom-out"> <img src="img/vip.jpg" height="200" width="200"> </a>
 			</div>
 
 			<table id="titres">

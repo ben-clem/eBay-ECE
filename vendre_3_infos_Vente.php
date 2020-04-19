@@ -1,3 +1,15 @@
+<?php
+error_log("----------------------------------------------------------------------------------------------------");
+error_log("Début vendre_3.php");
+session_start();
+$id_user = $_SESSION['id_user'];
+error_log("id_user : $id_user");
+
+if (empty($_SESSION['id_user'])) {  //Si pas connecté
+    echo '<meta http-equiv="refresh" content="0; URL=connexion.php" />'; /* Redirige vers connexion */
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <!-- specify primary language for Search Engines (en, fr...) -->
@@ -285,6 +297,7 @@
         </footer>
         <!-- fin Footer -->
     </div>
+    
     
     <!-- links to bootstrap JS dependencies -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

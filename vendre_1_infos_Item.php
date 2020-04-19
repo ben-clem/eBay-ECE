@@ -1,3 +1,15 @@
+<?php
+error_log("----------------------------------------------------------------------------------------------------");
+error_log("Début vendre_1.php");
+session_start();
+$id_user = $_SESSION['id_user'];
+error_log("id_user : $id_user");
+
+if (empty($_SESSION['id_user'])) {  //Si pas connecté
+    echo '<meta http-equiv="refresh" content="0; URL=connexion.php" />'; /* Redirige vers connexion */
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <!-- specify primary language for Search Engines (en, fr...) -->
@@ -158,6 +170,11 @@
             </script>
 
         </div>
+
+        <?php
+        error_log("Fin vendre_1.php");
+        error_log("----------------------------------------------------------------------------------------------------");
+        ?>
 
         <!-- Footer -->
         <footer class="footer navbar-dark bg-ece mb-0 pt-3">

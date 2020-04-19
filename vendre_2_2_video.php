@@ -1,3 +1,15 @@
+<?php
+error_log("----------------------------------------------------------------------------------------------------");
+error_log("Début vendre_2_2.php");
+session_start();
+$id_user = $_SESSION['id_user'];
+error_log("id_user : $id_user");
+
+if (empty($_SESSION['id_user'])) {  //Si pas connecté
+    echo '<meta http-equiv="refresh" content="0; URL=connexion.php" />'; /* Redirige vers connexion */
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <!-- specify primary language for Search Engines (en, fr...) -->
@@ -179,12 +191,12 @@
                                     <label for="video">Choisissez une <strong>vidéo</strong> de votre produit :</label>
                                 </td>
                                 <td>
-                                    <input type="file" name="video" accept="video/*">
+                                    <input type="file" name="video" accept="video/mp4">
                                 </td>
                             </tr>
                             <tr class="pb-2">
                                 <td colspan="2" class="pb-2">
-                                    <h6 style="text-align: center; position: relative; right: 25px;" class="pb-2">(Taille maximale : 5MB)</h6>
+                                    <h6 style="text-align: center; position: relative; right: 25px;" class="pb-2">(Format accepté : mp4, taille maximale : 5MB)</h6>
                                 </td>
                             </tr>
                             <tr>

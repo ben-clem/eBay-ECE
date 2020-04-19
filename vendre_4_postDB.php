@@ -1,9 +1,15 @@
 <?php
 error_log("----------------------------------------------------------------------------------------------------");
-error_log("Début vendre_4_postDB.php");
+error_log("Début vendre_4.php");
 session_start();
-error_log("id_user_session :" . $_SESSION['id_user'])
+$id_user = $_SESSION['id_user'];
+error_log("id_user : $id_user");
+
+if (empty($_SESSION['id_user'])) {  //Si pas connecté
+    echo '<meta http-equiv="refresh" content="0; URL=connexion.php" />'; /* Redirige vers connexion */
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <!-- specify primary language for Search Engines (en, fr...) -->

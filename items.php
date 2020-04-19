@@ -1,3 +1,9 @@
+<?php
+error_log("----------------------------------------------------------------------------------------------------");
+error_log("Début items.php");
+session_start();
+error_log("id_user_session : " . $_SESSION['id_user'])
+?>
 <!DOCTYPE html>
 <html>
 
@@ -65,126 +71,154 @@
         <div class="content-wrap">
 
             <div class="container">
+                <!-- Affichage du titre -->
                 <div class="row my-2">
+
                     <?php
                     $id = $_GET["id"];
-                    if ($id == 1) { ?>
+                    if ($id == '100,110') { 
+                        ?>
                         <h5 class="mx-auto px-2" id="first"> Ventes aux enchères </h5> <br><br><br><br>
-                    <?php } ?>
+                        <?php 
+                        $idT1 = substr($id, 0, 3);
+                        $idT2 = substr($id, 4, 3);
+                        $idT3 = 0;
+                        error_log("idT1 : $idT1, idT2 : $idT2, idT3 : $idT3");
+                    } 
+                    ?>
 
                     <?php
                     $id = $_GET["id"];
-                    if ($id == 2) { ?>
+                    if ($id == '001,011') { 
+                        ?>
                         <h5 class="mx-auto px-2" id="first"> Tous les articles en meilleure offre </h5><br><br><br><br>
-                    <?php } ?>
+                        <?php
+                        $idT1 = substr($id, 0, 3);
+                        $idT2 = substr($id, 4, 3);
+                        $idT3 = 0;
+                        error_log("idT1 : $idT1, idT2 : $idT2, idT3 : $idT3");
+                    } 
+                    ?>
 
                     <?php
                     $id = $_GET["id"];
-                    if ($id == 3) { ?>
+                    if ($id == '010,110,011') { 
+                        ?>
                         <h5 class="mx-auto px-2" id="first"> Tous les articles en achat immédiat </h5><br><br><br><br>
-                    <?php } ?>
+                        <?php 
+                        $idT1 = substr($id, 0, 3);
+                        $idT2 = substr($id, 4, 3);
+                        $idT3 = substr($id, 8, 3);
+                        error_log("idT1 : $idT1, idT2 : $idT2, idT3 : $idT3");
+                    } 
+                    ?>
 
                     <?php
                     $id = $_GET["id"];
-                    if ($id == 4) { ?>
+                    if ($id == '__1') { 
+                        ?>
                         <h5 class="mx-auto px-2" id="first"> Tous les articles Ferraille ou Trésor </h5><br><br><br><br>
-                    <?php } ?>
+                        <?php 
+                        $idC = substr($id, 2);
+                    } 
+                    ?>
 
                     <?php
                     $id = $_GET["id"];
-                    if ($id == 5) { ?>
+                    if ($id == '__2') {
+                         ?>
                         <h5 class="mx-auto px-2" id="first"> Tous les articles Bon pour le Musée </h5><br><br><br><br>
-                    <?php } ?>
+                        <?php 
+                        $idC = substr($id, 2);
+                    } 
+                    ?>
 
                     <?php
                     $id = $_GET["id"];
-                    if ($id == 6) { ?>
+                    if ($id == '__3') { 
+                        ?>
                         <h5 class="mx-auto px-2" id="first"> Tous les Accessoires VIP </h5><br><br><br><br>
-                    <?php } ?>
-
+                        <?php 
+                        $idC = substr($id, 2);
+                    } 
+                    ?>
 
                 </div>
+
+                <!-- Affcichage des items -->
                 <div class="row mx-5">
 
-
-
+                <!-- D'abord on va chercher les infos de l'item dans la DB -->
                     <?php
-                    ini_set('display_errors', 1);
-                    ini_set('display_startup_errors', 1);
-                    error_reporting(E_ALL);
+                    // Accès DB
+                    $servername = "localhost";
+                    $username = "benzinho";
+                    $dbpassword = "75011";
+                    $dbname = "eBay ECE";
 
-                    //identifier le nom de base de données
-                    $database = "eBay ECE";
-                    $id = $_GET["id"];
-                    //connectez-vous dans votre BDD
-                    //Rappel : votre serveur = localhost | votre login = root | votre mot de pass = '' (rien)
-                    $db_handle = mysqli_connect('localhost', 'benzinho', '75011');
-                    $db_found = mysqli_select_db($db_handle, $database);
-                    //si le BDD existe, faire le traitement
-                    if ($db_found) {
-                        if ($id == 1) {
-                            $sql = "SELECT * FROM item WHERE (Sale_Type = '100' OR Sale_Type = '110') ";
-                        } //encheres
+                    try {
+                        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
+                        // set the PDO error mode to exception
+                        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                        if ($id == 2) {
-                            $sql = "SELECT * FROM item WHERE (Sale_Type = '001' OR Sale_Type = '011') ";
-                        } //offre
+                        // begin the transaction
+                        $conn->beginTransaction();
 
-                        if ($id == 3) {
-                            $sql = "SELECT * FROM item WHERE (Sale_Type = '010' OR Sale_Type = '110' OR Sale_Type = '011') ";
-                        } //achat immediat
+                        $stmt = $conn->prepare("SELECT * FROM Item AS It
+                                                LEFT JOIN Images AS Im ON It.Id_Item = Im.Id_Item
+                                                WHERE Category = '$idC' OR Sale_Type IN ('$idT1', '$idT2', '$idT3')
+                                                ORDER BY 'Name'");
+                                                // ! Ne marche pas sans le ON ou sans les ''
 
-                        if ($id == 4) {
-                            $sql = "SELECT * FROM item WHERE Category = 'tresor' ";
+                        $stmt->execute();
+
+                         $result = $stmt->setFetchMode(PDO::FETCH_NUM);
+
+                         while ($row = $stmt->fetch()) {
+
+                            if ($row[0] != $id_item) {  ///On affiche que le premier match par objets
+
+                            ?>    
+                             <div class="col-sm-4 portfolio-item">
+                                 <div class="card h-100">
+                                     <a href="shop-item.php?id=<?php echo"$row[0]" ?>"><img class="card-img-top" src="<?php echo"$row[13]" ?>"></a>
+                                     <div class="card-body">
+                                         <h4 class="card-title">
+                                             <a href="shop-item.php?id=<?php echo"$row[0]" ?>"><?php echo"$row[1]" ?></a>
+                                         </h4>
+                                         <p class="card-text"><?php echo"$row[6]" ?></p>
+                                     </div>
+                                 </div>
+                             </div>
+                             <?php
+
+                            }
+
+                            $id_item = $row[0];
+
                         }
-                        if ($id == 5) {
-                            $sql = "SELECT * FROM item WHERE Category = 'musee' ";
-                        }
-                        if ($id == 6) {
-                            $sql = "SELECT * FROM item WHERE Category = 'vip' ";
-                        }
+                    } catch (PDOException $e) {
+                        // roll back the transaction if something failed
+                        $conn->rollback();
+                        error_log("Error: " . $e->getMessage());
+                        echo "<h5 class='text-center'>Erreur.</h5>";
+                    }
 
-                        $result = mysqli_query($db_handle, $sql);
-
-                        while ($data = mysqli_fetch_assoc($result)) {
-
-
+                    // On se déconnecte
+                    $conn = null;
                     ?>
-                            <!-- Marketing Icons Section -->
-                            <div class="col-sm-4 portfolio-item">
-                                <div class="card h-100">
-                                    <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                    <div class="card-body">
-                                        <h4 class="card-title">
-                                            <a href="shop-item.php?
-                                                Name=<?php echo $data["Name"] ?>
-                                                &Description=<?php echo $data["Description"] ?>
-                                                &Sale_Type=<?php echo $data["Sale_Type"] ?>
-                                                ">
-                                                <?php echo $data['Name']; ?>
 
-                                            </a>
+                    
 
 
-                                        </h4>
-                                        <p class="card-text"><?php echo $data['Description']; ?></p>
-                                    </div>
-                                </div>
-                            </div>
-
-                    <?php }
-                    } //end if
-                    //si le BDD n'existe pas
-                    else {
-                        echo "Database not found";
-                    } //end else
-                    //fermer la connection
-                    mysqli_close($db_handle); ?>
-
-                </div>
             </div>
 
         </div>
+        
+        <?php
+        error_log("Fin items.php");
+        error_log("----------------------------------------------------------------------------------------------------");
+        ?>
 
         <!-- Footer -->
         <footer class="footer navbar-dark bg-ece mb-0 pt-3">

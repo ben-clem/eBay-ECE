@@ -2,7 +2,7 @@
 error_log("----------------------------------------------------------------------------------------------------");
 error_log("Début index.php");
 session_start();
-error_log("id_user_session :" . $_SESSION['id_user'])
+error_log("id_user_session : " . $_SESSION['id_user'])
 ?>
 <!DOCTYPE html>
 <html lang="fr">

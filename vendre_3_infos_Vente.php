@@ -26,7 +26,15 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> <!-- ! Bien mettre après le 4.4.1 pour pas override tout (sert pour les icônes de la navbar) -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
+     <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+<script type="text/javascript">
+        function deconnect() {
+                
+            window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
+        }
+      
+    </script>
     <!-- Page title -->
     <title>eBay ECE - Vendre</title>
 </head>
@@ -36,13 +44,21 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
         <!-- Navigation -->
         <header class="page-header header container-fluid my-3 mb-5">
             <div class="topnav">
-                <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
+                <a href="index_admin.php"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
-                    <a class="dropbtn" href="achats.php"> Achats </a>
+                    <a class="dropbtn" href="vendre_1_infos_Item.php"> Ajouter un article </a>
                 </div>
                 <div class="dropdown">
-                    <a class="dropbtn" href="categories.php">Categories</a>
+                    <a class="dropbtn" href="supprimer_item.php">Supprimer un article</a>
                 </div>
+                <div class="dropdown">
+                    <a class="dropbtn" href="ajout_vendeur.php">Ajouter un vendeur</a>
+                </div>
+
+                <div class="dropdown">
+                    <a class="dropbtn" href="supprimer_vendeur.php">Supprimer un vendeur</a>
+                </div>
+
                 <div class="topnav-right">
                     <div class="dropdown">
                         <button class="dropbtn">
@@ -50,7 +66,7 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
                                     echo "Bonjour, ";
                                     echo $_SESSION['Firstname'];
                                 } else {
-                                    echo "Mon Compte";
+                                    echo "Mon Compte Admin";
                                 }
                                 ?> <span class="glyphicon glyphicon-user"></span></p>
                         </button>
@@ -65,17 +81,17 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
                             <a href="admin.php">Admin</a>
                         </div>
                     </div>
-                    <a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </div>
             </div>
         </header>
         <!-- Fin Nav -->
         <div class="content-wrap container">
             <div class="row">
-                <div class="col-sm-10 m-5 border border-primary mx-auto">
+                <div class="col-sm-10 mx-auto">
 
                     <!-- Form enchère -->
                     <form name="form" action="vendre_4_postDB.php" method="post" enctype="multipart/form-data" id="vendre" onsubmit="return validateForm()" required>
+            
 
                         <!-- On récupère les données -->
                         <?php
@@ -171,12 +187,12 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
                         <?php
                         if ($typeVente == "100" or $typeVente == "110") {
                         ?>
-                            <table class="mx-auto my-3 border border-success">
+                            <table class="mx-auto">
                                 <tr>
-                                    <td colspan="2" class="mx-auto text-center pt-3">
-                                        <h5>Infos Enchère</h5>
-                                    </td>
-                                </tr>
+                                <td colspan="2" class="mx-auto text-center pt-3">
+                                    <h5 id="titre">Informations Enchères</h5><br>
+                                </td>
+                            </tr>
                                 <tr>
                                     <td class="p-1"><label class="ml-auto mr-1" for="prixDepart">Prix de départ :</label></td>
                                     <td class="p-1"><input required type="number" name="prixDepart" placeholder="5€"></td>

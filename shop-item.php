@@ -81,6 +81,11 @@ error_log("id_user_session : " . $_SESSION['id_user'])
 			}
 			
 		}
+
+function deconnect() {
+                
+            window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
+        }
 	</script>
 
 </head>

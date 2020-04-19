@@ -2,7 +2,7 @@
 error_log("----------------------------------------------------------------------------------------------------");
 error_log("Début index.php");
 session_start();
-error_log("id_user_session : " . $_SESSION['id_user'])
+error_log("id_user_session :" . $_SESSION['id_user'])
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -59,13 +59,21 @@ error_log("id_user_session : " . $_SESSION['id_user'])
         <!-- Navigation -->
         <header class="page-header header container-fluid my-3 mb-5">
             <div class="topnav">
-                <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
+                <a href="index_admin.php"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
-                    <a class="dropbtn" href="achats.php"> Achats </a>
+                    <a class="dropbtn" href="vendre_1_infos_Item.php"> Ajouter un article </a>
                 </div>
                 <div class="dropdown">
-                    <a class="dropbtn" href="categories.php">Categories</a>
+                    <a class="dropbtn" href="supprimer_item.php">Supprimer un article</a>
                 </div>
+                <div class="dropdown">
+                    <a class="dropbtn" href="ajout_vendeur.php">Ajouter un vendeur</a>
+                </div>
+
+                <div class="dropdown">
+                    <a class="dropbtn" href="supprimer_vendeur.php">Supprimer un vendeur</a>
+                </div>
+
                 <div class="topnav-right">
                     <div class="dropdown">
                         <button class="dropbtn">
@@ -73,7 +81,7 @@ error_log("id_user_session : " . $_SESSION['id_user'])
                                     echo "Bonjour, ";
                                     echo $_SESSION['Firstname'];
                                 } else {
-                                    echo "Mon Compte";
+                                    echo "Mon Compte Admin";
                                 }
                                 ?> <span class="glyphicon glyphicon-user"></span></p>
                         </button>
@@ -88,7 +96,6 @@ error_log("id_user_session : " . $_SESSION['id_user'])
                             <a href="admin.php">Admin</a>
                         </div>
                     </div>
-                    <a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </div>
             </div>
         </header>
@@ -187,9 +194,11 @@ error_log("id_user_session : " . $_SESSION['id_user'])
                             <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
                             <div class="card-body">
                                 <h4 class="card-title">
-                                    <a href="#">Votre Objet 1</a>
+                                    <a href="#">Vente aux enchères</a>
                                 </h4>
-                                <p class="card-text">description objet 1</p>
+                                <p class="card-text">Indiquez-nous le prix maximum que vous seriez prêt à payer et
+                                    nous
+                                    enchérissons pour vous.</p>
                             </div>
                         </div>
                     </div>
@@ -198,9 +207,11 @@ error_log("id_user_session : " . $_SESSION['id_user'])
                             <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
                             <div class="card-body">
                                 <h4 class="card-title">
-                                    <a href="#">Votre objet 2</a>
+                                    <a href="#">Achat Immédiat</a>
                                 </h4>
-                                <p class="card-text">description objet 2</p>
+                                <p class="card-text">Achetez immédiatement l'objet qui vous plaît au prix conseillé
+                                    par
+                                    le vendeur.</p>
                             </div>
                         </div>
                     </div>
@@ -209,9 +220,10 @@ error_log("id_user_session : " . $_SESSION['id_user'])
                             <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
                             <div class="card-body">
                                 <h4 class="card-title">
-                                    <a href="#">votre objet 3</a>
+                                    <a href="#">Meilleure Offre</a>
                                 </h4>
-                                <p class="card-text">description objet 3</p>
+                                <p class="card-text">Négociez directement avec le vendeur jusqu'à trouver un terrain
+                                    d'entente.</p>
                             </div>
                         </div>
                     </div>

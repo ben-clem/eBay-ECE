@@ -1,0 +1,194 @@
+	.topnav {
+			background-color: #333;
+			position: absolute; 
+			top:0;
+			width : 100%;
+			left:0;
+			height : 50px;
+			justify-content: 
+		}
+
+		.topnav a {
+			float: left;
+			color: #f2f2f2;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+			font-size: 15px;
+		}
+/*Hover sur mon panier*/
+		.topnav a:hover {
+			background-color: #223843;
+			color: white;
+			height: 50px;
+		}
+/*partie droite navbar*/
+		.topnav-right {
+			float: right;
+			height : 50px;
+			display : flex;
+		}
+/*les dropbtn (achats, catégories, mon compte)*/
+		.dropbtn {
+			background-color: #333;
+			color: white;
+			padding: 16px;
+			font-size: 15px;
+			border: none;
+			height : 50px;
+		}
+/*le type des dropdown*/
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+/*le contenu des dropdown*/
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+			background-color: lightgrey;
+			min-width: 160px;
+			z-index: 1;
+			font-size : 10px;
+		}
+
+
+/*le contenu des dropdown-content */		
+.dropdown-content a {
+			color: black;
+			padding: 10px 15px;
+			text-decoration: none;
+			display: block;
+			font-size : 10px;
+			height: 30px;
+		}
+/*header c'est toute la navbar*/
+	header {
+			display : row;
+			background-color: #333;
+			top : 0;
+			left: 0;}
+/*Hover sur les boutons achats etc, et leur contenu*/
+			.dropdown-content a:hover {background-color: rgba(0,0,0,0.1);
+				height : 100%;}
+
+			.dropdown:hover .dropdown-content {display: grid;}
+
+			.dropdown:hover .dropbtn {background-color: #223843;
+				font-style: underline;
+			}
+
+/* container c'est toute la partie en dessous de navbar, h3 = bienvenue[...] doit être au milieu*/
+		 .container h3{text-align: center;}
+
+		.container {display: flex;
+			flex-direction: column;}
+		.container h4 {text-align: center ;
+			color: grey; }
+/*boutons acheteur ou vendeur*/
+		#btn1, #btn2 {
+			width:300px;
+			height : 40px;
+			color : white;
+			border-spacing: 0px ;
+			border-color: black;}
+
+		#btn1 {background-color: red;}
+
+		#btn2 {background-color: #333;}
+
+		#btn_group{
+			width : 30%;
+			display: flex;
+			height :auto ;
+			left : 255px;
+			top : 5px;
+			border-color: black;}
+		
+		a #btn2:hover {color: red;}
+
+		
+
+		
+body {
+  background-color: #f1f1f1;
+  width: 100%;
+  height:100%;}
+
+
+#footer {
+	display: grid;
+	background-color: #333;
+	color: white;
+	height : 115px;
+  	position: relative;
+  	left: 0;
+  	bottom: 0;
+  	width: 100%;
+  	text-align: ;
+}
+
+#footer p {
+	position:;
+	bottom : -10px;
+	left : 10px;
+	font-size: 15px;
+
+}
+
+#footer h5 {
+	position: ;
+	left : 20px;
+	margin: auto;
+	padding: 5px;
+	font-size: 10px;
+}
+
+.clas {
+	bottom : 200px;
+}
+
+body {
+     background-color: lightgrey;
+    background-size: cover;
+}
+
+form {
+    max-width: 500px;
+    padding: 15px;
+    margin: 0 auto;
+    border-radius: 1.5em;
+    background-color: #f2f2f2;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+}
+
+form h3 { 
+    /*font-family: 'Open Sans' , sans-serif;*/
+    font-size: 30px;
+    font-weight: 600;
+    color: #000000;
+    margin-top: 10px;
+    padding: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.copyright {
+	font-size: 1em;
+	bottom: 10px;
+	text-align: center;
+	background-color:#333; 
+}
+
+.form-group {
+	align-items: center;
+}
+
+/*BOUTON SUBMIT FORM*/
+#btn_submit
+{
+	width : 100px;
+	margin-left: 175px;
+}

@@ -1,9 +1,5 @@
-<?php
-error_log("----------------------------------------------------------------------------------------------------");
-error_log("Début index.php");
-session_start();
-error_log("id_user_session :" . $_SESSION['id_user'])
-?>
+<?php session_start(); ?>
+<!-- On lance la session -->
 <!DOCTYPE html>
 <html lang="fr">
 <!-- specify primary language for Search Engines (en, fr...) -->
@@ -20,8 +16,8 @@ error_log("id_user_session :" . $_SESSION['id_user'])
     <!-- links to bootstrap style sheet and my own style sheet -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/panier.css">
+    <link rel="stylesheet" href="css/admin.css">
+      <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -33,23 +29,30 @@ error_log("id_user_session :" . $_SESSION['id_user'])
       
     </script>
     <!-- Page title -->
-    <title>Panier - eBay ECE</title>
+    <title>Admin - eBay ECE</title>
 
 </head>
 
 <body>
-
     <div class="page-container">
         <!-- Navigation -->
         <header class="page-header header container-fluid my-3 mb-5">
             <div class="topnav">
-                <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
+                <a href="index_admin.php"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
-                    <a class="dropbtn" href="achats.php"> Achats </a>
+                    <a class="dropbtn" href="vendre_1_infos_Item.php"> Ajouter un article </a>
                 </div>
                 <div class="dropdown">
-                    <a class="dropbtn" href="categories.php">Categories</a>
+                    <a class="dropbtn" href="supprimer_item.php">Supprimer un article</a>
                 </div>
+                <div class="dropdown">
+                    <a class="dropbtn" href="ajout_vendeur.php">Ajouter un vendeur</a>
+                </div>
+
+                <div class="dropdown">
+                    <a class="dropbtn" href="supprimer_vendeur.php">Supprimer un vendeur</a>
+                </div>
+
                 <div class="topnav-right">
                     <div class="dropdown">
                         <button class="dropbtn">
@@ -57,7 +60,7 @@ error_log("id_user_session :" . $_SESSION['id_user'])
                                     echo "Bonjour, ";
                                     echo $_SESSION['Firstname'];
                                 } else {
-                                    echo "Mon Compte";
+                                    echo "Mon Compte Admin";
                                 }
                                 ?> <span class="glyphicon glyphicon-user"></span></p>
                         </button>
@@ -72,99 +75,117 @@ error_log("id_user_session :" . $_SESSION['id_user'])
                             <a href="admin.php">Admin</a>
                         </div>
                     </div>
-                    <a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </div>
             </div>
         </header>
         <!-- Fin Nav -->
-   <!-- PANIER 
-Code inspirer de : https://bootsnipp.com/snippets/ZXKKD -->
 
-        <h1 class="jumbotron-heading">Mon Panier</h1> <br><br>
-   
+        <?php
+        error_log("----------------------------------------------------------------------------------------------------");
+        error_log("Début admin.php");
+        ?>
 
-<div class="container mb-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col"> </th>
-                            <th scope="col">Produit</th>
-                            <th scope="col">Disponible</th>
-                            <th scope="col" class="text-center">Quantité</th>
-                            <th scope="col" class="text-right">Prix</th>
-                            <th> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Dada</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">124,90 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Toto</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">33,90 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Titi</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">70,00 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Sous-Total</td>
-                            <td class="text-right">255,90 €</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Livraison</td>
-                            <td class="text-right">0.00 €</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>Total</strong></td>
-                            <td class="text-right"><strong>346,90 €</strong></td>
-                        </tr>
-                    </tbody>
+        <!-- Début main container -->
+        <div class="content-wrap container">
+
+            <h2 class="text-center">Ajouter un vendeur</h2> <br>
+
+            <!-- Form pour AJOUTER UN VENDEUR à la BDD -->
+            <form name="addVendor" id="addVendor" action="admin.php" method="post">
+                <table class="w-100 text-center mx-auto my-2">
+                
+                    <tr>
+                        <td class="p-2 text-right"><label for="email">Adresse e-mail :</label></td>
+                        <td class="p-2 text-left"><input required class="w-50" type="email" name="email"></td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 text-right"><label for="password">Mot de passe :</label></td>
+                        <td class="p-2 text-left"><input required class="w-50" type="password" name="password"></td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 text-right"><label for="admin">Admin ? :</label></td>
+                        <td class="p-2 text-left"><input class="" type="checkbox" name="admin"></td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 text-right"><label for="name">Prénom :</label></td>
+                        <td class="p-2 text-left"><input required class="w-25" type="text" name="name"></td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 text-right"><label for="surname">Nom :</label></td>
+                        <td class="p-2 text-left"><input required class="w-25" type="text" name="surname"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="p-2 text-center"><input required type="submit" name="submit" value="Ajouter Vendeur"></td>
+                    </tr>
                 </table>
-            </div>
-        </div>
-        <div class="col mb-2">
-            <div class="row">
-                <div class="col-sm-12  col-md-6">
-                    <button class="btn btn-block btn-light">Continuer Le Shopping</button>
-                </div>
-                <div class="col-sm-12 col-md-6 text-right">
-                    <a href = "paiement.php"><button class="btn btn-lg btn-block btn-success text-uppercase" href = "paiement.php"> Paiement</button></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
+                <!-- Traitement de l'ajout Vendeur -->
+                <?php
+                // Traitement des données
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $admin = $_POST['admin'];
+                $name = $_POST['name'];
+                $surname = $_POST['surname'];
 
+                if ($admin == 'on') {
+                    $admin = 1;
+                } else {
+                    $admin = 0;
+                }
+
+                // Debug console
+                error_log("email : $email,
+                        password : $password,
+                           admin : $admin,
+                            name : $name,
+                         surname : $surname.");
+
+                // upload DB
+                $servername = "localhost";
+                $username = "benzinho";
+                $dbpassword = "75011";
+                $dbname = "eBay ECE";
+
+                try {
+                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    // begin the transaction
+                    $conn->beginTransaction();
+
+                    // our SQL statements
+                    // INSERT ITEMS
+                    if (!empty($email) and !empty($password) and isset($admin) and !empty($name) and !empty($surname)) { // Si les champs sont bien remplis
+                        // On upload dans la DB
+                        $conn->exec("INSERT INTO SELLER (ID_Seller, Password, Admin, Firstname, Name)
+                                            VALUES ('$email', '$password', '$admin', '$name', '$surname')");
+
+                        // commit the transaction
+                        $conn->commit();
+                        error_log("Insertion réussie.");
+                        echo "<h5 class='text-center'>Vendeur correctement ajouté 👍.</h5>";
+                    }
+                } catch (PDOException $e) {
+                    // roll back the transaction if something failed
+                    $conn->rollback();
+                    error_log("Error: " . $e->getMessage());
+                    echo "<h5 class='text-center'>Erreur : Adresse e-mail déjà utilisée 😕.</h5>";
+                }
+
+                // On se déconnecte
+                $conn = null;
+                ?>
+            </form>
+
+        </div>
+        <!-- Fin main container -->
+
+        <?php
+        error_log("Fin admin.php");
+        error_log("----------------------------------------------------------------------------------------------------");
+        ?>
 
         <!-- Footer -->
         <footer class="footer navbar-dark bg-ece mb-0 pt-3">
@@ -195,10 +216,9 @@ Code inspirer de : https://bootsnipp.com/snippets/ZXKKD -->
             <p class="white mx-auto my-0 py-0 text-center" id="copyright">Copyright &copy; 2020 eBay ECE Inc. Tous droits réservés à l'ECE Paris-Lyon.</p>
         </footer>
         <!-- fin Footer -->
-    </div>
 
+    </div>
     <!-- links to bootstrap JS dependencies -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

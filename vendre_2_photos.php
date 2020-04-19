@@ -14,11 +14,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> <!-- ! Bien mettre après le 4.4.1 pour pas override tout (sert pour les icônes de la navbar) -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
+<script type="text/javascript">
+        function deconnect() {
+                
+            window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
+        }
+      
+    </script>
     <!-- Page title -->
     <title>eBay ECE - Vendre</title>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -26,13 +34,21 @@
         <!-- Navigation -->
         <header class="page-header header container-fluid my-3 mb-5">
             <div class="topnav">
-                <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
+                <a href="index_admin.php"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
-                    <a class="dropbtn" href="achats.php"> Achats </a>
+                    <a class="dropbtn" href="vendre_1_infos_Item.php"> Ajouter un article </a>
                 </div>
                 <div class="dropdown">
-                    <a class="dropbtn" href="categories.php">Categories</a>
+                    <a class="dropbtn" href="supprimer_item.php">Supprimer un article</a>
                 </div>
+                <div class="dropdown">
+                    <a class="dropbtn" href="ajout_vendeur.php">Ajouter un vendeur</a>
+                </div>
+
+                <div class="dropdown">
+                    <a class="dropbtn" href="supprimer_vendeur.php">Supprimer un vendeur</a>
+                </div>
+
                 <div class="topnav-right">
                     <div class="dropdown">
                         <button class="dropbtn">
@@ -40,7 +56,7 @@
                                     echo "Bonjour, ";
                                     echo $_SESSION['Firstname'];
                                 } else {
-                                    echo "Mon Compte";
+                                    echo "Mon Compte Admin";
                                 }
                                 ?> <span class="glyphicon glyphicon-user"></span></p>
                         </button>
@@ -55,15 +71,14 @@
                             <a href="admin.php">Admin</a>
                         </div>
                     </div>
-                    <a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </div>
             </div>
         </header>
         <!-- Fin Nav -->
         <div class="content-wrap container">
             <div class="row">
-                <div class="col-sm-10 m-5 border border-primary mx-auto">
-
+                <div class="col-sm-10  mx-auto">
+                     <h4 class="mx-auto text-center" id="titre">Ajouter des photos</h4><br>
                     <!-- Form enchère -->
                     <form name="form" action="vendre_2_2_video.php" method="post" enctype="multipart/form-data" id="vendrePP" onsubmit="return validateForm()" required>
 
@@ -100,7 +115,7 @@
                             <tr>
                             <tr>
                                 <td colspan="2">
-                                    <input type="submit" name="button" value="Ajouter photos" id="submit" class="mx-20 my-3">
+                                    <input type="submit" name="button" value="Valider" id="submit" class="mx-20 my-3">
                                 </td>
                             </tr>
                         </table>

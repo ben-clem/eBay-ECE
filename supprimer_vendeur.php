@@ -17,10 +17,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-
+<script type="text/javascript">
+        function deconnect() {
+                
+            window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
+        }
+      
+    </script>
     <!-- Page title -->
     <title>Admin - eBay ECE</title>
 
@@ -29,27 +36,45 @@
 <body>
     <div class="page-container">
         <!-- Navigation -->
-        <header class="page-header header container-fluid">
+        <header class="page-header header container-fluid my-3 mb-5">
             <div class="topnav">
-                <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
+                <a href="index_admin.php"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
-                    <a class="dropbtn" href="achats.php"> Achats </a>
+                    <a class="dropbtn" href="vendre_1_infos_Item"> Ajouter un article </a>
                 </div>
                 <div class="dropdown">
-                    <a class="dropbtn" href="categories.php">Categories</a>
+                    <a class="dropbtn" href="supprimer_item.php">Supprimer un article</a>
                 </div>
+                <div class="dropdown">
+                    <a class="dropbtn" href="ajout_vendeur.php">Ajouter un vendeur</a>
+                </div>
+
+                <div class="dropdown">
+                    <a class="dropbtn" href="supprimer_vendeur.php">Supprimer un vendeur</a>
+                </div>
+
                 <div class="topnav-right">
                     <div class="dropdown">
                         <button class="dropbtn">
-                            <p>Mon compte <span class="glyphicon glyphicon-user"></span></p>
+                            <p> <?php if (isset($_SESSION['id_user'])) {
+                                    echo "Bonjour, ";
+                                    echo $_SESSION['Firstname'];
+                                } else {
+                                    echo "Mon Compte Admin";
+                                }
+                                ?> <span class="glyphicon glyphicon-user"></span></p>
                         </button>
                         <div class="dropdown-content">
-                            <a href="connexion.php">Se connecter</a>
+                            <?php if (isset($_SESSION['id_user'])) {
+                                echo '<a href="#" onclick="deconnect()">Se déconnecter</a> ';
+                            } else {
+                                echo '<a href="connexion.php">Se connecter</a> ';
+                            }
+                            ?>
                             <a href="inscription_buyer.php">S'inscrire</a>
                             <a href="admin.php">Admin</a>
                         </div>
                     </div>
-                    <a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </div>
             </div>
         </header>
@@ -63,109 +88,13 @@
         <!-- Début main container -->
         <div class="content-wrap container">
 
-            <h2 class="text-center">Page Administrateur</h2>
+            <h2 class="text-center">Supprimer un vendeur</h2><br>
 
-            <!-- Form pour ajouter un vendeur à la BDD -->
-            <form name="addVendor" id="addVendor" class="m-5 border border-success" action="admin.php" method="post">
-                <table class="w-100 text-center mx-auto my-2">
-                    <tr>
-                        <td colspan="2" class="p-2">
-                            <h4>Ajouter un Vendeur</h4>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="p-2 text-right"><label for="email">Adresse e-mail :</label></td>
-                        <td class="p-2 text-left"><input required class="w-50" type="email" name="email"></td>
-                    </tr>
-                    <tr>
-                        <td class="p-2 text-right"><label for="password">Mot de passe :</label></td>
-                        <td class="p-2 text-left"><input required class="w-50" type="password" name="password"></td>
-                    </tr>
-                    <tr>
-                        <td class="p-2 text-right"><label for="admin">Admin ? :</label></td>
-                        <td class="p-2 text-left"><input class="" type="checkbox" name="admin"></td>
-                    </tr>
-                    <tr>
-                        <td class="p-2 text-right"><label for="name">Prénom :</label></td>
-                        <td class="p-2 text-left"><input required class="w-25" type="text" name="name"></td>
-                    </tr>
-                    <tr>
-                        <td class="p-2 text-right"><label for="surname">Nom :</label></td>
-                        <td class="p-2 text-left"><input required class="w-25" type="text" name="surname"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="p-2 text-center"><input required type="submit" name="submit" value="Ajouter Vendeur"></td>
-                    </tr>
-                </table>
-
-                <!-- Traitement de l'ajout Vendeur -->
-                <?php
-                // Traitement des données
-                $email = $_POST['email'];
-                $password = $_POST['password'];
-                $admin = $_POST['admin'];
-                $name = $_POST['name'];
-                $surname = $_POST['surname'];
-
-                if ($admin == 'on') {
-                    $admin = 1;
-                } else {
-                    $admin = 0;
-                }
-
-                // Debug console
-                error_log("email : $email,
-                        password : $password,
-                           admin : $admin,
-                            name : $name,
-                         surname : $surname.");
-
-                // upload DB
-                $servername = "localhost";
-                $username = "benzinho";
-                $dbpassword = "75011";
-                $dbname = "eBay ECE";
-
-                try {
-                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
-                    // set the PDO error mode to exception
-                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                    // begin the transaction
-                    $conn->beginTransaction();
-
-                    // our SQL statements
-                    // INSERT ITEMS
-                    if (!empty($email) and !empty($password) and isset($admin) and !empty($name) and !empty($surname)) { // Si les champs sont bien remplis
-                        // On upload dans la DB
-                        $conn->exec("INSERT INTO SELLER (ID_Seller, Password, Admin, Firstname, Name)
-                                            VALUES ('$email', '$password', '$admin', '$name', '$surname')");
-
-                        // commit the transaction
-                        $conn->commit();
-                        error_log("Insertion réussie.");
-                        echo "<h5 class='text-center'>Vendeur correctement ajouté 👍.</h5>";
-                    }
-                } catch (PDOException $e) {
-                    // roll back the transaction if something failed
-                    $conn->rollback();
-                    error_log("Error: " . $e->getMessage());
-                    echo "<h5 class='text-center'>Erreur : Adresse e-mail déjà utilisée 😕.</h5>";
-                }
-
-                // On se déconnecte
-                $conn = null;
-                ?>
-            </form>
 
             <!-- Form pour supprimer un vendeur de la BDD -->
-            <form name="deleteVendor" id="deleteVendor" class="m-5 border border-danger" action="admin.php" method="post">
+            <form name="deleteVendor" id="deleteVendor" action="admin.php" method="post">
                 <table class="w-100 text-center mx-auto my-2">
-                    <tr>
-                        <td colspan="2" class="p-2">
-                            <h4>Supprimer un Vendeur</h4>
-                        </td>
-                    </tr>
+                   
                     <tr>
                         <td class="w-50 p-2 text-right">
                             <label class="text-left pl-2" for="email2">Avec son e-mail :</label>
@@ -305,126 +234,6 @@
 
             <hr class="my-2" style="border: 1px dashed black;">
 
-
-            <!-- ADD / DELETE ITEM -->
-            <!-- Form pour ajouter un vendeur à la BDD -->
-            <form name="addItem" id="addItem" class="m-5 border border-success" action="vendre_1_infos_Item.php" method="post">
-                <table class="w-100 text-center mx-auto my-2">
-                    <tr>
-                        <td colspan="2" class="p-2">
-                            <h4>Ajouter un Item</h4>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="p-2 pb-3 text-center"><input required type="submit" name="submit" value="Aller à la page mise en vente"></td>
-                    </tr>
-                </table>
-            </form>
-
-            <!-- Form pour supprimer un item de la BDD -->
-            <form name="deleteItem" id="deleteItem" class="m-5 border border-danger" action="admin.php" method="post">
-                <table class="w-100 text-center mx-auto my-2">
-                    <tr>
-                        <td colspan="2" class="p-2">
-                            <h4>Supprimer un Item</h4>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="w-50 p-2 text-right">
-                            <label class="text-left align-middle pl-2" for="selectVendor">Sélectionner dans la BDD :</label>
-                        </td>
-                        <td class="p-2 text-left">
-                            <select name="selectItem" id="selectItem">
-                                <option value="" disabled selected>Choisir un Item à supprimer</option> <!-- Il faut qu'on aille chercher tous les vendeurs de la BDD pour les afficher en tant qu'options -->
-                                <?php
-                                // Accès DB
-                                $servername = "localhost";
-                                $username = "benzinho";
-                                $dbpassword = "75011";
-                                $dbname = "eBay ECE";
-
-                                try {
-                                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
-                                    // set the PDO error mode to exception
-                                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                                    $stmt = $conn->prepare("SELECT Id_Item, Name, Category, Sale_Type, Sold, Video_Path, Description, Begin_Date, End_Date, Price_Min, Price_Now, ID_Seller, ID_Buyer
-                                                            FROM Item
-                                                            ORDER BY ID_Item");
-                                    $stmt->execute();
-
-                                    $result = $stmt->setFetchMode(PDO::FETCH_NUM);
-
-                                    while ($row = $stmt->fetch()) {
-                                        // print $row[0] . "\t" . $row[1] . "\t" . $row[2] . "\n";
-
-                                        echo "<option value='$row[0]'>$row[0] - $row[1] - $row[2] - $row[3] - $row[4] - $row[5] - $row[6] - $row[7] - $row[8] - $row[9] - $row[10] - $row[11] - $row[12]</option>";
-                                    }
-                                } catch (PDOException $e) {
-                                    // roll back the transaction if something failed
-                                    $conn->rollback();
-                                    error_log("Error: " . $e->getMessage());
-                                }
-
-                                // On se déconnecte
-                                $conn = null;
-                                ?>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="p-2 text-center"><input required type="submit" name="submit" value="Supprimer Item"></td>
-                    </tr>
-                </table>
-
-                <!-- Delete Item DB -->
-                <?php
-                // Traitement des données
-                $itemDelete = $_POST['selectItem'];
-
-                // Debug console
-                error_log("itemDelete : $itemDelete.");
-
-                // upload DB
-                $servername = "localhost";
-                $username = "benzinho";
-                $dbpassword = "75011";
-                $dbname = "eBay ECE";
-
-                try {
-                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
-                    // set the PDO error mode to exception
-                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                    // begin the transaction
-                    $conn->beginTransaction();
-
-                    // our SQL statements
-                    if (!empty($itemDelete)) { // Si les champs sont bien remplis
-                        // On delete dans la DB
-                        $conn->exec("DELETE FROM Item WHERE ID_Item = '$itemDelete'");
-
-                        // commit the transaction
-                        $conn->commit();
-
-                        error_log("Suppression réussie.");
-
-                        echo "<h5 class='text-center'>Item correctement supprimé 👍.<br>
-                                                        (la page va se recharger)</h5>";
-
-                        echo '<meta http-equiv="refresh" content="3; URL=admin.php" />'; /* Refresh la page au bout de 3 secondes */
-                    }
-                } catch (PDOException $e) {
-                    // roll back the transaction if something failed
-                    $conn->rollback();
-                    error_log("Error: " . $e->getMessage());
-                    echo "<h5 class='text-center'>Il y a eu une erreur 😰.</h5>";
-                }
-
-                // On se déconnecte
-                $conn = null;
-                ?>
-            </form>
 
         </div>
         <!-- Fin main container -->

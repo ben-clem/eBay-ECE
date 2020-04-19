@@ -19,6 +19,14 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 
+    <script type="text/javascript">
+        function deconnect() {
+                
+            window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
+        }
+      
+    </script>
+
     <!-- Page title -->
     <title>eBay ECE - Accueil</title>
 

@@ -26,7 +26,13 @@ error_log("id_user_session :" . $_SESSION['id_user'])
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <link rel="stylesheet" href="https://getbootstrap.com/docs/4.3/getting-started/introduction/">
-
+<script type="text/javascript">
+        function deconnect() {
+                
+            window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
+        }
+      
+    </script>
     <!-- Page title -->
     <title>Confirmation</title>
 

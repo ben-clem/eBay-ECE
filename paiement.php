@@ -19,7 +19,13 @@ error_log("id_user_session :" . $_SESSION['id_user'])
     <link href="css/paiement.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 
-    
+    <script type="text/javascript">
+        function deconnect() {
+                
+            window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
+        }
+      
+    </script>
     <title>Checkout example for Bootstrap</title>
   </head>
   <body class="bg-light">

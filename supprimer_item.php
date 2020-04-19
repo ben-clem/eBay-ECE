@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+<!-- On lance la session -->
 <!DOCTYPE html>
 <html lang="fr">
 <!-- specify primary language for Search Engines (en, fr...) -->
@@ -13,11 +15,12 @@
 
     <!-- links to bootstrap style sheet and my own style sheet -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> <!-- ! Bien mettre après le 4.4.1 pour pas override tout (sert pour les icônes de la navbar) -->
-      
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/admin.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script type="text/javascript">
         function deconnect() {
                 
@@ -26,14 +29,14 @@
       
     </script>
     <!-- Page title -->
-    <title>eBay ECE - Vendre</title>
+    <title>Admin - eBay ECE</title>
 
 </head>
 
 <body>
     <div class="page-container">
         <!-- Navigation -->
-         <header class="page-header header container-fluid my-3 mb-5">
+       <header class="page-header header container-fluid my-3 mb-5">
             <div class="topnav">
                 <a href="index_admin.php"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
@@ -76,104 +79,125 @@
             </div>
         </header>
         <!-- Fin Nav -->
+
+        <?php
+        error_log("----------------------------------------------------------------------------------------------------");
+        error_log("Début admin.php");
+        ?>
+
+        <!-- Début main container -->
         <div class="content-wrap container">
-            <div class="row">
-                <div class="col-sm-10 mx-auto">
 
-                    <!-- Form pour ajouter un objet en vente avec tout sauf photos (on ajoutera ensuite) -->
-                    <form name="form" action="vendre_2_photos.php" method="post" enctype="multipart/form-data" id="vendre" onsubmit="return validateForm()" required>
+            <h2 class="text-center">Supprimer un article</h2><br>
 
-                        <table class="mx-auto my-2">
+            <!-- Form pour supprimer un item de la BDD -->
+            <form name="deleteItem" id="deleteItem" action="admin.php" method="post">
+                <table class="w-100 text-center mx-auto my-2">
+                   
+                    <tr>
+                        <td class="w-50 p-2 text-right">
+                            <label class="text-left align-middle pl-2" for="selectVendor">Sélectionner dans la BDD :</label>
+                        </td>
+                        <td class="p-2 text-left">
+                            <select name="selectItem" id="selectItem">
+                                <option value="" disabled selected>Choisir un Item à supprimer</option> <!-- Il faut qu'on aille chercher tous les vendeurs de la BDD pour les afficher en tant qu'options -->
+                                <?php
+                                // Accès DB
+                                $servername = "localhost";
+                                $username = "benzinho";
+                                $dbpassword = "75011";
+                                $dbname = "eBay ECE";
 
-                            <tr>
-                                <td colspan="2" class="mx-auto text-center pt-3">
-                                    <h5 id="titre">Informations Objet</h5><br>
-                                </td>
-                            </tr>
+                                try {
+                                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
+                                    // set the PDO error mode to exception
+                                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                            <tr>
-                                <td class="p-1"><label class="ml-auto mr-1" for="Name"> Nom de l'objet :</label></td>
-                                <td class="p-1"><input type="text" name="Name" placeholder="Commode Louis XVI"></td>
-                            </tr>
+                                    $stmt = $conn->prepare("SELECT Id_Item, Name, Category, Sale_Type, Sold, Video_Path, Description, Begin_Date, End_Date, Price_Min, Price_Now, ID_Seller, ID_Buyer
+                                                            FROM Item
+                                                            ORDER BY ID_Item");
+                                    $stmt->execute();
 
-                            <tr>
-                                <td class="p-1"><label class="ml-auto mr-1" id="ml-10" for="Categorie"> Catégorie :</label>
-                                </td>
-                                <td class="p-1">
-                                    <select id="Categorie" name="Categorie">
-                                        <option value="1">Ferraille ou Trésor</option>
-                                        <option value="2">Bon pour le Musée</option>
-                                        <option value="3">Accessoire VIP</option>
-                                    </select>
-                                </td>
-                            </tr>
+                                    $result = $stmt->setFetchMode(PDO::FETCH_NUM);
 
-                            <tr>
-                                <td class="p-1">
-                                    <label class="ml-auto mr-1" id="ml-10" for="description"> Description :</label>
-                                </td>
-                                <td class="p-1">
-                                    <textarea name="description" form="vendre" rows="4" cols="25" maxlength="200" placeholder="Commode d'époque en Acajou, restaurée en 2019."></textarea>
-                                </td>
-                            </tr>
+                                    while ($row = $stmt->fetch()) {
+                                        // print $row[0] . "\t" . $row[1] . "\t" . $row[2] . "\n";
 
-                        </table>
+                                        echo "<option value='$row[0]'>$row[0] - $row[1] - $row[2] - $row[3] - $row[4] - $row[5] - $row[6] - $row[7] - $row[8] - $row[9] - $row[10] - $row[11] - $row[12]</option>";
+                                    }
+                                } catch (PDOException $e) {
+                                    // roll back the transaction if something failed
+                                    $conn->rollback();
+                                    error_log("Error: " . $e->getMessage());
+                                }
 
-                        <table class="mx-auto my-2">
-                            <tr>
-                                <td colspan="2" class="mx-auto text-center pt-3">
-                                    <h5>Infos Vente</h5>
-                                </td>
-                            </tr>
+                                // On se déconnecte
+                                $conn = null;
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="p-2 text-center"><input required type="submit" name="submit" value="Supprimer Item"></td>
+                    </tr>
+                </table>
 
-                            <tr>
-                                <td class="p-1">
-                                    <label class="ml-auto mr-1" id="ml-10" for="typeVente"> Type de vente :</label>
-                                </td>
-                                <td class="p-1">
-                                    <select id="typeVente" name="typeVente">
-                                        <option value="100">Enchère</option>
-                                        <option value="010">Achat Immédiat</option>
-                                        <option value="001">Meilleure Offre</option>
-                                        <option value="110">Enchère + Achat Immédiat</option>
-                                        <option value="011">Achat Immédiat + Meilleure Offre</option>
-                                    </select>
-                                </td>
-                            </tr>
+                <!-- Delete Item DB -->
+                <?php
+                // Traitement des données
+                $itemDelete = $_POST['selectItem'];
 
+                // Debug console
+                error_log("itemDelete : $itemDelete.");
 
+                // upload DB
+                $servername = "localhost";
+                $username = "benzinho";
+                $dbpassword = "75011";
+                $dbname = "eBay ECE";
 
-                        </table>
+                try {
+                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+                    // begin the transaction
+                    $conn->beginTransaction();
 
+                    // our SQL statements
+                    if (!empty($itemDelete)) { // Si les champs sont bien remplis
+                        // On delete dans la DB
+                        $conn->exec("DELETE FROM Item WHERE ID_Item = '$itemDelete'");
 
-                        <table class="mx-auto my-3">
-                            <tr>
-                                <td colspan="2">
-                                    <input type="submit" name="button2" value="Ajouter objet">
-                                </td>
-                            </tr>
-                        </table>
+                        // commit the transaction
+                        $conn->commit();
 
-                    </form>
+                        error_log("Suppression réussie.");
 
+                        echo "<h5 class='text-center'>Item correctement supprimé 👍.<br>
+                                                        (la page va se recharger)</h5>";
 
-                </div>
-            </div>
-
-
-            <!-- Script pour vérifier que le nom a bien été rempli -->
-            <script>
-                function validateForm() {
-                    var x = document.forms["form"]["Name"].value;
-                    if (x == "" || x == null) {
-                        alert("Name must be filled out");
-                        return false;
+                        echo '<meta http-equiv="refresh" content="3; URL=admin.php" />'; /* Refresh la page au bout de 3 secondes */
                     }
+                } catch (PDOException $e) {
+                    // roll back the transaction if something failed
+                    $conn->rollback();
+                    error_log("Error: " . $e->getMessage());
+                    echo "<h5 class='text-center'>Il y a eu une erreur 😰.</h5>";
                 }
-            </script>
+
+                // On se déconnecte
+                $conn = null;
+                ?>
+            </form>
 
         </div>
+        <!-- Fin main container -->
+
+        <?php
+        error_log("Fin admin.php");
+        error_log("----------------------------------------------------------------------------------------------------");
+        ?>
 
         <!-- Footer -->
         <footer class="footer navbar-dark bg-ece mb-0 pt-3">
@@ -204,9 +228,9 @@
             <p class="white mx-auto my-0 py-0 text-center" id="copyright">Copyright &copy; 2020 eBay ECE Inc. Tous droits réservés à l'ECE Paris-Lyon.</p>
         </footer>
         <!-- fin Footer -->
+
     </div>
     <!-- links to bootstrap JS dependencies -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

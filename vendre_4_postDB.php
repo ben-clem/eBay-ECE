@@ -20,7 +20,16 @@ error_log("id_user_session :" . $_SESSION['id_user'])
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> <!-- ! Bien mettre après le 4.4.1 pour pas override tout (sert pour les icônes de la navbar) -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
+     <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    
+<script type="text/javascript">
+        function deconnect() {
+                
+            window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
+        }
+      
+    </script>
     <!-- Page title -->
     <title>eBay ECE - Vendre</title>
 </head>
@@ -28,15 +37,23 @@ error_log("id_user_session :" . $_SESSION['id_user'])
 <body>
     <div class="page-container">
         <!-- Navigation -->
-        <header class="page-header header container-fluid my-3 mb-5">
+         <header class="page-header header container-fluid my-3 mb-5">
             <div class="topnav">
-                <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
+                <a href="index_admin.php"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
-                    <a class="dropbtn" href="achats.php"> Achats </a>
+                    <a class="dropbtn" href="vendre_1_infos_Item.php"> Ajouter un article </a>
                 </div>
                 <div class="dropdown">
-                    <a class="dropbtn" href="categories.php">Categories</a>
+                    <a class="dropbtn" href="supprimer_item.php">Supprimer un article</a>
                 </div>
+                <div class="dropdown">
+                    <a class="dropbtn" href="ajout_vendeur.php">Ajouter un vendeur</a>
+                </div>
+
+                <div class="dropdown">
+                    <a class="dropbtn" href="supprimer_vendeur.php">Supprimer un vendeur</a>
+                </div>
+
                 <div class="topnav-right">
                     <div class="dropdown">
                         <button class="dropbtn">
@@ -44,7 +61,7 @@ error_log("id_user_session :" . $_SESSION['id_user'])
                                     echo "Bonjour, ";
                                     echo $_SESSION['Firstname'];
                                 } else {
-                                    echo "Mon Compte";
+                                    echo "Mon Compte Admin";
                                 }
                                 ?> <span class="glyphicon glyphicon-user"></span></p>
                         </button>
@@ -59,7 +76,6 @@ error_log("id_user_session :" . $_SESSION['id_user'])
                             <a href="admin.php">Admin</a>
                         </div>
                     </div>
-                    <a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </div>
             </div>
         </header>

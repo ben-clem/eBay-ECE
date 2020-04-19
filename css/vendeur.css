@@ -11,6 +11,9 @@ a.bg-ece:focus, a.bg-ece:hover, button.bg-ece:focus, button.bg-ece:hover {
     font-size: 1.10rem;
 }
 
+body {
+    padding-top: 20px;
+}
 
 .carousel-item {
     height: 65vh;
@@ -20,6 +23,7 @@ a.bg-ece:focus, a.bg-ece:hover, button.bg-ece:focus, button.bg-ece:hover {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    border-radius: 30px;
 }
 
 .portfolio-item {
@@ -96,8 +100,6 @@ div.page-container {
     position: relative;
     min-height: 117vh;
 }
-
-
 
 div.content-wrap {
     padding-bottom: 160px;
@@ -275,6 +277,9 @@ header {
     background-color: #223843;
 }
 
+body {
+    background-color: #E5E1E1;
+}
 
 #test {
     color: white;
@@ -294,5 +299,4 @@ div.dropdown-content a {
     position:relative;
     z-index: 1000;
 }
-
-
+/*  */

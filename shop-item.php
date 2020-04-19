@@ -36,6 +36,13 @@
       enchere = prompt("Quel est le montant de votre offre pour ce produit?");
       alert("Merci ! Nous avons bien transmis votre offre au vendeur");
     }
+
+        function deconnect() {
+                
+            window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
+        }
+      
+   
   </script>
 
 </head>

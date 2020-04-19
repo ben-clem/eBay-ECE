@@ -1,7 +1,7 @@
 <?php
-if (empty(session_id())) {
+
 	session_start();
-}
+
 if (isset($_SESSION['id_user'])) {
 	header('Location: /ebay-ECE/index.php');
 }
@@ -24,7 +24,7 @@ if (isset($_SESSION['id_user'])) {
 	<link rel="stylesheet" href="css/style.css">
 
 	<!-- STYLES SPECIFIQUES A CETTE PAGE ICI -->
-	<link rel="stylesheet" href="css/connexion.css"> STYLES SPECIFIQUES A CETTE PAGE ICI
+	<link rel="stylesheet" href="css/connexion.css"> 
 	<!-- STYLES SPECIFIQUES A CETTE PAGE ICI -->
 
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
@@ -120,7 +120,7 @@ if (isset($_SESSION['id_user'])) {
 				try {
 
 					//connexion mysql
-					$bdd = new PDO('mysql:host=localhost;dbname=eBay ECE;charset=utf8', 'benzinho', '75011', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+					$bdd = new PDO('mysql:host=localhost;dbname=piscine;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 				}
 				// si erreur
 				catch (Exception $e) {
@@ -149,19 +149,22 @@ if (isset($_SESSION['id_user'])) {
 							$_SESSION['id_user'] = $login_info['ID_Buyer'];
 							$_SESSION['Firstname'] = $login_info['Firstname'];
 							$_SESSION['user_type'] = 1;
-							echo $_SESSION['id_user'];
 							echo "<p> Vous êtes maintenant connecté !<br> Merci de vous rediriger vers <a href='index.php'> page d'accueil </p>";
+						?> <meta http-equiv = "refresh" content ="1; url = http://localhost/EBay-ECE/index.php" /> <?php
+
 						}
 					} else {
 						$_SESSION['id_user'] = $login_info['ID_Seller'];
 						$_SESSION['Firstname'] = $login_info['Firstname'];
 						$_SESSION['user_type'] = 0;
-						echo $_SESSION['id_user'];
+						
 						echo '<p> Vous êtes maintenant connecté !<br> Merci de vous rediriger vers <a href="index.php"> page d\'accueil </p>';
+						?> <meta http-equiv = "refresh" content ="1; url = http://localhost/EBay-ECE/index.php" /> <?php 
 					}
 				}
 
 				?>
+
 			</div>
 
 
@@ -198,6 +201,7 @@ if (isset($_SESSION['id_user'])) {
 		<!-- fin Footer -->
 	</div>
 
+ 
 </body>
 
 </html>

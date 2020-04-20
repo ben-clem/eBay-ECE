@@ -1,3 +1,9 @@
+<?php
+error_log("----------------------------------------------------------------------------------------------------");
+error_log("Début achats.php");
+session_start();
+error_log("id_user_session : " . $_SESSION['id_user'])
+?>
 <!DOCTYPE html>
 <html>
 
@@ -21,10 +27,10 @@
 
     <script type="text/javascript">
         function deconnect() {
-                
-            window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
+
+            alert("Vous avez été déconnecté, à bientôt !");
+            window.location.replace("deconnexion.php");
         }
-      
     </script>
 
     <!-- Page title -->

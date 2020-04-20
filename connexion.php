@@ -3,7 +3,7 @@
 	session_start();
 
 if (isset($_SESSION['id_user'])) {
-	header('Location: /ebay-ECE/index.php');
+	header('Location: index.php');
 }
 ?>
 
@@ -116,53 +116,54 @@ if (isset($_SESSION['id_user'])) {
 			<div id=connected>
 
 				<?php
+				if ( empty($_SESSION['id_user']) ) {
+					try {
 
-				try {
+						//connexion mysql
+						//$bdd = new PDO('mysql:host=localhost;dbname=piscine;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+						$bdd = new PDO('mysql:host=localhost;dbname=eBay ECE;charset=utf8', 'benzinho', '75011', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+					}
+					// si erreur
+					catch (Exception $e) {
 
-					//connexion mysql
-					$bdd = new PDO('mysql:host=localhost;dbname=piscine;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-				}
-				// si erreur
-				catch (Exception $e) {
-
-					die('Erreur : ' . $e->getMessage());
-				}
+						die('Erreur : ' . $e->getMessage());
+					}
 
 
-				if (isset($_POST['btn_submit'])) {
-					$req = $bdd->prepare('SELECT ID_Seller, Firstname, Password FROM seller WHERE ID_Seller=? AND Password=?');
-					$req->execute(array(
-						$_POST['id_user'],
-						$_POST['password']
-					));
-					$login_info = $req->fetch();
-					if (!$login_info) {
-						$req = $bdd->prepare('SELECT ID_Buyer, Firstname, Password FROM buyer WHERE ID_Buyer=? AND Password=?');
+					if (isset($_POST['btn_submit'])) {
+						$req = $bdd->prepare('SELECT ID_Seller, Firstname, Password FROM seller WHERE ID_Seller=? AND Password=?');
 						$req->execute(array(
 							$_POST['id_user'],
 							$_POST['password']
 						));
 						$login_info = $req->fetch();
 						if (!$login_info) {
-							echo 'Mauvais identifiant ou mot de passe !';
+							$req = $bdd->prepare('SELECT ID_Buyer, Firstname, Password FROM buyer WHERE ID_Buyer=? AND Password=?');
+							$req->execute(array(
+								$_POST['id_user'],
+								$_POST['password']
+							));
+							$login_info = $req->fetch();
+							if (!$login_info) {
+								echo 'Mauvais identifiant ou mot de passe !';
+							} else {
+								$_SESSION['id_user'] = $login_info['ID_Buyer'];
+								$_SESSION['Firstname'] = $login_info['Firstname'];
+								$_SESSION['user_type'] = 1;
+								echo "<p> Vous êtes maintenant connecté !<br> Merci de vous rediriger vers <a href='index.php'> page d'accueil </p>";
+							?> <meta http-equiv = "refresh" content ="1; url = index.php" /> <?php
+
+							}
 						} else {
-							$_SESSION['id_user'] = $login_info['ID_Buyer'];
+							$_SESSION['id_user'] = $login_info['ID_Seller'];
 							$_SESSION['Firstname'] = $login_info['Firstname'];
-							$_SESSION['user_type'] = 1;
-							echo "<p> Vous êtes maintenant connecté !<br> Merci de vous rediriger vers <a href='index.php'> page d'accueil </p>";
-						?> <meta http-equiv = "refresh" content ="1; url = http://localhost/EBay-ECE/index.php" /> <?php
-
+							$_SESSION['user_type'] = 0;
+							
+							echo '<p> Vous êtes maintenant connecté !<br> Merci de vous rediriger vers <a href="index.php"> page d\'accueil </p>';
+							?> <meta http-equiv = "refresh" content ="1; url = index.php" /> <?php 
 						}
-					} else {
-						$_SESSION['id_user'] = $login_info['ID_Seller'];
-						$_SESSION['Firstname'] = $login_info['Firstname'];
-						$_SESSION['user_type'] = 0;
-						
-						echo '<p> Vous êtes maintenant connecté !<br> Merci de vous rediriger vers <a href="index.php"> page d\'accueil </p>';
-						?> <meta http-equiv = "refresh" content ="1; url = http://localhost/EBay-ECE/index.php" /> <?php 
 					}
-				}
-
+			}
 				?>
 
 			</div>

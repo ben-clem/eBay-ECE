@@ -1,8 +1,28 @@
 <?php
 error_log("----------------------------------------------------------------------------------------------------");
-error_log("Début index.php");
+error_log("Début panier.php");
 session_start();
-error_log("id_user_session :" . $_SESSION['id_user'])
+$id_user = $_SESSION['id_user'];
+error_log("id_user_session :" . $id_user);
+
+// ON SUPPRIME L'ITEM DU PANIER A SUPPRIMER
+unset($_SESSION['pannier'][$_GET['deleteID']]);
+
+// Total
+$total = 0;
+
+foreach ($_SESSION['pannier'] as $key => $value) {
+    error_log(
+        "id : $key,
+        name : $value[1],
+        description : $value[2],
+        priceNow : $value[3],
+        idSeller : $value[4],
+        photo1 : $value[5]."
+    );
+    $total += $value[3];
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -25,15 +45,15 @@ error_log("id_user_session :" . $_SESSION['id_user'])
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script type="text/javascript">
+    <script type="text/javascript">
         function deconnect() {
-                
+
             window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
         }
-      
     </script>
     <!-- Page title -->
     <title>Panier - eBay ECE</title>
+
 
 </head>
 
@@ -77,94 +97,74 @@ error_log("id_user_session :" . $_SESSION['id_user'])
             </div>
         </header>
         <!-- Fin Nav -->
-   <!-- PANIER 
+        <!-- PANIER 
 Code inspirer de : https://bootsnipp.com/snippets/ZXKKD -->
 
-        <h1 class="jumbotron-heading">Mon Panier</h1> <br><br>
-   
+        <h1 class="jumbotron-heading mt-5 pt-5">Mon Panier</h1> <br><br>
 
-<div class="container mb-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col"> </th>
-                            <th scope="col">Produit</th>
-                            <th scope="col">Disponible</th>
-                            <th scope="col" class="text-center">Quantité</th>
-                            <th scope="col" class="text-right">Prix</th>
-                            <th> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Dada</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">124,90 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Toto</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">33,90 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Titi</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">70,00 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Sous-Total</td>
-                            <td class="text-right">255,90 €</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Livraison</td>
-                            <td class="text-right">0.00 €</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>Total</strong></td>
-                            <td class="text-right"><strong>346,90 €</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col mb-2">
+
+        <div class="container mb-4">
             <div class="row">
-                <div class="col-sm-12  col-md-6">
-                    <button class="btn btn-block btn-light">Continuer Le Shopping</button>
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col"> </th>
+                                    <th scope="col">Produit</th>
+                                    <th scope="col" class="text-left">Vendeur</th>
+                                    <th scope="col" class="text-right">Prix</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php
+                                foreach ($_SESSION['pannier'] as $key => $value) {
+                                ?>
+
+                                    <tr>
+                                        <td><img src="<?php echo "$value[5]" ?>" height="50" width="50" /> </td>
+                                        <td><?php echo "$value[1]" ?></td>
+                                        <td><?php echo "$value[4]" ?></td>
+                                        <td class="text-right"><?php echo "$value[3]" ?> €</td>
+                                        <td class="text-right">
+                                            <button class="btn btn-sm btn-danger" onclick="location.href = 'panier.php?deleteID=<?php echo $value[0] ?>';"><i class="glyphicon glyphicon-trash"></i> </button>
+                                        </td>
+                                    </tr>
+
+                                <?php
+                                }
+                                ?>
+
+                                <tr>
+                                    
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right"><strong>Total</strong></td>
+                                    <td class="text-right"><?php echo"$total" ?> €</td>
+                                    <td></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="col-sm-12 col-md-6 text-right">
-                    <a href = "paiement.php"><button class="btn btn-lg btn-block btn-success text-uppercase" href = "paiement.php"> Paiement</button></a>
+                <div class="col mb-2">
+                    <div class="row d-flex flex-row-reverse">
+                        
+                        <div class="col-sm-12 col-md-6">
+                            <a href="paiement.php?total=<?php echo"$total" ?>"><button href="paiement.php?total=<?php echo"$total" ?>" class="btn btn-lg btn-block btn-success text-uppercase"> Paiement</button></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-
+        <?php
+        error_log("Fin panier.php");
+        error_log("----------------------------------------------------------------------------------------------------");
+        ?>
 
         <!-- Footer -->
         <footer class="footer navbar-dark bg-ece mb-0 pt-3">

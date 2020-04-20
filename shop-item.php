@@ -6,6 +6,7 @@ error_log("id_user_session : " . $_SESSION['id_user'])
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 	<meta charset="utf-8">
@@ -30,62 +31,91 @@ error_log("id_user_session : " . $_SESSION['id_user'])
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 	<style>
-			.carousel-indicators li {
-				border: solid 2px lightgrey; 
-				margin: 2px;
-				position: relative;
-				top: 20px;
-			}
+		.carousel-indicators li {
+			border: solid 2px lightgrey;
+			margin: 2px;
+			position: relative;
+			top: 20px;
+		}
 
-			.carousel-indicators .active {
-				background-color: red;
-			}
+		.carousel-indicators .active {
+			background-color: red;
+		}
 
-			.carousel-item {
-				border-radius: 0;
-			}
+		.carousel-item {
+			border-radius: 0;
+		}
 	</style>
 
 	<script type="text/javascript">
 		function achatImm() {
-			
-			if (confirm("   Etes-vous sûr ?\n   Cliquez pour être redirigé au payement.")) {
-				//redirect payement
-			} else {
-				//rien
+
+			var x = 0;
+			<?php
+			if (empty($_SESSION['id_user'])) {  //Si pas connecté
+				echo 'window.location.href = "connexion.php";'; /* Redirige vers connexion */
+				echo "var x = 1;";
+			}
+			?>
+
+			if (x === 0) {
+				if (confirm("   Etes-vous sûr ?\n   Cliquez pour être redirigé au payement.")) {
+					//redirect payement
+				} else {
+					//rien
+				}
 			}
 		}
 
 		function encherir() {
-			var enchere;
 
-			if( enchere = prompt("Combien voulez vous enchérir pour ce produit?")) {
-				//envoyer var "enchere".
-				alert("Merci ! Nous avons bien enregistré votre enchère");
+			var x = 0;
+			<?php
+			if (empty($_SESSION['id_user'])) {  //Si pas connecté
+				echo 'window.location.href = "connexion.php";'; /* Redirige vers connexion */
+				echo "var x = 1;";
 			}
-			else {
-				//rien
+			?>
+
+			if (x === 0) {
+				var enchere;
+
+				if (enchere = prompt("Combien voulez vous enchérir pour ce produit?")) {
+					//envoyer var "enchere".
+					alert("Merci ! Nous avons bien enregistré votre enchère");
+				} else {
+					//rien
+				}
 			}
-			
 		}
 
 		function offre() {
-			var offre;
 
-			if (enchere = prompt("Quel est le montant de votre offre pour ce produit?")) {
-				//envoyer var offre
-				alert("Merci ! Nous avons bien transmis votre offre au vendeur");
+
+			var x = 0;
+			<?php
+			if (empty($_SESSION['id_user'])) {  //Si pas connecté
+				echo 'window.location.href = "connexion.php";'; /* Redirige vers connexion */
+				echo "var x = 1;";
 			}
-			else {
-				//rien
+			?>
+
+			if (x === 0) {
+				var offre;
+
+				if (enchere = prompt("Quel est le montant de votre offre pour ce produit?")) {
+					//envoyer var offre
+					alert("Merci ! Nous avons bien transmis votre offre au vendeur");
+				} else {
+					//rien
+				}
 			}
-			
 		}
 
-function deconnect() {
-                
-            window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
-        }
+		function deconnect() {
+
+			window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
+		}
 	</script>
 
 </head>
@@ -106,12 +136,12 @@ function deconnect() {
 					<div class="dropdown">
 						<button class="dropbtn">
 							<p> <?php if (isset($_SESSION['id_user'])) {
-										echo "Bonjour, ";
-										echo $_SESSION['Firstname'];
-									} else {
-										echo "Mon Compte";
-									}
-									?> <span class="glyphicon glyphicon-user"></span></p>
+									echo "Bonjour, ";
+									echo $_SESSION['Firstname'];
+								} else {
+									echo "Mon Compte";
+								}
+								?> <span class="glyphicon glyphicon-user"></span></p>
 						</button>
 						<div class="dropdown-content">
 							<?php if (isset($_SESSION['id_user'])) {
@@ -131,138 +161,158 @@ function deconnect() {
 		<!-- Fin Nav -->
 
 		<div class="content-wrap">
-				<!-- D'abord on va chercher les infos de l'item dans la DB -->
-				<?php
-					// Accès DB
-					$servername = "localhost";
-					$username = "benzinho";
-					$dbpassword = "75011";
-					$dbname = "eBay ECE";
+			<!-- D'abord on va chercher les infos de l'item dans la DB -->
+			<?php
+			// Accès DB
+			$servername = "localhost";
+			$username = "benzinho";
+			$dbpassword = "75011";
+			$dbname = "eBay ECE";
 
-					//On récupère l'id de l'item
-					$id = $_GET['id'];
-					error_log("id : $id");
+			//On récupère l'id de l'item
+			$id = $_GET['id'];
+			error_log("id : $id");
 
-					try {
-							$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
-							// set the PDO error mode to exception
-							$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			try {
+				$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
+				// set the PDO error mode to exception
+				$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-							// begin the transaction
-							$conn->beginTransaction();
+				// begin the transaction
+				$conn->beginTransaction();
 
-							$stmt = $conn->prepare("SELECT * FROM Item AS It
+				$stmt = $conn->prepare("SELECT * FROM Item AS It
 																			LEFT JOIN Images AS Im ON It.Id_Item = Im.Id_Item
 																			WHERE It.Id_Item = '$id'");
-																			// Ne marche pas sans le ON 
-																			// ou sans les ''
-																			// ni sans le dernier It
+				// Ne marche pas sans le ON 
+				// ou sans les ''
+				// ni sans le dernier It
 
-							$stmt->execute();
+				$stmt->execute();
 
-							$result = $stmt->setFetchMode(PDO::FETCH_NUM);
+				$result = $stmt->setFetchMode(PDO::FETCH_NUM);
 
-							$tour = 0;
-							while ($row = $stmt->fetch()) {
+				$tour = 0;
+				while ($row = $stmt->fetch()) {
 
-									if ($row[0] != $i) {  ///Pour le premier match seulement
+					if ($row[0] != $i) {  ///Pour le premier match seulement
 
-										$id = $row[0];
-										$name = $row[1];
-										$category = $row[2];
-										$sale_type = $row[3];
-										$sold = $row[4];
-										$videoPath = $row[5];
-										$description = $row[6];
-										$beginDate = $row[7];
-										$endDate = $row[8];
-										$priceMin = $row[9];
-										$priceNow = $row[10];
-										$idSeller = $row[11];
+						$id = $row[0];
+						$name = $row[1];
+						$category = $row[2];
+						$sale_type = $row[3];
+						$sold = $row[4];
+						$videoPath = $row[5];
+						$description = $row[6];
+						$beginDate = $row[7];
+						$endDate = $row[8];
+						$priceMin = $row[9];
+						$priceNow = $row[10];
+						$idSeller = $row[11];
 
 
-										error_log("name: $name, category: $category, saleType: $sale_Type, sold: $sold, videoPath: $videoPath,
+						error_log("name: $name, category: $category, saleType: $sale_Type, sold: $sold, videoPath: $videoPath,
 											descriuption: $description, beginDate: $beginDate, endDate: $endDate, priceMin: $priceMin, priceNow: $priceNow, idSeller: $idSeller");
-
-										}$i = $row[0];
-										
-										//Pour les autres
-										$photosPath[$tour] = $row[13];
-										error_log("photosPath[$tour] : $photosPath[$tour]");
-										$tour++;
-								}
-
-					} catch (PDOException $e) {
-							// roll back the transaction if something failed
-							$conn->rollback();
-							error_log("Error: " . $e->getMessage());
-							echo "<h5 class='text-center'>Erreur.</h5>";
 					}
+					$i = $row[0];
 
-				// On se déconnecte
-				$conn = null;
-				?>
+					//Pour les autres
+					$photosPath[$tour] = $row[13];
+					error_log("photosPath[$tour] : $photosPath[$tour]");
+					$tour++;
+				}
 
-			
+				$photo1 = $photosPath[0];
+
+			} catch (PDOException $e) {
+				// roll back the transaction if something failed
+				$conn->rollback();
+				error_log("Error: " . $e->getMessage());
+				echo "<h5 class='text-center'>Erreur.</h5>";
+			}
+
+			// On se déconnecte
+			$conn = null;
+			?>
+
+
 			<!-- ON PASSE MAINTENANT A L'AFFICHAGE -->
-			
-			
+
+
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-3">
 						<h1 class="my-4"><?php echo $name; ?> </h1> <br>
 						<div class="list-group">
 
-							<!-- ok ENCHERES SEULEMENT-->
+							<!-- ENCHERES SEULEMENT-->
 							<?php if ($sale_type == '100') { ?>
 								<button class="list-group-item" onclick="encherir()">
 									<div class="bouton">Enchérir</div> <br>
 									<div class="info">
 										<p style="font-size: 120%;">
-											Date de début :<br><?php echo"$beginDate"; ?> <br><br>
-											Date de fin :<br><?php echo"$endDate"; ?> <br><br>
-											Prix Minimum :<br><?php echo"$priceMin"; ?>€ <br><br>
-										</p>	
+											Date de début :<br><?php echo "$beginDate"; ?> <br><br>
+											Date de fin :<br><?php echo "$endDate"; ?> <br><br>
+											Prix Minimum :<br><?php echo "$priceMin"; ?>€ <br><br>
+										</p>
 									</div>
 								</button>
 							<?php } ?>
 
-							<!-- OKKKKKK   ENCHERES et ACHAT IMMEDIAT-->
+							<!-- ENCHERES et ACHAT IMMEDIAT-->
 							<?php if ($sale_type == '110') { ?>
 
 								<button class="list-group-item" onclick="achatImm()">
 									<div class="bouton"> Achat Immédiat </div>
 									<div class="info">
-										<br><p class="pb-3" style="font-size: 150%;">Prix : <span style="font-weight: bold!important;"><?php echo"$priceNow"; ?>€</span><br></p>
-									<a href="panier.php?id=<?php echo"$id"; ?>"> Ajouter au panier </a> <br>
+										<br>
+										<p class="pb-3" style="font-size: 150%;">Prix : <span style="font-weight: bold!important;"><?php echo "$priceNow"; ?>€</span><br></p>
+
 									</div>
 								</button>
+								<a href="panier.php?id=<?php
+
+														$itemToPanier = array($id, $name, $description, $priceNow, $idSeller, $photo1);
+														$_SESSION['pannier'][$id] = $itemToPanier;
+
+														echo "$id";
+
+														?>" style="z-index: 2000;" class="mx-auto mt-2"> Ajouter au panier </a> <br>
 
 								<button class="list-group-item" onclick="encherir()">
 									<div class="bouton">Enchérir</div> <br>
 									<div class="info">
 										<p style="font-size: 120%;">
-											Date de début :<br><?php echo"$beginDate"; ?> <br><br>
-											Date de fin :<br><?php echo"$endDate"; ?> <br><br>
-											Prix Minimum :<br><?php echo"$priceMin"; ?>€ <br><br>
-										</p>	
+											Date de début :<br><?php echo "$beginDate"; ?> <br><br>
+											Date de fin :<br><?php echo "$endDate"; ?> <br><br>
+											Prix Minimum :<br><?php echo "$priceMin"; ?>€ <br><br>
+										</p>
 									</div>
 								</button>
 
 							<?php } ?>
 
-							<!-- ok ACHAT IMMEDIAT SEULEMENT -->
+							<!-- ACHAT IMMEDIAT SEULEMENT -->
 							<?php if ($sale_type == '010') { ?>
 								<button class="list-group-item" onclick="achatImm()">
 									<div class="bouton"> Achat Immédiat </div>
 									<div class="info">
-										<br><p class="pb-3" style="font-size: 150%;">Prix : <span style="font-weight: bold!important;"><?php echo"$priceNow"; ?>€</span><br></p>
-									<a href="panier.php?id=<?php echo"$id"; ?>"> Ajouter au panier </a> <br>
+										<br>
+										<p class="pb-3" style="font-size: 150%;">Prix : <span style="font-weight: bold!important;"><?php echo "$priceNow"; ?>€</span><br></p>
+
 									</div>
 								</button>
+								<a href="panier.php?id=<?php
+
+														$itemToPanier = array($id, $name, $description, $priceNow, $idSeller, $photo1);
+														$_SESSION['pannier'][$id] = $itemToPanier;
+
+														echo "$id";
+
+														?>" style="z-index: 2000;" class="mx-auto mt-2"> Ajouter au panier </a> <br>
 							<?php } ?>
 
-							<!-- OKKK OFFRE SEULEMENT-->
+							<!-- OFFRE SEULEMENT-->
 							<?php if ($sale_type == '001') { ?>
 
 								<button class="list-group-item" onclick="offre()">
@@ -270,15 +320,24 @@ function deconnect() {
 								</button>
 							<?php } ?>
 
-							<!-- ok OFFRE et ACHAT-->
+							<!-- OFFRE et ACHAT-->
 							<?php if ($sale_type == '011') { ?>
 								<button class="list-group-item" onclick="achatImm()">
 									<div class="bouton"> Achat Immédiat </div>
 									<div class="info">
-										<br><p class="pb-3" style="font-size: 150%;">Prix : <span style="font-weight: bold!important;"><?php echo"$priceNow"; ?>€</span><br></p>
-									<a href="panier.php?id=<?php echo"$id"; ?>"> Ajouter au panier </a> <br>
+										<br>
+										<p class="pb-3" style="font-size: 150%;">Prix : <span style="font-weight: bold!important;"><?php echo "$priceNow"; ?>€</span><br></p>
+
 									</div>
 								</button>
+								<a href="panier.php?id=<?php
+
+														$itemToPanier = array($id, $name, $description, $priceNow, $idSeller, $photo1);
+														$_SESSION['pannier'][$id] = $itemToPanier;
+
+														echo "$id";
+
+														?>" style="z-index: 2000;" class="mx-auto mt-2"> Ajouter au panier </a> <br>
 
 								<button class="list-group-item" onclick="offre()">
 									<div class="bouton">Faire une offre directe au vendeur</div>
@@ -298,13 +357,12 @@ function deconnect() {
 							<header>
 								<div id="carouselExampleIndicators" class="carousel slide" data-interval="false" data-ride="carousel" data-pause="hover">
 									<ol class="carousel-indicators">
-										<?php 
+										<?php
 										$countItems = count($photosPath) + count($videoPath);
 										for ($x = 0; $x < $countItems; $x++) {
 											if ($x == 0) {
 												echo "<li data-target='#carouselExampleIndicators' data-slide-to='$x' class='active'></li>";
-											}
-											else {
+											} else {
 												echo "<li data-target='#carouselExampleIndicators' data-slide-to='$x'></li>";
 											}
 										}
@@ -313,36 +371,38 @@ function deconnect() {
 
 									<div class="carousel-inner" role="listbox">
 										<!-- Slides du carousel en fonction du nombre d'images + vidéo -->
-										<?php 
+										<?php
 
 										foreach ($photosPath as $path) {
 
-											?>
+										?>
 											<!-- Slide X - Set the background image for this slide in the line below -->
-											<div class="carousel-item <?php if ($path == $photosPath[0]) {echo"active";} ?>" style="background-image: url('<?php echo"$path"; ?>'); border-radius: 10px 10px 0px 0px;">
+											<div class="carousel-item <?php if ($path == $photosPath[0]) {
+																			echo "active";
+																		} ?>" style="background-image: url('<?php echo "$path"; ?>'); border-radius: 10px 10px 0px 0px;">
 												<div class="carousel-caption d-none d-md-block">
 												</div>
 											</div>
-											<?php
+										<?php
 
 										}
 
 										if (!empty($videoPath)) {
-											?>
+										?>
 											<!-- Slide vidéo -->
 											<div class="carousel-item" style="max-height: 500px; border-radius: 10px 10px 0px 0px;">
 												<div class="embed-responsive embed-responsive-16by9">
 													<video height="500px" controls style="position: absolute; z-index: 0; left: 0px; overflow: hidden; opacity: 1; user-select: none; margin-top: 0px; max-width: initial;">
-														<source src="<?php echo"$videoPath"; ?>" type="video/mp4">
+														<source src="<?php echo "$videoPath"; ?>" type="video/mp4">
 													</video>
 												</div>
 											</div>
-											<?php
+										<?php
 										}
 
 										?>
 
-										
+
 									</div>
 
 									<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -358,15 +418,15 @@ function deconnect() {
 
 							<div class="card-body">
 								<h3 class="card-title"> <?php echo $name; ?> </h3>
-								
+
 								<p class="card-text"> <?php echo $description; ?></p>
 								<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
 								4.0 stars
 							</div>
 						</div>
-						
+
 					</div>
-				
+
 				</div>
 			</div>
 
@@ -416,4 +476,5 @@ function deconnect() {
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

@@ -179,7 +179,7 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
                         <?php
                         if ($typeVente == "100" or $typeVente == "110") {
                         ?>
-                            <table class="mx-auto">
+                            <table class="mx-auto my-3 border border-success">
                                 <tr>
                                 <td colspan="2" class="mx-auto text-center pt-3">
                                     <h5 id="titre">Informations Enchères</h5><br>

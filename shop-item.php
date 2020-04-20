@@ -2,7 +2,9 @@
 error_log("----------------------------------------------------------------------------------------------------");
 error_log("Début shop-item.php");
 session_start();
-error_log("id_user_session : " . $_SESSION['id_user'])
+error_log("id_user_session : " . $_SESSION['id_user']);
+$idUser = $_SESSION['id_user'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,126 +49,57 @@ error_log("id_user_session : " . $_SESSION['id_user'])
 		}
 	</style>
 
-	<script type="text/javascript">
-		function achatImm() {
-
-			var x = 0;
-			<?php
-			if (empty($_SESSION['id_user'])) {  //Si pas connecté
-				echo 'window.location.href = "connexion.php";'; /* Redirige vers connexion */
-				echo "var x = 1;";
-			}
-			?>
-
-			if (x === 0) {
-				if (confirm("   Etes-vous sûr ?\n   Cliquez pour être redirigé au payement.")) {
-					//redirect payement
-				} else {
-					//rien
-				}
-			}
-		}
-
-		function encherir() {
-
-			var x = 0;
-			<?php
-			if (empty($_SESSION['id_user'])) {  //Si pas connecté
-				echo 'window.location.href = "connexion.php";'; /* Redirige vers connexion */
-				echo "var x = 1;";
-			}
-			?>
-
-			if (x === 0) {
-				var enchere;
-
-				if (enchere = prompt("Combien voulez vous enchérir pour ce produit?")) {
-					//envoyer var "enchere".
-					alert("Merci ! Nous avons bien enregistré votre enchère");
-				} else {
-					//rien
-				}
-			}
-		}
-
-		function offre() {
-
-
-			var x = 0;
-			<?php
-			if (empty($_SESSION['id_user'])) {  //Si pas connecté
-				echo 'window.location.href = "connexion.php";'; /* Redirige vers connexion */
-				echo "var x = 1;";
-			}
-			?>
-
-			if (x === 0) {
-				var offre;
-
-				if (enchere = prompt("Quel est le montant de votre offre pour ce produit?")) {
-					//envoyer var offre
-					alert("Merci ! Nous avons bien transmis votre offre au vendeur");
-				} else {
-					//rien
-				}
-			}
-		}
-
-		function deconnect() {
-
-			window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
-		}
-	</script>
+	
 
 </head>
 
 <body>
 	<div class="page-container">
 		<!-- Navigation -->
-        <header class="page-header header container-fluid my-3 mb-5">
-            <div class="topnav">
-                <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
-                <div class="dropdown">
-                    <a class="dropbtn" href="achats.php">Types d'achats</a>
-                </div>
-                <div class="dropdown">
-                    <a class="dropbtn" href="categories.php">Catégories</a>
-                </div>
-                <div class="dropdown">
-                    <?php if ($_SESSION['user_type'] == 1) {
-                        ?>
-                    <a class="dropbtn" href="index_vendeur.php">Page Vendeur</a>
-                    <?php } ?>
-                </div>
-                <div class="topnav-right">
-                    <div class="dropdown">
-                        <button class="dropbtn">
-                            <p> <?php if (isset($_SESSION['id_user'])) {
-                                    echo "Bonjour, ";
-                                    echo $_SESSION['Firstname'];
-                                } else {
-                                    echo "Mon Compte";
-                                }
-                                ?> <span class="glyphicon glyphicon-user"></span></p>
-                        </button>
-                        <div class="dropdown-content">
-                            <?php if (isset($_SESSION['id_user'])) {
-                                echo '<a href="#" onclick="deconnect()">Se déconnecter</a> ';
-                            } else {
-                                echo '<a href="connexion.php">Se connecter</a> ';
-                            }
-                            ?>
-                            <?php if (!isset($_SESSION['id_user'])) { ?>
-                            <a href="inscription_buyer.php">S'inscrire</a>
-                            <?php } ?>
-                            <a href="admin.php">Admin</a>
-                        </div>
-                    </div>
-                    <a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
-                </div>
-            </div>
-        </header>
-        <!-- Fin Nav -->
+		<header class="page-header header container-fluid my-3 mb-5">
+			<div class="topnav">
+				<a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
+				<div class="dropdown">
+					<a class="dropbtn" href="achats.php">Types d'achats</a>
+				</div>
+				<div class="dropdown">
+					<a class="dropbtn" href="categories.php">Catégories</a>
+				</div>
+				<div class="dropdown">
+					<?php if ($_SESSION['user_type'] == 1) {
+					?>
+						<a class="dropbtn" href="index_vendeur.php">Page Vendeur</a>
+					<?php } ?>
+				</div>
+				<div class="topnav-right">
+					<div class="dropdown">
+						<button class="dropbtn">
+							<p> <?php if (isset($_SESSION['id_user'])) {
+									echo "Bonjour, ";
+									echo $_SESSION['Firstname'];
+								} else {
+									echo "Mon Compte";
+								}
+								?> <span class="glyphicon glyphicon-user"></span></p>
+						</button>
+						<div class="dropdown-content">
+							<?php if (isset($_SESSION['id_user'])) {
+								echo '<a href="#" onclick="deconnect()">Se déconnecter</a> ';
+							} else {
+								echo '<a href="connexion.php">Se connecter</a> ';
+							}
+							?>
+							<?php if (!isset($_SESSION['id_user'])) { ?>
+								<a href="inscription_buyer.php">S'inscrire</a>
+							<?php } ?>
+							<a href="admin.php">Admin</a>
+						</div>
+					</div>
+					<a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
+				</div>
+			</div>
+		</header>
+		<!-- Fin Nav -->
 
 		<div class="content-wrap">
 			<!-- D'abord on va chercher les infos de l'item dans la DB -->
@@ -231,7 +164,6 @@ error_log("id_user_session : " . $_SESSION['id_user'])
 				}
 
 				$photo1 = $photosPath[0];
-
 			} catch (PDOException $e) {
 				// roll back the transaction if something failed
 				$conn->rollback();
@@ -291,7 +223,7 @@ error_log("id_user_session : " . $_SESSION['id_user'])
 									<div class="bouton">Enchérir</div> <br>
 									<div class="info">
 										<p style="font-size: 120%;">
-											Date de début :<br><?php echo "$beginDate"; ?> <br><br>
+											
 											Date de fin :<br><?php echo "$endDate"; ?> <br><br>
 											Prix Minimum :<br><?php echo "$priceMin"; ?>€ <br><br>
 										</p>
@@ -441,6 +373,76 @@ error_log("id_user_session : " . $_SESSION['id_user'])
 
 			<!-- FIN AFFICHAGE -->
 		</div>
+
+
+		<script type="text/javascript">
+		function achatImm() {
+
+			var x = 0;
+			<?php
+			if (empty($_SESSION['id_user'])) {  //Si pas connecté
+				echo 'window.location.href = "connexion.php";'; /* Redirige vers connexion */
+				echo "var x = 1;";
+			}
+			?>
+
+			if (x === 0) {
+				if (confirm("   Etes-vous sûr ?\n   Cliquez pour être redirigé au payement.")) {
+					<?php unset($_SESSION['pannier']);
+					echo 'window.location.href = "paiement.php";'; ?>
+				} else {
+					//rien
+				}
+			}
+		}
+
+		function encherir() {
+
+			var x = 0;
+			<?php
+			if (empty($_SESSION['id_user'])) {  //Si pas connecté
+				echo 'window.location.href = "connexion.php";'; /* Redirige vers connexion */
+				echo "var x = 1;";
+			}
+			?>
+
+			if (x === 0) {
+				
+				<?php echo 'window.location.href = "offre.php?id=' . $id . '";' ?>
+
+			}
+		}
+
+
+		function offre() {
+
+			var x = 0;
+			<?php
+			if (empty($_SESSION['id_user'])) {  //Si pas connecté
+				echo 'window.location.href = "connexion.php";'; /* Redirige vers connexion */
+				echo "var x = 1;";
+			}
+			?>
+
+			if (x === 0) {
+				var offre;
+
+				if (enchere = prompt("Quel est le montant de votre offre pour ce produit?")) {
+					//envoyer var offre
+					alert("Merci ! Nous avons bien transmis votre offre au vendeur");
+				} else {
+					//rien
+				}
+			}
+		}
+
+		function deconnect() {
+
+			window.location.replace("deconnexion.php");
+		}
+	</script>
+
+
 
 		<?php
 		error_log("Fin shop-item.php");

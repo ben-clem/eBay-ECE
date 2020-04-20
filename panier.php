@@ -49,7 +49,7 @@ foreach ($_SESSION['pannier'] as $key => $value) {
     <script type="text/javascript">
         function deconnect() {
 
-            window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
+            window.location.replace("deconnexion.php");
         }
     </script>
     <!-- Page title -->

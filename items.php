@@ -26,7 +26,7 @@ error_log("id_user_session : " . $_SESSION['id_user'])
     <script type="text/javascript">
         function deconnect() {
 
-            window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
+            window.location.replace("deconnexion.php");
         }
     </script>
     <!-- Page title -->
@@ -193,6 +193,7 @@ error_log("id_user_session : " . $_SESSION['id_user'])
 
                                 if ($row[4] == 1) { /// Si l'objet a été vendu
                                     error_log("$row[4]");
+                                    $_SESSION['id_item'] = $row[0];
                                 ?>
 
 
@@ -238,6 +239,7 @@ error_log("id_user_session : " . $_SESSION['id_user'])
                             }
 
                             $id_item = $row[0];
+                            
                         }
                     } catch (PDOException $e) {
                         // roll back the transaction if something failed

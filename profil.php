@@ -38,10 +38,16 @@ error_log("id_user_session :" . $_SESSION['id_user'])
             <div class="topnav">
                 <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
                 <div class="dropdown">
-                    <a class="dropbtn" href="achats.php"> Achats </a>
+                    <a class="dropbtn" href="achats.php">Types d'achats</a>
                 </div>
                 <div class="dropdown">
-                    <a class="dropbtn" href="categories.php">Categories</a>
+                    <a class="dropbtn" href="categories.php">Catégories</a>
+                </div>
+                <div class="dropdown">
+                    <?php if ($_SESSION['user_type'] == 1) {
+                        ?>
+                    <a class="dropbtn" href="index_vendeur.php">Page Vendeur</a>
+                    <?php } ?>
                 </div>
                 <div class="topnav-right">
                     <div class="dropdown">
@@ -61,7 +67,9 @@ error_log("id_user_session :" . $_SESSION['id_user'])
                                 echo '<a href="connexion.php">Se connecter</a> ';
                             }
                             ?>
+                            <?php if (!isset($_SESSION['id_user'])) { ?>
                             <a href="inscription_buyer.php">S'inscrire</a>
+                            <?php } ?>
                             <a href="admin.php">Admin</a>
                         </div>
                     </div>

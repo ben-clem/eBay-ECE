@@ -123,42 +123,50 @@ error_log("id_user_session : " . $_SESSION['id_user'])
 <body>
 	<div class="page-container">
 		<!-- Navigation -->
-		<header class="page-header header container-fluid my-3 mb-5">
-			<div class="topnav">
-				<a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
-				<div class="dropdown">
-					<a class="dropbtn" href="achats.php"> Achats </a>
-				</div>
-				<div class="dropdown">
-					<a class="dropbtn" href="categories.php">Categories</a>
-				</div>
-				<div class="topnav-right">
-					<div class="dropdown">
-						<button class="dropbtn">
-							<p> <?php if (isset($_SESSION['id_user'])) {
-									echo "Bonjour, ";
-									echo $_SESSION['Firstname'];
-								} else {
-									echo "Mon Compte";
-								}
-								?> <span class="glyphicon glyphicon-user"></span></p>
-						</button>
-						<div class="dropdown-content">
-							<?php if (isset($_SESSION['id_user'])) {
-								echo '<a href="#" onclick="deconnect()">Se déconnecter</a> ';
-							} else {
-								echo '<a href="connexion.php">Se connecter</a> ';
-							}
-							?>
-							<a href="inscription_buyer.php">S'inscrire</a>
-							<a href="admin.php">Admin</a>
-						</div>
-					</div>
-					<a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
-				</div>
-			</div>
-		</header>
-		<!-- Fin Nav -->
+        <header class="page-header header container-fluid my-3 mb-5">
+            <div class="topnav">
+                <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
+                <div class="dropdown">
+                    <a class="dropbtn" href="achats.php">Types d'achats</a>
+                </div>
+                <div class="dropdown">
+                    <a class="dropbtn" href="categories.php">Catégories</a>
+                </div>
+                <div class="dropdown">
+                    <?php if ($_SESSION['user_type'] == 1) {
+                        ?>
+                    <a class="dropbtn" href="index_vendeur.php">Page Vendeur</a>
+                    <?php } ?>
+                </div>
+                <div class="topnav-right">
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <p> <?php if (isset($_SESSION['id_user'])) {
+                                    echo "Bonjour, ";
+                                    echo $_SESSION['Firstname'];
+                                } else {
+                                    echo "Mon Compte";
+                                }
+                                ?> <span class="glyphicon glyphicon-user"></span></p>
+                        </button>
+                        <div class="dropdown-content">
+                            <?php if (isset($_SESSION['id_user'])) {
+                                echo '<a href="#" onclick="deconnect()">Se déconnecter</a> ';
+                            } else {
+                                echo '<a href="connexion.php">Se connecter</a> ';
+                            }
+                            ?>
+                            <?php if (!isset($_SESSION['id_user'])) { ?>
+                            <a href="inscription_buyer.php">S'inscrire</a>
+                            <?php } ?>
+                            <a href="admin.php">Admin</a>
+                        </div>
+                    </div>
+                    <a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                </div>
+            </div>
+        </header>
+        <!-- Fin Nav -->
 
 		<div class="content-wrap">
 			<!-- D'abord on va chercher les infos de l'item dans la DB -->

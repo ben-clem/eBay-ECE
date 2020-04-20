@@ -41,50 +41,42 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
 
 <body>
     <div class="page-container">
-        <!-- Navigation -->
-        <header class="page-header header container-fluid my-3 mb-5">
-            <div class="topnav">
-                <a href="index_admin.php"> <span class="glyphicon glyphicon-home"></span> </a>
-                <div class="dropdown">
-                    <a class="dropbtn" href="vendre_1_infos_Item.php"> Ajouter un article </a>
-                </div>
-                <div class="dropdown">
-                    <a class="dropbtn" href="supprimer_item.php">Supprimer un article</a>
-                </div>
-                <div class="dropdown">
-                    <a class="dropbtn" href="ajout_vendeur.php">Ajouter un vendeur</a>
-                </div>
+        <!-- nav vendeur -->
+    <header class="page-header header container-fluid my-3 mb-5">
+        <div class="topnav">
+            <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
+            <div class="dropdown">
+                <a class="dropbtn" href="vendre_1_infos_Item.php"> Ajouter un article </a>
+            </div>
 
-                <div class="dropdown">
-                    <a class="dropbtn" href="supprimer_vendeur.php">Supprimer un vendeur</a>
-                </div>
 
-                <div class="topnav-right">
-                    <div class="dropdown">
-                        <button class="dropbtn">
-                            <p> <?php if (isset($_SESSION['id_user'])) {
-                                    echo "Bonjour, ";
-                                    echo $_SESSION['Firstname'];
-                                } else {
-                                    echo "Mon Compte Admin";
-                                }
-                                ?> <span class="glyphicon glyphicon-user"></span></p>
-                        </button>
-                        <div class="dropdown-content">
-                            <?php if (isset($_SESSION['id_user'])) {
-                                echo '<a href="#" onclick="deconnect()">Se déconnecter</a> ';
+
+            <div class="topnav-right">
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        <p> <?php if (isset($_SESSION['id_user'])) {
+                                echo "Bonjour, ";
+                                echo $_SESSION['Firstname'];
                             } else {
-                                echo '<a href="connexion.php">Se connecter</a> ';
+                                echo "Mon Compte Vendeur";
                             }
-                            ?>
-                            <a href="inscription_buyer.php">S'inscrire</a>
-                            <a href="admin.php">Admin</a>
-                        </div>
+                            ?> <span class="glyphicon glyphicon-user"></span></p>
+                    </button>
+                    <div class="dropdown-content">
+                        <?php if (isset($_SESSION['id_user'])) {
+                            echo '<a href="#" onclick="deconnect()">Se déconnecter</a> ';
+                        } else {
+                            echo '<a href="connexion.php">Se connecter</a> ';
+                        }
+                        ?>
+
+                        <a href="admin.php">Admin</a>
                     </div>
                 </div>
             </div>
-        </header>
-        <!-- Fin Nav -->
+        </div>
+    </header>
+    <!-- fin nav vendeur -->
         <div class="content-wrap container">
             <div class="row">
                 <div class="col-sm-10 mx-auto">

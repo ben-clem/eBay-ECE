@@ -40,44 +40,51 @@ if (!empty($_POST['btn_submit'])){
 
 <body>
 
-		<header class="page-header header container-fluid">
-
-			<div class="topnav">
-				<a href="#search"> <span class="glyphicon glyphicon-home"></span> </a>
-				<div class="dropdown">
-					<button class="dropbtn"> Achats </button>
-					<div class="dropdown-content">
-						<a href="#">Vente aux enchères</a> 
-						<a href="#">Achat Immédiat</a>
-						<a href="#">Meilleure offre</a>
-					</div>
-				</div>
-
-				<div class="dropdown">
-					<button class="dropbtn">Categories</button>
-					<div class="dropdown-content">
-						<a href="#">Ferraille ou Trésor</a>
-						<a href="#">Accessoires VIP</a>
-						<a href="#">Bon pour le Musée</a>
-					</div>
-				</div>
-
-  				<div class="topnav-right">
-
-  					<div class="dropdown">
-					<button class="dropbtn"><p>Mon compte <span class="glyphicon glyphicon-user"></span></p></button>
-					<div class="dropdown-content">
-						<a href="connexion.php">Se connecter</a>
-						<a href="inscription_seller.php">S'inscrire</a>
-						<a href="connexion.php">Admin</a>
-					</div>
-					</div>
-					<a href="#panier">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
-
-  				</div>
-
-			</div>
-		</header>
+		<!-- Navigation -->
+        <header class="page-header header container-fluid my-3 mb-5">
+            <div class="topnav">
+                <a href="index.php"> <span class="glyphicon glyphicon-home"></span> </a>
+                <div class="dropdown">
+                    <a class="dropbtn" href="achats.php">Types d'achats</a>
+                </div>
+                <div class="dropdown">
+                    <a class="dropbtn" href="categories.php">Catégories</a>
+                </div>
+                <div class="dropdown">
+                    <?php if ($_SESSION['user_type'] == 1) {
+                        ?>
+                    <a class="dropbtn" href="index_vendeur.php">Page Vendeur</a>
+                    <?php } ?>
+                </div>
+                <div class="topnav-right">
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <p> <?php if (isset($_SESSION['id_user'])) {
+                                    echo "Bonjour, ";
+                                    echo $_SESSION['Firstname'];
+                                } else {
+                                    echo "Mon Compte";
+                                }
+                                ?> <span class="glyphicon glyphicon-user"></span></p>
+                        </button>
+                        <div class="dropdown-content">
+                            <?php if (isset($_SESSION['id_user'])) {
+                                echo '<a href="#" onclick="deconnect()">Se déconnecter</a> ';
+                            } else {
+                                echo '<a href="connexion.php">Se connecter</a> ';
+                            }
+                            ?>
+                            <?php if (!isset($_SESSION['id_user'])) { ?>
+                            <a href="inscription_buyer.php">S'inscrire</a>
+                            <?php } ?>
+                            <a href="admin.php">Admin</a>
+                        </div>
+                    </div>
+                    <a href="panier.php">Mon panier <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                </div>
+            </div>
+        </header>
+        <!-- Fin Nav -->
 
 		<div class="container">
   			

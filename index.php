@@ -69,8 +69,8 @@ error_log("id_user_session : " . $_SESSION['id_user'])
                 </div>
                 <div class="dropdown">
                     <?php if ($_SESSION['user_type'] == 1) {
-                        ?>
-                    <a class="dropbtn" href="index_vendeur.php">Page Vendeur</a>
+                    ?>
+                        <a class="dropbtn" href="index_vendeur.php">Page Vendeur</a>
                     <?php } ?>
                 </div>
                 <div class="topnav-right">
@@ -92,7 +92,7 @@ error_log("id_user_session : " . $_SESSION['id_user'])
                             }
                             ?>
                             <?php if (!isset($_SESSION['id_user'])) { ?>
-                            <a href="inscription_buyer.php">S'inscrire</a>
+                                <a href="inscription_buyer.php">S'inscrire</a>
                             <?php } ?>
                             <a href="admin.php">Admin</a>
                         </div>
@@ -155,29 +155,198 @@ error_log("id_user_session : " . $_SESSION['id_user'])
 
                 <div class="row mx-5">
 
-                    <div class="col-sm-4 portfolio-item">
-                        <div class="card h-auto">
-                            <h6 class=" mx-auto my-2 px-2" id="second"><a class="link-black" href="#">venteUne1</a>
-                            </h6>
-                            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                        </div>
-                    </div>
+                    <!-- D'abord on va chercher les infos de l'item dans la DB -->
+                    <?php
+                    // Accès DB
+                    $servername = "localhost";
+                    $username = "benzinho";
+                    $dbpassword = "75011";
+                    $dbname = "eBay ECE";
 
-                    <div class="col-sm-4 portfolio-item">
-                        <div class="card h-auto">
-                            <h6 class=" mx-auto my-2 px-2" id="second"><a class="link-black" href="#">venteUne2</a>
-                            </h6>
-                            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                        </div>
-                    </div>
+                    try {
+                        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
+                        // set the PDO error mode to exception
+                        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                    <div class="col-sm-4 portfolio-item">
-                        <div class="card h-auto">
-                            <h6 class=" mx-auto my-2 px-2" id="second"><a class="link-black" href="#">venteUne3</a>
-                            </h6>
-                            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                        </div>
-                    </div>
+                        // begin the transaction
+                        $conn->beginTransaction();
+
+                        $stmt = $conn->prepare("SELECT * FROM Item AS It
+                                                LEFT JOIN Images AS Im ON It.Id_Item = Im.Id_Item
+                                                ORDER BY 'Name'");
+                        // ! Ne marche pas sans le ON ou sans les ''
+
+                        $stmt->execute();
+
+                        $result = $stmt->setFetchMode(PDO::FETCH_NUM);
+
+                        $i = 0;
+                        while ($row = $stmt->fetch()) {
+                            $i++;
+                            if ($i < 8) {
+
+                                if ($row[0] != $id_item) {  ///On affiche que le premier match par objets
+
+                                    if ($row[4] == 1) { /// Si l'objet a été vendu
+                                        error_log("$row[4]");
+                                        $_SESSION['id_item'] = $row[0];
+                    ?>
+
+
+
+                                        <div class="col-sm-4 portfolio-item" style="pointer-events: none;">
+                                            <div class="overlay">
+
+                                                <div class="card h-100">
+
+                                                    <a href="shop-item.php?id=<?php echo "$row[0]" ?>"><img class="card-img-top" src="<?php echo "$row[13]" ?>"></a>
+                                                    <div class="card-body">
+                                                        <p class="text-center overlay-text">Vendu ! </p>
+                                                        <h4 class="card-title">
+                                                            <a href="shop-item.php?id=<?php echo "$row[0]" ?>"><?php echo "$row[1]" ?></a>
+                                                        </h4>
+                                                        <p class="card-text"><?php echo "$row[6]" ?></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    <?php
+
+                                    } elseif ($row[4] == 0) {    /// Sinon
+                                    ?>
+
+                                        <div class="col-sm-4 portfolio-item">
+                                            <div class="card h-100">
+                                                <a href="shop-item.php?id=<?php echo "$row[0]" ?>"><img class="card-img-top" src="<?php echo "$row[13]" ?>"></a>
+                                                <div class="card-body">
+                                                    <h4 class="card-title">
+                                                        <a href="shop-item.php?id=<?php echo "$row[0]" ?>"><?php echo "$row[1]" ?></a>
+                                                    </h4>
+                                                    <p class="card-text"><?php echo "$row[6]" ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                    <?php
+                                    }
+                                }
+                            }
+
+                            $id_item = $row[0];
+                        }
+                    } catch (PDOException $e) {
+                        // roll back the transaction if something failed
+                        $conn->rollback();
+                        error_log("Error: " . $e->getMessage());
+                        echo "<h5 class='text-center'>Erreur.</h5>";
+                    }
+
+                    // On se déconnecte
+                    $conn = null;
+                    ?>
+
+
+
+
+                </div>
+                <div class="row mx-5">
+
+                    <!-- D'abord on va chercher les infos de l'item dans la DB -->
+                    <?php
+                    // Accès DB
+                    $servername = "localhost";
+                    $username = "benzinho";
+                    $dbpassword = "75011";
+                    $dbname = "eBay ECE";
+
+                    try {
+                        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
+                        // set the PDO error mode to exception
+                        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                        // begin the transaction
+                        $conn->beginTransaction();
+
+                        $stmt = $conn->prepare("SELECT * FROM Item AS It
+                                                LEFT JOIN Images AS Im ON It.Id_Item = Im.Id_Item
+                                                WHERE Category = '$idC' OR Sale_Type IN ('$idT1', '$idT2', '$idT3')
+                                                ORDER BY 'Name'");
+                        // ! Ne marche pas sans le ON ou sans les ''
+
+                        $stmt->execute();
+
+                        $result = $stmt->setFetchMode(PDO::FETCH_NUM);
+
+                        while ($row = $stmt->fetch()) {
+
+                            if ($row[0] != $id_item) {  ///On affiche que le premier match par objets
+
+                                if ($row[4] == 1) { /// Si l'objet a été vendu
+                                    error_log("$row[4]");
+                                    $_SESSION['id_item'] = $row[0];
+                    ?>
+
+
+
+                                    <div class="col-sm-4 portfolio-item" style="pointer-events: none;">
+                                        <div class="overlay">
+
+                                            <div class="card h-100">
+
+                                                <a href="shop-item.php?id=<?php echo "$row[0]" ?>"><img class="card-img-top" src="<?php echo "$row[13]" ?>"></a>
+                                                <div class="card-body">
+                                                    <p class="text-center overlay-text">Vendu ! </p>
+                                                    <h4 class="card-title">
+                                                        <a href="shop-item.php?id=<?php echo "$row[0]" ?>"><?php echo "$row[1]" ?></a>
+                                                    </h4>
+                                                    <p class="card-text"><?php echo "$row[6]" ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                <?php
+
+                                } elseif ($row[4] == 0) {    /// Sinon
+                                ?>
+
+                                    <div class="col-sm-4 portfolio-item">
+                                        <div class="card h-100">
+                                            <a href="shop-item.php?id=<?php echo "$row[0]" ?>"><img class="card-img-top" src="<?php echo "$row[13]" ?>"></a>
+                                            <div class="card-body">
+                                                <h4 class="card-title">
+                                                    <a href="shop-item.php?id=<?php echo "$row[0]" ?>"><?php echo "$row[1]" ?></a>
+                                                </h4>
+                                                <p class="card-text"><?php echo "$row[6]" ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                    <?php
+                                }
+                            }
+
+                            $id_item = $row[0];
+                        }
+                    } catch (PDOException $e) {
+                        // roll back the transaction if something failed
+                        $conn->rollback();
+                        error_log("Error: " . $e->getMessage());
+                        echo "<h5 class='text-center'>Erreur.</h5>";
+                    }
+
+                    // On se déconnecte
+                    $conn = null;
+                    ?>
+
+
+
+
                 </div>
 
             </div>
@@ -193,34 +362,34 @@ error_log("id_user_session : " . $_SESSION['id_user'])
                 <div class="row mx-5">
                     <div class="col-sm-4 portfolio-item">
                         <div class="card h-100">
-                            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                            <a href="#"><img class="card-img-top" src="img/auction.jpg" alt=""></a>
                             <div class="card-body">
                                 <h4 class="card-title">
-                                    <a href="#">Votre Objet 1</a>
+                                    <a href="#">Enchère</a>
                                 </h4>
-                                <p class="card-text">description objet 1</p>
+                                <p class="card-text">Enchérissez sur un produit.<br>La plus grosse offre l'emporte</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-4 portfolio-item">
                         <div class="card h-100">
-                            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                            <a href="#"><img class="card-img-top" src="img/achat.jpg" alt=""></a>
                             <div class="card-body">
                                 <h4 class="card-title">
-                                    <a href="#">Votre objet 2</a>
+                                    <a href="#">Achat Immédiat</a>
                                 </h4>
-                                <p class="card-text">description objet 2</p>
+                                <p class="card-text">Ne perdez pas de temps et achetez sur le champ.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-4 portfolio-item">
                         <div class="card h-100">
-                            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                            <a href="#"><img class="card-img-top" src="img/offre.jpg" alt=""></a>
                             <div class="card-body">
                                 <h4 class="card-title">
-                                    <a href="#">votre objet 3</a>
+                                    <a href="#">Meilleure Offre</a>
                                 </h4>
-                                <p class="card-text">description objet 3</p>
+                                <p class="card-text">Négociez directement avec le vendeur.</p>
                             </div>
                         </div>
                     </div>

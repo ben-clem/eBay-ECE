@@ -1,3 +1,9 @@
+<?php
+error_log("----------------------------------------------------------------------------------------------------");
+error_log("Début categories.php");
+session_start();
+error_log("id_user_session : " . $_SESSION['id_user'])
+?>
 <!DOCTYPE html>
 <html>
 
@@ -92,13 +98,17 @@ pour la communauté ECE Paris "> <!-- Search Engines description -->
 				<a href="items.php?id=__3" class="zoom-out"> <img src="img/vip.jpg" height="200" width="200"> </a>
 			</div>
 
-			<table id="titres">
-				<tr>
-					<th> Ferraille ou Trésor </th>
-					<th STYLE="padding:0 0 0 190px;"> Bon pour le Musée </th>
-					<th STYLE="padding:0 0 0 200px;"> Accessoires VIP </th>
-				</tr>
-			</table>
+			<div class="row mt-5 pt-5">
+                <div class="col-4 text-center px-0 w-25" style="font-size: 125%; font-weight: bold; position: relative; left:5%;">
+                    <p class="w-50 mx-auto mr-2">Ferraille ou Trésor</p>
+                </div>
+                <div class="col-4 text-center px-0 w-25" style="font-size: 125%; font-weight: bold;">
+                    <p class="w-50 mx-auto">Bon pour le Musée</p>
+                </div>
+                <div class="col-4 text-center px-0 w-25" style="font-size: 125%; font-weight: bold; position: relative; right:5%;">
+                    <p class="w-50 mx-auto ml-2">Accessoires VIP</p>
+                </div>
+            </div>
 
 
 

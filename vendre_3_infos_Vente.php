@@ -129,7 +129,7 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
                             if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 
                                 //Handle other code here
-                                echo "vidéo envoyée";
+                                
                             }
                             $urlVideo = $newFilePath; //On récupère l'url de la vidéo
 
@@ -147,7 +147,7 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
                                 if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 
                                     //Handle other code here
-                                    echo "vidéo envoyée";
+                                    
                                 }
                                 $urlVideo = $newFilePath; //On récupère l'url de la vidéo
                             }
@@ -164,12 +164,7 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
                         }
                         ?>
 
-                        <?php
-                        echo "$nom";
-                        echo "$categorie";
-                        echo "$description";
-                        echo "typeVente: $typeVente";
-                        ?>
+                        
 
 
 
@@ -177,7 +172,7 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
 
 
                         <?php
-                        if ($typeVente == "100" or $typeVente == "110") {
+                        if ($typeVente == '100' or $typeVente == '110') {
                         ?>
                             <table class="mx-auto my-3 border border-success">
                                 <tr>
@@ -189,10 +184,7 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
                                     <td class="p-1"><label class="ml-auto mr-1" for="prixDepart">Prix de départ :</label></td>
                                     <td class="p-1"><input required type="number" name="prixDepart" placeholder="5€"></td>
                                 </tr>
-                                <tr>
-                                    <td class="p-1"><label class="ml-auto mr-1" for="dateDebut">Date de début :</label></td>
-                                    <td class="p-1"><input required type="datetime-local" name="dateDebut"></td>
-                                </tr>
+                                
                                 <tr>
                                     <td class="p-1"><label class="ml-auto mr-1" for="dateFin">Date de fin :</label></td>
                                     <td class="p-1"><input required type="datetime-local" name="dateFin"></td>
@@ -203,7 +195,7 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
                         ?>
 
                         <?php
-                        if ($typeVente == "010" || $typeVente == "110" || $typeVente == "011") {
+                        if ($typeVente == '010' || $typeVente == '110' || $typeVente == '011') {
                         ?>
                             <table class="mx-auto my-3 border border-danger">
                                 <tr>
@@ -221,7 +213,7 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
                         ?>
 
                         <?php
-                        if ($typeVente == "001" or $typeVente == "011") {
+                        if ($typeVente == '001' or $typeVente == '011') {
                         ?>
                             <table class="mx-auto my-3 border border-dark">
                                 <tr>

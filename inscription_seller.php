@@ -139,7 +139,7 @@ if (!empty($_POST['btn_submit'])){
 	try
 	{
 		// On se connecte à MySQL
-		$bdd = new PDO('mysql:host=localhost;dbname=Ebay ECE;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+		$bdd = new PDO('mysql:host=localhost;dbname=eBay ECE;charset=utf8', 'benzinho', '75011', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 	}
 	catch(Exception $e)
 	{
@@ -152,14 +152,14 @@ if (!empty($_POST['btn_submit'])){
 		if($_POST['password'] == $_POST['password_confirm']) {
 		
 
-		$reponse = $bdd->prepare('INSERT INTO seller (ID_Seller, Name, Firstname, Password, Photo_path, Background_path) VALUES (? ,? , ?, ?, ?, ?)');
+		$reponse = $bdd->prepare('INSERT INTO seller (ID_Seller, Name, Firstname, Password, Photo_path, Backgroung_path) VALUES (? ,? , ?, ?, ?, ?)');
 		$reponse->execute(array(
 			$_POST['id_seller'],
 			$_POST['s_name'],
 			$_POST['firstname'],
 			$_POST['password'],
-			$_FILES['photo_path']['name'],
-			$_FILES['background_path']['name']));
+			$_FILES['photo_path'],
+			$_FILES['background_path']));
 
 		$reponse->closeCursor();
 }

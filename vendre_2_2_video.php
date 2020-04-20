@@ -113,7 +113,7 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
                             }
 
                             // Check filesize
-                            if ($_FILES['photos']['size'][$key] > 500000) {
+                            if ($_FILES['photos']['size'][$key] > 50000000) {
                                 die('File uploaded exceeds maximum upload size.');
                             }
 

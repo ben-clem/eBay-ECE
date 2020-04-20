@@ -154,7 +154,6 @@ $idUser = $_SESSION['id_user'];
                     // roll back the transaction if something failed
                     $conn->rollback();
                     error_log("Error: " . $e->getMessage());
-                    echo "<h5 class='text-center'>Erreur .</h5>";
                 }
 
                 // On se déconnecte

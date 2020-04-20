@@ -164,7 +164,7 @@ error_log("id_user_session :" . $_SESSION['id_user'])
     </div>
     <div class="row mx-5 my-10">
 
-        <div class="col-sm-4 portfolio-item">
+        <!-- <div class="col-sm-4 portfolio-item">
             <div class="card h-auto">
                 <h6 class=" mx-auto my-2 px-2" id="second"><a class="link-black" href="#">venteUne1</a>
                 </h6>
@@ -186,7 +186,7 @@ error_log("id_user_session :" . $_SESSION['id_user'])
                 </h6>
                 <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
             </div>
-        </div>
+        </div> -->
     </div>
 
 

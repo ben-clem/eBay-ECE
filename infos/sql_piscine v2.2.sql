@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 18, 2020 at 12:00 PM
+-- Generation Time: Apr 20, 2020 at 08:53 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.4.2
 
@@ -11,7 +11,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Database: `ebay ECE`
+-- Database: `eBay ECE`
 --
 
 -- --------------------------------------------------------
@@ -51,22 +51,20 @@ CREATE TABLE `BUYER` (
   `Name` varchar(255) NOT NULL,
   `Firstname` varchar(255) NOT NULL,
   `Address` varchar(255) NOT NULL,
-  `Bank_Info` varchar(255) NOT NULL,
-  `Amount` float NOT NULL,
-  `Photo_path` varchar(255) NOT NULL,
-  `Background_path` varchar(255) NOT NULL
+  `Titulaire` varchar(255) NOT NULL,
+  `Numero` bigint(20) NOT NULL,
+  `Expiration` varchar(255) NOT NULL,
+  `CVV` int(255) NOT NULL,
+  `Photo_path` varchar(255) DEFAULT NULL,
+  `Background_path` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `CONTAIN`
+-- Dumping data for table `BUYER`
 --
 
-CREATE TABLE `CONTAIN` (
-  `Id_Item` int(11) NOT NULL,
-  `ID_Panier` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `BUYER` (`ID_Buyer`, `Password`, `Name`, `Firstname`, `Address`, `Titulaire`, `Numero`, `Expiration`, `CVV`, `Photo_path`, `Background_path`) VALUES
+('ben@acheteur.com', 'mdp', 'Acheteur', 'New', '146 Rue du Chemin Vert, 75011 Paris, France', 'M BENOIT CLEMENCEAU', 4561237896541236, '12/2022', 123, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -78,6 +76,18 @@ CREATE TABLE `Images` (
   `Image_Path` varchar(255) NOT NULL,
   `Id_Item` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Images`
+--
+
+INSERT INTO `Images` (`Image_Path`, `Id_Item`) VALUES
+('databaseImages/tableau-tableaux-tableau-contemporain-tableaux-contemporains-art-moderne-peintre-peintres-peintre-contemporain-peintres-contemporains1.jpg', 69),
+('databaseImages/93857440_904345760008189_1393137779931611136_n.jpg', 71),
+('databaseImages/92467999_157283908934486_2919853565369384960_n.jpg', 72),
+('databaseImages/93783918_2608673239404230_3876810723170451456_n3.jpg', 73),
+('databaseImages/93707348_238207380859540_5300624856042176512_n.jpg', 74),
+('databaseImages/88991856_219083565881034_6623165721658523648_n1.jpg', 75);
 
 -- --------------------------------------------------------
 
@@ -101,6 +111,18 @@ CREATE TABLE `Item` (
   `ID_Buyer` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `Item`
+--
+
+INSERT INTO `Item` (`Id_Item`, `Name`, `Category`, `Sale_Type`, `Sold`, `Video_Path`, `Description`, `Begin_Date`, `End_Date`, `Price_Min`, `Price_Now`, `ID_Seller`, `ID_Buyer`) VALUES
+(69, 'Peinture Aquarelle', 2, 110, 1, 'databaseVideos/1.', 'Peinture Magnifique pour votre salon', NULL, '2020-05-20 15:12:00', 125, 500, 'benoit.clemenceau@edu.ece.fr', 'ben@acheteur.com'),
+(71, 'Champagne Dom Pérignon', 1, 100, 0, 'databaseVideos/TestVideo11.mp4', 'Bouteille Vintage Collector de 2006.', NULL, '2020-06-01 12:00:00', 500, NULL, 'benoit.clemenceau@edu.ece.fr', NULL),
+(72, 'Machine à écrire Vintage', 1, 11, 0, 'databaseVideos/1.', 'Datée de 1965 et restaurée en 2016.', NULL, NULL, NULL, 200, 'benoit.clemenceau@edu.ece.fr', NULL),
+(73, 'Malle Napoléon III', 3, 10, 0, 'databaseVideos/TestVideo16.mp4', 'Ayant servi à enfermer des enfants.', NULL, NULL, NULL, 600, 'benoit.clemenceau@edu.ece.fr', NULL),
+(74, 'Appareil Photo Nikon', 3, 110, 1, 'databaseVideos/1.', 'Appareil ayant appartenu à Joe Bassin.', NULL, '2022-12-15 12:27:00', 500, 1000, 'mich.mich@mail.dz', 'ben@acheteur.com'),
+(75, 'Bague Or', 3, 11, 0, 'databaseVideos/1.', '256 carats', NULL, NULL, NULL, 750, 'mich.mich@mail.dz', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -111,17 +133,6 @@ CREATE TABLE `NEGOCIATION` (
   `ID_Buyer` varchar(255) NOT NULL,
   `Id_Item` int(11) NOT NULL,
   `Price_Nego` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `PANIER`
---
-
-CREATE TABLE `PANIER` (
-  `ID_Panier` int(11) NOT NULL,
-  `ID_Buyer` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -147,6 +158,7 @@ CREATE TABLE `SELLER` (
 INSERT INTO `SELLER` (`ID_Seller`, `Password`, `Admin`, `Firstname`, `Name`, `Photo_path`, `Backgroung_path`) VALUES
 ('benoit.clemenceau@edu.ece.fr', 'mdp', 1, 'Benoît', 'Clemenceau', '', ''),
 ('kim.zaatar@gmail.com', 'mdp', 1, 'Kim', 'Zaatar', '', ''),
+('mich.mich@mail.dz', 'mdp', 0, 'Michel', 'Dumaire', 'Array', 'Array'),
 ('miriam.benallou@edu.ece.fr', 'mdp', 1, 'Miriam', 'Benallou', '', ''),
 ('test.test@test.com', '75011', 1, 'test', 'test', NULL, NULL);
 
@@ -175,13 +187,6 @@ ALTER TABLE `BUYER`
   ADD PRIMARY KEY (`ID_Buyer`);
 
 --
--- Indexes for table `CONTAIN`
---
-ALTER TABLE `CONTAIN`
-  ADD PRIMARY KEY (`Id_Item`,`ID_Panier`),
-  ADD KEY `CONTAIN_PANIER0_FK` (`ID_Panier`);
-
---
 -- Indexes for table `Images`
 --
 ALTER TABLE `Images`
@@ -204,13 +209,6 @@ ALTER TABLE `NEGOCIATION`
   ADD KEY `NEGOCIATION_Item0_FK` (`Id_Item`);
 
 --
--- Indexes for table `PANIER`
---
-ALTER TABLE `PANIER`
-  ADD PRIMARY KEY (`ID_Panier`),
-  ADD UNIQUE KEY `PANIER_BUYER_AK` (`ID_Buyer`);
-
---
 -- Indexes for table `SELLER`
 --
 ALTER TABLE `SELLER`
@@ -224,13 +222,7 @@ ALTER TABLE `SELLER`
 -- AUTO_INCREMENT for table `Item`
 --
 ALTER TABLE `Item`
-  MODIFY `Id_Item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
-
---
--- AUTO_INCREMENT for table `PANIER`
---
-ALTER TABLE `PANIER`
-  MODIFY `ID_Panier` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_Item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- Constraints for dumped tables
@@ -251,13 +243,6 @@ ALTER TABLE `BID_SALE`
   ADD CONSTRAINT `BID_SALE_Item0_FK` FOREIGN KEY (`Id_Item`) REFERENCES `Item` (`Id_Item`);
 
 --
--- Constraints for table `CONTAIN`
---
-ALTER TABLE `CONTAIN`
-  ADD CONSTRAINT `CONTAIN_Item_FK` FOREIGN KEY (`Id_Item`) REFERENCES `Item` (`Id_Item`),
-  ADD CONSTRAINT `CONTAIN_PANIER0_FK` FOREIGN KEY (`ID_Panier`) REFERENCES `PANIER` (`ID_Panier`);
-
---
 -- Constraints for table `Images`
 --
 ALTER TABLE `Images`
@@ -276,9 +261,3 @@ ALTER TABLE `Item`
 ALTER TABLE `NEGOCIATION`
   ADD CONSTRAINT `NEGOCIATION_BUYER_FK` FOREIGN KEY (`ID_Buyer`) REFERENCES `BUYER` (`ID_Buyer`),
   ADD CONSTRAINT `NEGOCIATION_Item0_FK` FOREIGN KEY (`Id_Item`) REFERENCES `Item` (`Id_Item`);
-
---
--- Constraints for table `PANIER`
---
-ALTER TABLE `PANIER`
-  ADD CONSTRAINT `PANIER_BUYER_FK` FOREIGN KEY (`ID_Buyer`) REFERENCES `BUYER` (`ID_Buyer`);

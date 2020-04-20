@@ -113,17 +113,6 @@ error_log("id_user_session : " . $_SESSION['id_user'])
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-4">
-
-                </div>
-                <div class="col-4">
-
-                </div>
-                <div class="col-4">
-
-                </div>
-            </div>
 
 
 

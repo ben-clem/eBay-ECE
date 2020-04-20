@@ -175,7 +175,7 @@ $idUser = $_SESSION['id_user'];
 			$conn = null;
 			?>
 
-
+			<input type="hidden" name="id" value="$id">
 			<!-- ON PASSE MAINTENANT A L'AFFICHAGE -->
 
 
@@ -191,7 +191,6 @@ $idUser = $_SESSION['id_user'];
 									<div class="bouton">Enchérir</div> <br>
 									<div class="info">
 										<p style="font-size: 120%;">
-											Date de début :<br><?php echo "$beginDate"; ?> <br><br>
 											Date de fin :<br><?php echo "$endDate"; ?> <br><br>
 											Prix Minimum :<br><?php echo "$priceMin"; ?>€ <br><br>
 										</p>
@@ -388,8 +387,7 @@ $idUser = $_SESSION['id_user'];
 
 			if (x === 0) {
 				if (confirm("   Etes-vous sûr ?\n   Cliquez pour être redirigé au payement.")) {
-					<?php unset($_SESSION['pannier']);
-					echo 'window.location.href = "paiement.php";'; ?>
+					<?php echo 'window.location.href = "paiement.php";'; ?>
 				} else {
 					//rien
 				}

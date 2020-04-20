@@ -98,7 +98,6 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
 
             $ID_USER = $_SESSION['id_user'];
 
-            echo "$urlPhotos[0]<br>$urlPhotos[1]<br>$urlPhotos[2]<br>$urlPhotos[3]<br>$urlPhotos[4]<br>$urlVideo[0]";
 
             ?>
 
@@ -121,19 +120,23 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
                 // our SQL statements
 
                 //INSERT ITEMS
-                if ($typeVente == "100") { //Enchère seule
-                    $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, Begin_Date, End_Date, Price_Min, ID_seller)
-                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$dateDebut', '$dateFin', '$prixDepart', '$ID_USER')");
+                if ($typeVente == '100') { //Enchère seule
+                    $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, End_Date, Price_Min, ID_seller)
+                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$dateFin', '$prixDepart', '$ID_USER')");
                 }
-                if ($typeVente == "110") { //Enchère + Achat immédiat
-                    $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, Begin_Date, End_Date, Price_Min, Price_Now, ID_seller)
-                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$dateDebut', '$dateFin', '$prixDepart', '$prixAchImm', '$ID_USER')");
+                if ($typeVente == '110') { //Enchère + Achat immédiat
+                    $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, End_Date, Price_Min, Price_Now, ID_seller)
+                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$dateFin', '$prixDepart', '$prixAchImm', '$ID_USER')");
                 }
-                if ($typeVente == "010" or $typeVente == "011") { //Ach Imm seul ou achat Imm + meilleure offre
+                if ($typeVente == '010') { //Ach Imm seul 
                     $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, Price_Now, ID_seller)
                 VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$prixAchImm', '$ID_USER')");
                 }
-                if ($typeVente == "001") { //Meilleure offre seule
+                if ($typeVente == '011') { //achat Imm + meilleure offre
+                    $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, Price_Now, ID_seller)
+                VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$prixAchImm', '$ID_USER')");
+                }
+                if ($typeVente == '001') { //Meilleure offre seule
                     $conn->exec("INSERT INTO Item (Name, Category, Sale_Type, Sold, Video_Path, Description, ID_seller)
                 VALUES ('$nom', '$categorie', '$typeVente', false, '$urlVideo[0]', '$description', '$ID_USER')");
                 }
@@ -142,7 +145,7 @@ if (empty($_SESSION['id_user'])) {  //Si pas connecté
                 $idItem = $conn->lastInsertId(); // On récupère l'ID du dernier Item inséré // ! Ne fonctionne pas corréctement si placé après le commit.
 
                 foreach ($urlPhotos as $url) {
-                    $conn->exec("INSERT INTO Images (Image_Path, Id_Item) VALUES ('$url', '$idItem')");
+                    $conn->exec("INSERT INTO Images (Image_Path, Id_Item) VALUES ('$url', $idItem)");
                 }
 
 

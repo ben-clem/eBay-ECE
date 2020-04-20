@@ -5,6 +5,9 @@ session_start();
 $id_user = $_SESSION['id_user'];
 error_log("id_user_session :" . $id_user);
 
+$id = $_GET['id'];
+error_log("id $id");
+
 // ON SUPPRIME L'ITEM DU PANIER A SUPPRIMER
 unset($_SESSION['pannier'][$_GET['deleteID']]);
 

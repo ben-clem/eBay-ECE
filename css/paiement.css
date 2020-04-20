@@ -54,18 +54,7 @@ body {
     font-family: Poppins;
 }
 
-/* Keeping the footer where it should be
-https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/
-need :
-<body>
- <div class="page-container">
-   <div class="content-wrap">
-     <!-- all other page content -->
-   </div>
-   <footer class="footer"></footer>
- </div>
-</body>
-*/
+
 
 
 .topnav {
@@ -158,3 +147,37 @@ body {
 .row{
 	font-family: Poppins;
 }
+
+/* Keeping the footer where it should be
+https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/
+need :
+<body>
+ <div class="page-container">
+   <div class="content-wrap">
+     <!-- all other page content -->
+   </div>
+   <footer class="footer"></footer>
+ </div>
+</body>
+*/
+
+div.page-container {
+    position: relative;
+    min-height: 117vh;
+}
+
+
+
+div.content-wrap {
+    padding-bottom: 160px;
+    /* Footer height */
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 160px;
+    /* Footer height */
+}
+/* End */

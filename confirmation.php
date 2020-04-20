@@ -1,8 +1,9 @@
 <?php
 error_log("----------------------------------------------------------------------------------------------------");
-error_log("Début index.php");
+error_log("Début confirmation.php");
 session_start();
-error_log("id_user_session :" . $_SESSION['id_user'])
+$buyer = $_SESSION['id_user'];
+error_log("buyer : " . $buyer)
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,12 +27,11 @@ error_log("id_user_session :" . $_SESSION['id_user'])
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <link rel="stylesheet" href="https://getbootstrap.com/docs/4.3/getting-started/introduction/">
-<script type="text/javascript">
+    <script type="text/javascript">
         function deconnect() {
-                
+
             window.location.replace("http://localhost/EBay-ECE/deconnexion.php");
         }
-      
     </script>
     <!-- Page title -->
     <title>Confirmation</title>
@@ -39,6 +39,49 @@ error_log("id_user_session :" . $_SESSION['id_user'])
 </head>
 
 <body>
+    <!-- TRAITEMENT -->
+
+    <?php
+
+
+
+
+
+
+    foreach ($_SESSION['pannier'] as $key => $value) {
+
+        // Accès DB
+        $servername = "localhost";
+        $username = "benzinho";
+        $dbpassword = "75011";
+        $dbname = "eBay ECE";
+
+
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
+            // set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $sql = "UPDATE Item SET Sold = 1, ID_Buyer = '$buyer' WHERE Id_Item = $value[0]";
+
+            // Prepare statement
+            $stmt = $conn->prepare($sql);
+
+            // execute the query
+            $stmt->execute();
+
+            // echo a message to say the UPDATE succeeded
+            echo $stmt->rowCount() . " records UPDATED successfully";
+        } catch (PDOException $e) {
+            echo $sql . "<br>" . $e->getMessage();
+        }
+
+        // On se déconnecte
+        $conn = null;
+    }
+
+    ?>
+    <!-- FIN TRAITEMENT -->
 
     <div class="page-container">
         <!-- Navigation -->
@@ -79,27 +122,29 @@ error_log("id_user_session :" . $_SESSION['id_user'])
         </header>
         <!-- Fin Nav -->
 
-           <!-- CODE INSPIRE DE : https://codepen.io/JacobLett/pen/vyegPV -->
+        <!-- CODE INSPIRE DE : https://codepen.io/JacobLett/pen/vyegPV -->
 
-           <!-- SI LA COMMANDE EST PASSEE -->
+        <!-- SI LA COMMANDE EST PASSEE -->
 
-                     <!-- METTRE UNE CONDITION ICI -->
+        <!-- METTRE UNE CONDITION ICI -->
 
-                    <div class="jumbotron text-center">
-                          <h1 class="display-3">Merci !</h1>
-                          <p class="lead"><strong>Votre commande à bien été confirmée </strong> <br> <h4>Nous vous avons envoyé un email de confirmation ! Suivez votre colis en temps réel<h4></p>
-                          <hr>
-                          <p>
-                            Un problème ? <a href="#footer">Contactez-nous</a>
-                          </p>
-                          <p class="lead">
-                            <a class="btn btn-primary btn-sm" href="index.php" role="button" id ="buttonMenu">Revenir à la page principale</a>
-                          </p>
-                    </div> 
+        <div class="jumbotron text-center">
+            <h1 class="display-3">Merci !</h1>
+            <p class="lead"><strong>Votre commande à bien été confirmée </strong> <br>
+                <h4>Nous vous avons envoyé un email de confirmation ! Suivez votre colis en temps réel<h4>
+            </p>
+            <hr>
+            <p>
+                Un problème ? <a href="#footer">Contactez-nous</a>
+            </p>
+            <p class="lead">
+                <a class="btn btn-primary btn-sm" href="index.php" role="button" id="buttonMenu">Revenir à la page principale</a>
+            </p>
+        </div>
 
-            <!-- SI LA COMMANDE N EST PAS PASSEE -->
+        <!-- SI LA COMMANDE N EST PAS PASSEE -->
 
-                     <!-- METTRE UNE CONDITION ICI 
+        <!-- METTRE UNE CONDITION ICI 
 
                      <div class="jumbotron text-center">
                           <h1 class="display-3"> Oups !</h1>
@@ -112,7 +157,7 @@ error_log("id_user_session :" . $_SESSION['id_user'])
                             <a class="btn btn-primary btn-sm" href="index.php" role="button" id ="buttonMenu">Revenir à la page principale</a>
                           </p>
                     </div> -->
-        
+
         <!-- fin du message -->
 
         <!-- Footer -->
@@ -145,6 +190,14 @@ error_log("id_user_session :" . $_SESSION['id_user'])
         </footer>
         <!-- fin Footer -->
     </div>
+
+    <?php
+    unset($_SESSION['pannier']);
+    error_log("Fin confirmation.php");
+    error_log("----------------------------------------------------------------------------------------------------");
+    ?>
+
+
 
     <!-- links to bootstrap JS dependencies -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

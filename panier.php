@@ -21,6 +21,7 @@ foreach ($_SESSION['pannier'] as $key => $value) {
         photo1 : $value[5]."
     );
     $total += $value[3];
+    error_log("total : $total.");
 }
 
 ?>
@@ -102,6 +103,75 @@ Code inspirer de : https://bootsnipp.com/snippets/ZXKKD -->
 
         <h1 class="jumbotron-heading mt-5 pt-5">Mon Panier</h1> <br><br>
 
+        <!-- D'abord on va chercher les infos de l'acheteur la DB -->
+			<?php
+			// Accès DB
+			$servername = "localhost";
+			$username = "benzinho";
+			$dbpassword = "75011";
+			$dbname = "eBay ECE";
+
+			try {
+				$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $dbpassword);
+				// set the PDO error mode to exception
+				$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+				// begin the transaction
+				$conn->beginTransaction();
+
+				$stmt = $conn->prepare("SELECT * FROM Item AS It
+																			LEFT JOIN Images AS Im ON It.Id_Item = Im.Id_Item
+																			WHERE It.Id_Item = '$id'");
+				// Ne marche pas sans le ON 
+				// ou sans les ''
+				// ni sans le dernier It
+
+				$stmt->execute();
+
+				$result = $stmt->setFetchMode(PDO::FETCH_NUM);
+
+				$tour = 0;
+				while ($row = $stmt->fetch()) {
+
+					if ($row[0] != $i) {  ///Pour le premier match seulement
+
+						$id = $row[0];
+						$name = $row[1];
+						$category = $row[2];
+						$sale_type = $row[3];
+						$sold = $row[4];
+						$videoPath = $row[5];
+						$description = $row[6];
+						$beginDate = $row[7];
+						$endDate = $row[8];
+						$priceMin = $row[9];
+						$priceNow = $row[10];
+						$idSeller = $row[11];
+
+
+						error_log("name: $name, category: $category, saleType: $sale_Type, sold: $sold, videoPath: $videoPath,
+											descriuption: $description, beginDate: $beginDate, endDate: $endDate, priceMin: $priceMin, priceNow: $priceNow, idSeller: $idSeller");
+					}
+					$i = $row[0];
+
+					//Pour les autres
+					$photosPath[$tour] = $row[13];
+					error_log("photosPath[$tour] : $photosPath[$tour]");
+					$tour++;
+				}
+
+				$photo1 = $photosPath[0];
+
+			} catch (PDOException $e) {
+				// roll back the transaction if something failed
+				$conn->rollback();
+				error_log("Error: " . $e->getMessage());
+				echo "<h5 class='text-center'>Erreur.</h5>";
+			}
+
+			// On se déconnecte
+			$conn = null;
+			?>
 
         <div class="container mb-4">
             <div class="row">
